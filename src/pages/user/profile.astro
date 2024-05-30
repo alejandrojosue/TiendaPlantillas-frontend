@@ -1,0 +1,51 @@
+---
+import Sidebar from "../../components/Sidebar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { Role } from "../../types/api";
+import ByUserProjects from "../../components/project/ByUserProjects";
+import UserRepository from "../../repositories/UserRepository";
+import ByUserTemplates from "../../components/template/ByUserTemplates";
+
+export const prerender = false;
+
+const token:string = Astro.cookies.get('jwt')!.value
+
+if(!token) return Astro.redirect('/user/login')
+const userRepository = new UserRepository()
+const user = await userRepository.me({token})
+if(!user) {
+ Astro.response.status = 404;
+ return;
+}
+
+const {username, email, biography, LinkedInLink, githubLink, instagramLink, role} = user
+---
+
+<Layout title="Profile">
+ <div class="w-full flex flex-col lg:flex-row" slot="before-main">
+  <Sidebar
+   username={username}
+   isProfile={true}
+   email={email}
+   role={role==='Customer' ? 'Cliente' : role} 
+   githubLink={githubLink}
+   instagramLink={instagramLink}
+   LinkedInLink={LinkedInLink}
+  />
+  <div class="w-full p-4">
+   <h2 class="text-2xl">Mi Biografía</h2>
+   <p class="text-gray-400 my-4">
+   {biography ? biography : '// Nada aún'}
+   </p>
+   <h2 class="text-2xl mb-4">
+    Mis {role === Role.customer ? "Proyectos" : "Plantillas"}
+   </h2>
+   <div>
+    {role === Role.customer && <ByUserProjects username={user.username as string} client:visible />}
+    {role == Role.freelancer && <ByUserTemplates username={user.username as string} client:visible/>}
+   </div>
+   
+  </div>
+  
+ </div>
+</Layout>

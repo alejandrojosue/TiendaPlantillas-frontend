@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Templates from '../../components/template/Templates';
+import FilteringSection from '../../components/FilteringSection.astro';
+---
+
+<Layout title="Templates">
+<FilteringSection/>
+	<Templates client:load />
+	<div transition:persist>
+	</div>
+</Layout>

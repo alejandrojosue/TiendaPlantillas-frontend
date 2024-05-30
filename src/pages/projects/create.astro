@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Form from "../../components/project/Form";
+
+---
+
+<link
+ href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+ rel="stylesheet"
+ type="text/css"
+/>
+<Layout title="Crear Proyecto">
+  <Form client:visible/>
+</Layout>
+<script
+ type="text/javascript"
+ src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
+></script>
+ <style is:global>
+  /* Froala Editor <<Logo>> */
+  #fr-logo {
+   display: none;
+  }
+</style>

@@ -1,0 +1,8 @@
+#reader-markdown-component li {
+ list-style: square inside;
+ line-height: 1.7em;
+ padding-left: 30px;
+}
+#reader-markdown-component p {
+ margin: 20px 0;
+}

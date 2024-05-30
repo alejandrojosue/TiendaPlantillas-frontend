@@ -1,0 +1,61 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const textExample = `## [Nombre del Producto] - [Breve descripción del producto]
+
+[Nombre del Producto] es una **herramienta poderosa** diseñada para _mejorar la productividad_ y **facilitar la colaboración** en tus proyectos. Con su enfoque modular y su integración perfecta con Elementor, [Nombre del Producto] te permite crear **sitios web impresionantes** sin necesidad de conocimientos de codificación.
+
+### Características Principales:
+- **Modularidad:** [Nombre del Producto] está construido sobre un enfoque modular, lo que significa que puedes personalizar y combinar diferentes elementos y estilos de diseño para crear tu propio diseño único y adaptarlo a tus necesidades específicas.
+- **Totalmente Compatible con Elementor:** El tema está completamente integrado con Elementor, lo que te permite crear y personalizar páginas de forma visual y sin necesidad de conocimientos de codificación.
+- **Diseños Predefinidos:** [Nombre del Producto] viene con una amplia variedad de diseños predefinidos y demos importables con un solo clic, que te proporcionan un punto de partida sólido para tu proyecto.
+- **Optimizado para SEO:** El tema está diseñado teniendo en cuenta las mejores prácticas de SEO para garantizar que tu sitio tenga una buena visibilidad en los motores de búsqueda.
+- **Totalmente Responsivo:** [Nombre del Producto] es totalmente receptivo y se ve genial en todos los dispositivos, desde teléfonos móviles hasta computadoras de escritorio.
+- **Compatibilidad con WooCommerce:** Si deseas crear una tienda en línea, [Nombre del Producto] es compatible con WooCommerce, lo que te permite vender productos y servicios directamente desde tu sitio web.
+
+[Nombre del Producto] es la solución perfecta para cualquier persona que desee **crear un sitio web impresionante** y funcional con WordPress y Elementor. Con su combinación de flexibilidad, facilidad de uso y potentes características, [Nombre del Producto] hace que sea fácil crear un sitio web profesional sin necesidad de conocimientos técnicos avanzados.
+
+---
+
+Esta plantilla proporciona una estructura clara y fácil de seguir para crear descripciones de productos utilizando Markdown. Solo necesitas reemplazar los marcadores de posición con la información específica de tu producto.
+`;
+
+---
+
+<Layout title="Crear Plantilla">
+
+ <div id="editor"></div>
+ <input type="text" name="title" id="title">
+ <input type="file" name="images" id="images">
+ <textarea id="description" class="hidden" name="description"></textarea>
+ <input type="number" name="unitPrice" id="unitPrice">
+ <input type="file" name="template" id="template">
+</Layout>
+
+<link
+href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+rel="stylesheet"
+type="text/css"
+/>
+
+<script
+ type="text/javascript"
+ src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
+></script>
+<script>
+ //@ts-ignore
+ new FroalaEditor("#editor", {
+  toolbarButtons: [['bold', 'italic', 'underline', 'paragraphFormat', 'formatUL'], ['insertHR','insertHTML', 'undo', 'redo', 'html']],
+  placeholderText: 'Ingrese una descripción...',
+  tag: 'textarea',
+  saveInterval: 2000,
+  events: {
+   'save.before': function(html:string){(document.getElementById('description') as HTMLTextAreaElement).value = html},
+  }
+ });
+ 
+</script>
+<style is:global>
+ #fr-logo{
+  display: none;
+ }
+</style>

@@ -1,0 +1,34 @@
+---
+export const prerender = false
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("username");
+    const email = data.get("email");
+    const password = data.get("password");
+    // Do something with the data
+    console.log({name, email, password});
+    
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+<h1>Register</h1>
+<form method="POST">
+  <label>
+    Username:
+    <input type="text" name="username" required />
+  </label>
+  <label>
+    Email:
+    <input type="email" name="email" required />
+  </label>
+  <label>
+    Password:
+    <input type="password" name="password" required minlength="6" />
+  </label>
+  <button>Submit</button>
+</form>

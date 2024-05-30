@@ -1,0 +1,65 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="stylesheet" href="../../public/editor.md/css/editormd.min.css" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-gray-900 min-h-screen w-full absolute">
+		<Header />
+		<ViewTransitions />
+		<section id="up"></section>
+		<main class="max-w-5xl mx-auto mt-4">
+			<slot />
+			<section class="p-4 w-full opacity-0">section</section>
+		</main>
+		<Footer />
+		<script
+			src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+			integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+			crossorigin="anonymous"></script>
+		<script src="../../public/editor.md/editormd.min.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				var editor = editormd("editor", {
+					// width: "100%",
+					height: "500px",
+					// markdown: "xxxx",     // dynamic set Markdown text
+					path: "../../public/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+				});
+			});
+		</script>
+	</body>
+</html>
+<style is:global>
+	html {
+		font-family: system-ui, sans-serif;
+		color: #fff;
+		color-scheme: dark light;
+	}
+
+	body::-webkit-scrollbar {
+		background-color: none;
+		width: 6px;
+	}
+	body::-webkit-scrollbar-thumb {
+		background: rgb(255, 255, 255, 0.7);
+		border-radius: 10px;
+	}
+</style>

@@ -1,0 +1,10 @@
+---
+import Projects from '../../components/project/Projects';
+import Layout from '../../layouts/Layout.astro';
+import FilteringSection from '../../components/FilteringSection.astro';
+---
+
+<Layout title="Projects">
+ <FilteringSection />
+ <Projects client:load />
+</Layout>

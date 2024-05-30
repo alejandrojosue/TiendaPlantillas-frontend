@@ -1,0 +1,32 @@
+---
+import {PUBLIC_COMPANY_NAME} from '../env/config'
+---
+<footer class="dark: bg-slate-800 absolute bottom-0 w-full">
+    <div
+        class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
+    >
+        <span class="text-sm sm:text-center dark:text-gray-400"
+            >© {(new Date()).getFullYear()} <a href="https://flowbite.com/" class="hover:underline"
+                >{PUBLIC_COMPANY_NAME}™</a
+            >. Derechos de Autor Reservados.
+        </span>
+        <ul
+            class="flex flex-wrap items-center mt-3 text-sm font-medium dark:text-gray-400 sm:mt-0"
+        >
+            <li>
+                <a href="/about" class="hover:underline me-4 md:me-6">Sobre Nosotros</a>
+            </li>
+            <li>
+                <a href="/privacy" class="hover:underline me-4 md:me-6"
+                    >Políticas de Privacidad</a
+                >
+            </li>
+            <li>
+                <a href="/license" class="hover:underline me-4 md:me-6">Licencia</a>
+            </li>
+            <li>
+                <a href="/contact" class="hover:underline">Contacto</a>
+            </li>
+        </ul>
+    </div>
+</footer>
