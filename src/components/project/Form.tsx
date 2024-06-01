@@ -1,19 +1,18 @@
 import { useState, useEffect } from "preact/hooks";
 import type { Category, Project, User } from "../../types/api";
 import { ProjectStatus, Role } from "../../types/api";
-import ProjectRepository from "../../repositories/ProjectRepository";
 import CategoryRepository from "../../repositories/CategoryRepository";
 import Tags from "../Tags";
-import { getCookie } from "../../util/cookies"
+import useProject from "../../hooks/useProject";
 
-export default function Form() {
-   const projectRepository = new ProjectRepository();
-   const categoryRepository = new CategoryRepository()
+export default function Form({ customerID, username, email, token }: { customerID: number, username: string, email: string, token: string }) {
+   const categoryRepository = new CategoryRepository();
    const [title, setTitle] = useState("");
    const [description, setDescription] = useState("");
    const [price, setPrice] = useState(0);
    const [tags, setTags] = useState<Category[]>([]);
    const [categories, setCategories] = useState<Category[]>([]);
+   const { create } = useProject()
 
    useEffect(() => {
       categoryRepository.get().then(data => setCategories(data))
@@ -25,23 +24,23 @@ export default function Form() {
             ["insertHR", "insertHTML", "undo", "redo", "html"],
          ],
          placeholderText: "Ingrese una descripción...",
-         saveInterval: 2000,
+         saveInterval: 500,
          events: {
             "save.before": function (html: string) {
-               (document.getElementById("txtDescription") as HTMLInputElement).value = html;
+               setDescription(html)
             },
          },
       });
-      console.log(getCookie("jwt"));
    }, []);
 
    const handleSubmit = async (event: Event) => {
       event.preventDefault();
+
       const customer: User & { role: Role.customer } = {
-         id: 1,
-         username: '',
+         id: customerID,
          role: Role.customer
       }
+
       const projectData: Project = {
          title,
          description,
@@ -51,20 +50,14 @@ export default function Form() {
          status: ProjectStatus.Open
       };
 
-      try {
-         let res = await projectRepository.create(projectData);
-         if (res) alert("Project successfully created!");
-         // Optionally, redirect or clear the form here
-      } catch (error) {
-         console.error("Error creating project:", error);
-         alert("Failed to create project.");
-      }
+      await create(projectData, token)
    };
 
    return (
       <div class="p-3">
          <form id="project-form" onSubmit={handleSubmit}>
             <input
+            title="Este campo es requerido!"
                type="text"
                name="title"
                id="title"
@@ -72,13 +65,11 @@ export default function Form() {
                class="p-1 rounded-md text-5xl my-2 w-full"
                placeholder="Ingrese un título"
                value={title}
+               required
                //@ts-ignore
                onInput={(e) => setTitle(e.target.value)}
             />
-            <div id="editor" class="my-2"></div>
-            {/* @ts-ignore */}
-            <input type="hidden" id="txtDescription" onChange={(e) => setDescription(e, target.value)} />
-
+            <textarea id="editor" class="my-2"></textarea>
             <div class="grid lg:grid-cols-1">
                <div
                   class="bg-gray-800 text-gray-400 p-8 text-3xl font-semibold my-3 rounded-md flex items-center justify-center"
@@ -104,11 +95,11 @@ export default function Form() {
                   </svg>
                   Precio:
                   <input
-                     style="background: transparent;"
                      type="number"
                      name="unitPrice"
                      id="unitPrice"
-                     class="p-1 text-center rounded-md w-full"
+                     required
+                     class="p-1 text-center rounded-md w-full bg-transparent"
                      placeholder="Ingrese valor ($)"
                      //@ts-ignore
                      onInput={(e) => setPrice(parseFloat(e.target.value))}
@@ -118,10 +109,10 @@ export default function Form() {
                   class="bg-gray-400 text-lg relative p-8 flex items-center justify-center text-gray-800 font-semibold my-3 rounded-md"
                >
                   <span class="text-gray-800 rounded p-3 text-xs absolute top-0 left-0">Autor</span>
-                  <a href={`/user/${'susan'}`} class="capitalize transition-all hover:text-2xl">
-                     {"susan"}
+                  <a href={`/user/${username}`} class="capitalize transition-all hover:text-2xl">
+                     {username}
                   </a>
-                  <h1 class="mx-2">&#183;</h1>{"susan@gmail.com"}
+                  <h1 class="mx-2">&#183;</h1>{email}
                </div>
             </div>
             <div class="flex flex-wrap justify-center my-3 gap-4 mb-10">

@@ -5,5 +5,5 @@ export default interface IProjectRepository {
       Promise<Project[]>;
   getById(id: string): Promise<Project|null>;
   getByUsername({username}:{username: string}): Promise<Project[]>;
-  create(project: Project): Promise<Project|null>;
+  create(project: Project, token: string): Promise<void>;
 }

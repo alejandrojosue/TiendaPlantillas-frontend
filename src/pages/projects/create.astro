@@ -1,24 +1,34 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Form from "../../components/project/Form";
+export const prerender = false;
+const token = Astro.cookies.get("jwt")?.value;
+const username = Astro.cookies.get("username")?.value;
+const email = Astro.cookies.get("email")?.value;
+const customerID = Astro.cookies.get("id")?.value;
 
+if (!token || !customerID || !email || !username)
+  return Astro.redirect("/login");
 ---
 
 <link
- href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
- rel="stylesheet"
- type="text/css"
+  href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+  rel="stylesheet"
+  type="text/css"
 />
 <Layout title="Crear Proyecto">
-  <Form client:visible/>
+  <Form customerID={+customerID} 
+  username={username}
+  email={email}
+  token={token} client:visible />
 </Layout>
 <script
- type="text/javascript"
- src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
 ></script>
- <style is:global>
+<style is:global>
   /* Froala Editor <<Logo>> */
   #fr-logo {
-   display: none;
+    display: none;
   }
 </style>

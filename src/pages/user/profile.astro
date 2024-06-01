@@ -8,44 +8,57 @@ import ByUserTemplates from "../../components/template/ByUserTemplates";
 
 export const prerender = false;
 
-const token:string = Astro.cookies.get('jwt')!.value
+const token = Astro.cookies.get("jwt")?.value as string;
 
-if(!token) return Astro.redirect('/user/login')
-const userRepository = new UserRepository()
-const user = await userRepository.me({token})
-if(!user) {
+if (!token) return Astro.redirect("/login");
+const userRepository = new UserRepository();
+const user = await userRepository.me({ token });
+console.log({user});
+
+if (!user) {
  Astro.response.status = 404;
  return;
 }
-
-const {username, email, biography, LinkedInLink, githubLink, instagramLink, role} = user
+let _role: any = user.role;
 ---
 
 <Layout title="Profile">
  <div class="w-full flex flex-col lg:flex-row" slot="before-main">
   <Sidebar
-   username={username}
+   username={user.username ?? ""}
    isProfile={true}
-   email={email}
-   role={role==='Customer' ? 'Cliente' : role} 
-   githubLink={githubLink}
-   instagramLink={instagramLink}
-   LinkedInLink={LinkedInLink}
+   email={user.email ?? ""}
+   role={_role === "Customer" ? "Cliente" : _role}
+   githubLink={user.githubLink ?? ""}
+   instagramLink={user.instagramLink ?? ""}
+   LinkedInLink={user.LinkedInLink ?? ""}
   />
   <div class="w-full p-4">
    <h2 class="text-2xl">Mi Biografía</h2>
    <p class="text-gray-400 my-4">
-   {biography ? biography : '// Nada aún'}
+    {user.biography ? user.biography : "// Nada aún"}
    </p>
    <h2 class="text-2xl mb-4">
-    Mis {role === Role.customer ? "Proyectos" : "Plantillas"}
+    Mis {user.role && user.role === Role.customer ? "Proyectos" : "Plantillas"}
    </h2>
    <div>
-    {role === Role.customer && <ByUserProjects username={user.username as string} client:visible />}
-    {role == Role.freelancer && <ByUserTemplates username={user.username as string} client:visible/>}
+    {
+     user.role === Role.customer && (
+      <ByUserProjects
+       username={(user.username as string) ?? ""}
+       client:visible
+      />
+     )
+    }
+    {
+     user.role == Role.freelancer && (
+      <ByUserTemplates
+       username={(user.username as string) ?? ""}
+       client:visible
+      />
+     )
+    }
    </div>
-   
   </div>
-  
  </div>
 </Layout>

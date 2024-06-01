@@ -8,7 +8,10 @@ import { useEffect } from 'preact/hooks';
 export default function Projects() {
   const { project: projects, loading, error, pageCount, pageSize, total, get } = useProject()
   useEffect(() => {
-    setTimeout(()=>{get()}, 0)
+    setTimeout(()=>{
+      get()
+
+    }, 0)
   }, [])
   if (loading) {
     return (

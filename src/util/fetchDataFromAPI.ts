@@ -15,7 +15,7 @@ export const fetchDataFromAPI =
               {url: string, method?: string, data?: object,token?:string}): Promise<any> => {
   let retries = 0;
   let errorResponse: Error|null = null;
-
+                
   while (retries < MAX_RETRIES) {
     try {
       if (!url || typeof url !== 'string')

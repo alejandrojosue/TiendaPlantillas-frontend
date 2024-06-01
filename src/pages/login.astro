@@ -4,9 +4,9 @@ import Layout from "../layouts/Layout.astro";
 import UserRepository from "../repositories/UserRepository";
 
 export const prerender = false;
-const username = Astro.cookies.get('jwt')?.value
+const token = Astro.cookies.get('jwt')?.value
 
-if(username) return Astro.redirect(`/user/profile`)
+if(token) return Astro.redirect(`/user/profile`)
 
 if (Astro.request.method === "POST") {
   try {
@@ -16,6 +16,7 @@ if (Astro.request.method === "POST") {
     // Do something with the data
     const userRepository = new UserRepository();
     const user = await userRepository.signin(identifier, password);
+    
     if(!user) return;
     
     //@ts-ignore
@@ -25,7 +26,9 @@ if (Astro.request.method === "POST") {
     //@ts-ignore
     Astro.cookies.set("jwt", user?.jwt + "");
     //@ts-ignore
-    return Astro.redirect(`/user/${user?.user?.username}`)
+    Astro.cookies.set("id", user?.user?.id + "");
+    //@ts-ignore
+    return Astro.redirect(`/user/profile`)
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);

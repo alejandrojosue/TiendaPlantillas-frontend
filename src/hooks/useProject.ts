@@ -3,6 +3,7 @@ import {useState} from 'preact/hooks'
 import ProjectRepository from '../repositories/ProjectRepository'
 
 import type {Project} from '../types/api'
+import {isEmpty} from '../util/isEmpy';
 
 const useProject = () => {
   const [state, setState] = useState<{
@@ -35,7 +36,7 @@ const useProject = () => {
         throw new Error('El parámetro de `page` debe ser un número.')
       }
       const projectsData = await projectRepository.get({pageNumber, sort});
-
+      
       setState(prev => ({
                  ...prev,
                  project: projectsData,
@@ -50,9 +51,9 @@ const useProject = () => {
     }
   }
 
-  const getByUsername = async({username}:{username:string})=>{
+  const getByUsername =
+      async ({username}: {username: string}) => {
     try {
-      
       const projectsData = await projectRepository.getByUsername({username});
 
       setState(prev => ({
@@ -69,8 +70,29 @@ const useProject = () => {
     }
   }
 
+  const create =
+      async (projectData: Project, token: string) => {
+    if (projectData.unitPrice < 1 || isNaN(projectData.unitPrice)) {
+      alert('Debe ingresar un precio válido!')
+      return;
+    }if (isEmpty([projectData.title])) {
+      alert('Debe ingresar el título!');
+      return;
+    }
+    
+    if (isEmpty([projectData.description])) {
+      alert('Debe ingresar la descripción!');
+      return;
+    }
+    if (projectData.categories.length < 2) {
+      alert('Los tags deben ser al menos 2!')
+      return;
+    }
+    await projectRepository.create(projectData, token)
+  }
+
   return {
-    ...state, get, getByUsername
+    ...state, get, getByUsername, create
   }
 };
 
