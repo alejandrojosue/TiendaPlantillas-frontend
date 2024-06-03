@@ -68,8 +68,20 @@ const useTemplate = () => {
   }
 
   const create =
-      async (template: Template, images:FileList, token: string) => {
-    // await templateRepository.create(template, token)
+      async ({templateData, images, zip, token}: {
+    templateData: Template,
+    images: File[],
+    zip: File,
+    token: string
+  }) => {
+    // Crear un nuevo objeto DataTransfer
+    const dataTransfer = new DataTransfer();
+
+    // Agregar cada archivo del array al objeto DataTransfer
+    images.forEach(image => dataTransfer.items.add(image));
+
+    await templateRepository.create(
+        templateData, dataTransfer.files, zip, token)
   }
 
   return {

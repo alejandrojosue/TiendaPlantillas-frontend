@@ -2,11 +2,18 @@ import {type Template} from '../types/api';
 import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
 import type ITemplateRepository from './ITemplateRepository';
 import {templateMaper, templatesMaper} from '../maper/templateMaper'
+import { PUBLIC_STRAPI_HOST } from '../env/config';
 export default class TemplateRepository implements ITemplateRepository {
   constructor() {
     this.total = 0;
     this.pageCount = 0;
     this.pageSize = 0
+  }
+  uploadImages(files: FileList): Promise<number[]> {
+    throw new Error('Method not implemented.');
+  }
+  uploadFile(file: File): Promise<number> {
+    throw new Error('Method not implemented.');
   }
   total: number;
   pageCount: number;
@@ -73,52 +80,38 @@ export default class TemplateRepository implements ITemplateRepository {
     try {
       const {title, description, unitPrice, categories, freelancer, url} =
           template;
-      if (!images) return;
-      if (!templateZIP) return;
-      const [imagesData, templateData] = await Promise.all(
-          [this.uploadImages(images), this.uploadFile(templateZIP)]);
+      if (!images || !templateZIP || !title || !description || !unitPrice ||
+          !categories || !freelancer || !url)
+        return;
+      const data = {title, description, unitPrice, categories, freelancer, url};
+      console.log(data);
 
-      const res = await fetchDataFromAPI({
-        url: `/api/templates`,
-        method: 'POST',
-        data: {
-          data: {title, description, unitPrice, categories, freelancer, url}
-        },
-        token
+      const formData = new FormData();
+
+      formData.append('data', JSON.stringify(data),);
+      for (let i = 0; i < images.length; i++) {
+        formData.append('files.images', images[i]);
+      }
+
+      formData.append('files.template', templateZIP)
+
+      const response = await fetch(PUBLIC_STRAPI_HOST + '/api/templates', {
+        method: 'post',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
+
+      const res = await response.json()
 
       if (!res.data) return;
       alert('Se ha creado la plantilla satisfactoriamente!')
-      location.href = '/user/profile'
+      // location.href = '/user/profile'
     } catch (error) {
       alert((error as Error).message)
     }
   }
-
-  async uploadImages(files: FileList): Promise<number[]> {
-    try {
-      const formData = new FormData();
-
-      for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i], files[i].name);
-      }
-      await fetchDataFromAPI(
-          {url: '/api/upload', method: 'POST', data: formData})
-    } catch (error) {
-    }
-    return []
-  }
-
-  async uploadFile(file: File): Promise<number> {
-    try {
-      await fetchDataFromAPI(
-          {url: '/api/upload', method: 'POST', data: undefined})
-    } catch (error) {
-    }
-
-    return 0
-  }
-
   async downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}):
       Promise<void> {
     const template = await fetch('')

@@ -16,10 +16,10 @@ interface Props {
 
 export default function Form({ customerID, username, email, token }: Props) {
    const categoryRepository = new CategoryRepository();
-   const [title, setTitle] = useState('');
-   const [url, setURL] = useState('');
-   const [description, setDescription] = useState('');
-   const [price, setPrice] = useState(0);
+   const [title, setTitle] = useState('dasdas');
+   const [url, setURL] = useState('https://chatgpt.com/c/6364e379-ea45-4e89-9400-e2f14a5f7f8d');
+   const [description, setDescription] = useState(TEXT_EXAMPLE);
+   const [price, setPrice] = useState(100);
    const [tags, setTags] = useState<Category[]>([]);
    const [categories, setCategories] = useState<Category[]>([]);
    const [images, setImages] = useState<File[]>([]);
@@ -66,7 +66,8 @@ export default function Form({ customerID, username, email, token }: Props) {
          alert('No ha seleccionado imágenes');
          return;
       }
-      if (zips.length < 1) {
+
+      if (zips.length < 1 || !zips || !zips[0]) {
          alert('No ha seleccionado un archivo zip');
          return;
       }
@@ -88,7 +89,7 @@ export default function Form({ customerID, username, email, token }: Props) {
          url
       };
       console.log(templateData, zips, images, token)
-      //  await create(templateData, null, token);
+       await create({templateData, zip: zips[0], images, token});
    };
 
    return (
@@ -134,6 +135,7 @@ export default function Form({ customerID, username, email, token }: Props) {
                      name="unitPrice"
                      id="unitPrice"
                      required
+                     value={price}
                      class="p-1 text-center rounded-md w-full bg-transparent"
                      placeholder="Ingrese valor ($)"
                      //@ts-ignore

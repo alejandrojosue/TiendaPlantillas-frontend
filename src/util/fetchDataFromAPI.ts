@@ -10,68 +10,74 @@ import {MAX_RETRIES, PUBLIC_STRAPI_HOST} from '../env/config'
  *     la API.
  * @throws {Error} Si se produce un error en la solicitud.
  */
-export const fetchDataFromAPI =
-    async({url, method = 'GET', data, token}:
-              {url: string, method?: string, data?: object,token?:string}): Promise<any> => {
-  let retries = 0;
-  let errorResponse: Error|null = null;
-                
-  while (retries < MAX_RETRIES) {
-    try {
-      if (!url || typeof url !== 'string')
-        throw new Error('La URL no es válida.');
+export const fetchDataFromAPI = async(
+    {url, method = 'GET', data, token}:
+        {url: string, method?: string, data?: object, token?: string}):
+    Promise<any> => {
+      let retries = 0;
+      let errorResponse: Error|null = null;
 
-      let headers: HeadersInit = {'Content-Type': 'application/json'};
+      while (retries < MAX_RETRIES) {
+        try {
+          if (!url || typeof url !== 'string')
+            throw new Error('La URL no es válida.');
 
-      if (token) headers['Authorization'] = `Bearer ${token}`;
+          let headers: HeadersInit = {'Content-Type': 'application/json'};
 
-      const requestOptions: RequestInit = {method, headers,};
+          if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      if (data) requestOptions.body = JSON.stringify(data);
+          const requestOptions: RequestInit = {
+            method,
+            headers,
+          };
 
-      const response = await fetch(PUBLIC_STRAPI_HOST + url, requestOptions);
+          if (data) requestOptions.body = JSON.stringify(data);
 
-      const errorList: {[key: string]: () => void} = {
-        'Bad Request': () => {
-          throw new Error('Datos no válidos')
-        },
-        Unauthorized: () => {
-          throw new Error('Acceso Denegado')
-        },
-        Forbidden: () => {
-          throw new Error('Acceso Denegado')
-        },
-        'Not Found': () => {
-          throw new Error('Recurso no encontrado')
-        },
-        'Internal Server Error': () => {
-          throw new Error('Ha ocurrido un error en el servidor')
-        },
-        'Failed to fetch': () => {
-          throw new Error('No hay conexión con el servidor')
+          const response =
+              await fetch(PUBLIC_STRAPI_HOST + url, requestOptions);
+
+          const errorList: {[key: string]: () => void} = {
+            'Bad Request': () => {
+              throw new Error('Datos no válidos')
+            },
+            Unauthorized: () => {
+              throw new Error('Acceso Denegado')
+            },
+            Forbidden: () => {
+              throw new Error('Acceso Denegado')
+            },
+            'Not Found': () => {
+              throw new Error('Recurso no encontrado')
+            },
+            'Internal Server Error': () => {
+              throw new Error('Ha ocurrido un error en el servidor')
+            },
+            'Failed to fetch': () => {
+              throw new Error('No hay conexión con el servidor')
+            }
+          };
+
+          if (!response.ok) {
+            console.error(await response.json())
+            if (errorList[response.statusText])
+            errorList[response.statusText]();
+            else throw new Error(response.statusText);
+          }
+          const responseData = await response.json();
+          return responseData;
+        } catch (error) {
+          retries++;
+          errorResponse = error as Error;
+          console.error(`Error fetching data (attempt ${retries} of ${
+              MAX_RETRIES}): ${errorResponse.message}`);
+          // Evitar que se ejecute otra vez si no es problema con el servidor
+          if (errorResponse.message != 'fetch failed' &&
+              retries < MAX_RETRIES) {
+            break;
+          }
         }
-      };
-
-      if (!response.ok) {
-        if (errorList[response.statusText])
-          errorList[response.statusText]();
-        else
-          throw new Error(response.statusText);
       }
-      const responseData = await response.json();
-      return responseData;
-    } catch (error) {
-      retries++;
-      errorResponse = error as Error;
-      console.error(`Error fetching data (attempt ${retries} of ${
-          MAX_RETRIES}): ${errorResponse.message}`);
-      // Evitar que se ejecute otra vez si no es problema con el servidor
-      if (errorResponse.message != 'fetch failed' && retries < MAX_RETRIES) {
-        break;
-      }
-    }
-  }
-  // Si se alcanza el número máximo de intentos, se devuelve el último error
-  throw new Error(`Failed to fetch data after ${MAX_RETRIES} attempts: ${
-      errorResponse ? errorResponse.message : ''}`);
-};
+      // Si se alcanza el número máximo de intentos, se devuelve el último error
+      throw new Error(`Failed to fetch data after ${MAX_RETRIES} attempts: ${
+          errorResponse ? errorResponse.message : ''}`);
+    };
