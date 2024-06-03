@@ -49,7 +49,8 @@ const useTemplate = () => {
     }
   }
 
-  const getByUsername = async ({username}:{username:string})=>{
+  const getByUsername =
+      async ({username}: {username: string}) => {
     try {
       const templatesData = await templateRepository.getByUsername({username});
       setState(prev => ({
@@ -66,8 +67,13 @@ const useTemplate = () => {
     }
   }
 
+  const create =
+      async (template: Template, images:FileList, token: string) => {
+    // await templateRepository.create(template, token)
+  }
+
   return {
-    ...state, get, getByUsername
+    ...state, get, getByUsername, create
   }
 };
 

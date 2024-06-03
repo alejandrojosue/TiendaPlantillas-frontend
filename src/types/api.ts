@@ -4,10 +4,10 @@ export interface Template{
  title:string
  images:String[]
  description:string
- categories: string[]
+ categories: Category[]
  unitPrice:number
  freelancer: User & {role:Role.freelancer}
- createdAt: string
+ createdAt?: string
  status: TemplateStatus
  url:string
  template?: string
@@ -55,4 +55,9 @@ export enum TemplateStatus {
  'APPROVED',
  'REVIEWING',
  'NOT APPROVED'
+}
+
+export enum TypeFileToUpload {
+ ZIP = '.zip',
+ IMAGE = 'images'
 }

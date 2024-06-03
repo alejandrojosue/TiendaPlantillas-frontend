@@ -1,81 +1,128 @@
-import { type Template } from "../types/api";
-import { fetchDataFromAPI } from "../util/fetchDataFromAPI";
-import type ITemplateRepository from "./ITemplateRepository";
+import {type Template} from '../types/api';
+import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
+import type ITemplateRepository from './ITemplateRepository';
 import {templateMaper, templatesMaper} from '../maper/templateMaper'
-export default class TemplateRepository implements ITemplateRepository{
- constructor(){
-  this.total = 0
-  this.pageCount = 0
-  this.pageSize = 0
- }
- total: number;
- pageCount: number;
- pageSize: number;
- 
- async get({pageNumber, sort = 'asc'}:{pageNumber:string, sort?:string}): Promise<Template[]> {
-  try {
-   const res = await fetchDataFromAPI({
-    url: `/api/templates?populate=*&sort[0]=id:${sort}&pagination[page]=${pageNumber}`
-   });
-
-   if(!res.data)
-    return [];
- 
-   this.total = res.meta.pagination.total
-   this.pageCount = res.meta.pagination.pageCount
-   this.pageSize = res.meta.pagination.pageSize
- 
-   return templatesMaper(res.data)
-  } catch (error) {   
+export default class TemplateRepository implements ITemplateRepository {
+  constructor() {
+    this.total = 0;
+    this.pageCount = 0;
+    this.pageSize = 0
   }
-  return []
- }
- 
- async getById(id: string): Promise<Template|null> {
-  try {
-   const res = await fetchDataFromAPI({
-    url: `/api/templates/${id}?populate=*`
-   });
- 
-   if(!res.data)
-    return null;
- 
-   this.total = 1
-   this.pageCount = 1
-   return templateMaper(res.data.id, res.data.attributes)
-  } catch (error) {
-   console.log((error as Error).message)
+  total: number;
+  pageCount: number;
+  pageSize: number;
+
+  async get({pageNumber, sort = 'asc'}: {pageNumber: string, sort?: string}):
+      Promise<Template[]> {
+    try {
+      const res = await fetchDataFromAPI({
+        url: `/api/templates?populate=*&sort[0]=id:${sort}&pagination[page]=${
+            pageNumber}`
+      });
+
+      if (!res.data) return [];
+
+      this.total = res.meta.pagination.total;
+      this.pageCount = res.meta.pagination.pageCount;
+      this.pageSize = res.meta.pagination.pageSize;
+
+      return templatesMaper(res.data)
+    } catch (error) {
+    }
+    return []
   }
-  return null
- }
 
- async getByUsername({ username }: { username: string; }): Promise<Template[]> {
-  try {
-   const res = await fetchDataFromAPI({
-    url: `/api/templates?populate=*&filters[freelancer][username][$eqi]=${username}`
-   });
+  async getById(id: string): Promise<Template|null> {
+    try {
+      const res =
+          await fetchDataFromAPI({url: `/api/templates/${id}?populate=*`});
 
-   if(!res.data)
-    return [];
- 
-   // this.total = res.meta.pagination.total
-   // this.pageCount = res.meta.pagination.pageCount
-   // this.pageSize = res.meta.pagination.pageSize
- 
-   return templatesMaper(res.data)
-  } catch (error) {   
+      if (!res.data) return null;
+
+      this.total = 1;
+      this.pageCount = 1;
+      return templateMaper(res.data.id, res.data.attributes)
+    } catch (error) {
+      console.log((error as Error).message)
+    }
+    return null
   }
-  return []
- }
 
- async create(template:Template): Promise<Template> {
-  throw new Error("Method not implemented.");
- }
+  async getByUsername({username}: {username: string;}): Promise<Template[]> {
+    try {
+      const res = await fetchDataFromAPI({
+        url: `/api/templates?populate=*&filters[freelancer][username][$eqi]=${
+            username}`
+      });
 
- async downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}): Promise<void> {
-  const template =   await fetch('')
-  
-  throw new Error("Method not implemented.");
- }
+      if (!res.data) return [];
 
+      // this.total = res.meta.pagination.total
+      // this.pageCount = res.meta.pagination.pageCount
+      // this.pageSize = res.meta.pagination.pageSize
+
+      return templatesMaper(res.data)
+    } catch (error) {
+    }
+    return []
+  }
+
+  async create(
+      template: Template, images: FileList|null, templateZIP: File,
+      token: string): Promise<void> {
+    try {
+      const {title, description, unitPrice, categories, freelancer, url} =
+          template;
+      if (!images) return;
+      if (!templateZIP) return;
+      const [imagesData, templateData] = await Promise.all(
+          [this.uploadImages(images), this.uploadFile(templateZIP)]);
+
+      const res = await fetchDataFromAPI({
+        url: `/api/templates`,
+        method: 'POST',
+        data: {
+          data: {title, description, unitPrice, categories, freelancer, url}
+        },
+        token
+      });
+
+      if (!res.data) return;
+      alert('Se ha creado la plantilla satisfactoriamente!')
+      location.href = '/user/profile'
+    } catch (error) {
+      alert((error as Error).message)
+    }
+  }
+
+  async uploadImages(files: FileList): Promise<number[]> {
+    try {
+      const formData = new FormData();
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i], files[i].name);
+      }
+      await fetchDataFromAPI(
+          {url: '/api/upload', method: 'POST', data: formData})
+    } catch (error) {
+    }
+    return []
+  }
+
+  async uploadFile(file: File): Promise<number> {
+    try {
+      await fetchDataFromAPI(
+          {url: '/api/upload', method: 'POST', data: undefined})
+    } catch (error) {
+    }
+
+    return 0
+  }
+
+  async downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}):
+      Promise<void> {
+    const template = await fetch('')
+
+    throw new Error('Method not implemented.');
+  }
 }

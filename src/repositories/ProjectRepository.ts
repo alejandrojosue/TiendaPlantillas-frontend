@@ -19,9 +19,7 @@ export default class ProjectRepository implements IProjectRepository {
       const res = await fetchDataFromAPI({
         url: `/api/projects?populate=*&sort[0]=id:${sort}&pagination[page]=${
             pageNumber}`
-      });
-      console.log(res.data);
-      
+      });      
       
       if (!res.data) return [];
 
@@ -47,7 +45,7 @@ export default class ProjectRepository implements IProjectRepository {
       this.pageCount = 1;
       return projectMaper(res.data.id, res.data.attributes)
     } catch (error) {
-      console.log((error as Error).message)
+      console.error((error as Error).message)
     }
     return null
   }
@@ -84,7 +82,7 @@ export default class ProjectRepository implements IProjectRepository {
 
       if (!res.data) return;
       alert('Se ha creado el proyecto satisfactoriamente!')
-      location.href = '/projects'
+      location.href = '/user/profile'
     } catch (error) {
       alert((error as Error).message)
     }
