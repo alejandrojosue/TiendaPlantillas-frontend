@@ -5,13 +5,10 @@ import CardProjectSkeleton from './CardProjectSkeleton';
 import Pagination from '../Pagination';
 import { useEffect } from 'preact/hooks';
 
-export default function Projects() {
-  const { project: projects, loading, error, pageCount, pageSize, total, get } = useProject()
+export default function Projects({ username, isProfile }: { username?: string, isProfile?:boolean }) {
+  const { project: projects, loading, error, pageCount, pageSize, total, get, getByUsername } = useProject()
   useEffect(() => {
-    setTimeout(()=>{
-      get()
-
-    }, 0)
+    if (username) getByUsername({ username }); else get();
   }, [])
   if (loading) {
     return (
@@ -39,13 +36,16 @@ export default function Projects() {
           customer={project.customer}
           unitPrice={project.unitPrice}
           status={project.status}
+          isProfile={isProfile}
         />
       })}
     </div>
-    <Pagination
-      pageCount={pageCount}
-      pageSize={pageSize}
-      total={total}
-    />
+    {
+      username ? '' : <Pagination
+        pageCount={pageCount}
+        pageSize={pageSize}
+        total={total}
+      />
+    }
   </>)
 }

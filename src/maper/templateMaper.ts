@@ -1,3 +1,4 @@
+import { PUBLIC_STRAPI_HOST } from "../env/config";
 import { Role, type Template, TemplateStatus, type User } from "../types/api"
 
 export const templatesMaper = (data:any): Template[] =>{
@@ -21,15 +22,15 @@ export const templateMaper = (id:number, attributes: any): Template =>{
   images: _imagesUrl,
   url,
   freelancer: freelancerMaper(freelancer.data.attributes),
-  categories: categories.map(({categoryName}:{categoryName:string})=>categoryName),
+  categories: categories.map(({categoryName}:{categoryName:string})=>({categoryName: categoryName})),
  }
  return template
 }
 
-const imagesListMaper = (data:any) : String[] =>{
- return data.map(({attributes}:{attributes:any})=>(
-  attributes.formats.thumbnail.url
- )) as String[]
+const imagesListMaper = (data:any) : string[] =>{
+ return data?.map(({attributes}:{attributes:any})=>(
+  PUBLIC_STRAPI_HOST + attributes.formats?.medium?.url
+ )) as string[]
 }
 
 const freelancerMaper = (attributes:any): User & {role: Role.freelancer} =>{

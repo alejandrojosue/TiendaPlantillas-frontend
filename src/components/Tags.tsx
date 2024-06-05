@@ -1,13 +1,11 @@
 import { useState } from "preact/hooks";
 import type { Category } from "../types/api";
 
-export default function Tags({ categories, onTagsChange }: { categories: Category[], onTagsChange: (tags: Category[]) => void }) {
-  const [tags, setTags] = useState<Category[]>([]);
+export default function Tags({ categories, tags, onTagsChange }: { categories: Category[], tags: Category[], onTagsChange: (tags: Category[]) => void }) {
 
   const deleteTag = (categoryName: string) => {
     if (confirm(`¿Desea eliminar ${categoryName}?`)) {
       const newTags = tags.filter(tag => tag.categoryName !== categoryName);
-      setTags(newTags);
       onTagsChange(newTags);
     }
   };
@@ -15,7 +13,6 @@ export default function Tags({ categories, onTagsChange }: { categories: Categor
   const addTag = (categoryName: string) => {
     if (!tags.some(tag=>tag.categoryName === categoryName)) {
       const newTags = [...tags, ({categoryName} as Category)];
-      setTags(newTags);
       onTagsChange(newTags);
     }
   };

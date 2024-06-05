@@ -1,0 +1,44 @@
+---
+import Form from "../../../components/template/Form";
+import Layout from "../../../layouts/Layout.astro";
+import TemplateRepository from "../../../repositories/TemplateRepository";
+import type { Template } from "../../../types/api";
+export const prerender = false;
+
+const { id } = Astro.params;
+if (!id) return;
+
+const token = Astro.cookies.get("jwt")?.value;
+const username = Astro.cookies.get("username")?.value;
+const email = Astro.cookies.get("email")?.value;
+const customerID = Astro.cookies.get("id")?.value;
+
+if (!token || !customerID || !email || !username)
+ return Astro.redirect("/login");
+
+const repo = new TemplateRepository();
+const template = await repo.getById(id);
+if (!template) Astro.response.status = 404;
+---
+
+<link
+ href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+ rel="stylesheet"
+ type="text/css"
+/>
+<Layout title="Editar Plantilla">
+ <Form
+  customerID={+customerID}
+  username={username}
+  email={email}
+  token={token}
+  template={template as Template}
+  client:visible
+ />
+</Layout>
+
+<script
+ type="text/javascript"
+ src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
+></script>
+<style is:global></style>

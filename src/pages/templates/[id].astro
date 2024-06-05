@@ -2,26 +2,24 @@
 import Layout from '../../layouts/Layout.astro';
 import TemplateRepository from '../../repositories/TemplateRepository';
 import ReaderMarkdown from '../../components/ReaderMarkdown';
-import { PUBLIC_STRAPI_HOST } from '../../env/config';
+import Carousel from '../../components/template/Carousel';
+import LinkButton from '../../components/LinkButton';
 export const prerender = false;
 const { id } = Astro.params;
+if (!id) return;
 
 const templateRepository = new TemplateRepository();
-if (!id) return;
 
 const template = await templateRepository.getById(id);
 if (!template) Astro.response.status = 404;
+
 ---
 
 <Layout title={template?.title || ''}>
    
    <div class="p-3 overflow-hidden">
       <h1 class="text-5xl my-2">{template?.title}</h1>
-      <img
-         class="w-full h-auto my-5 rounded shadow-lg hover:opacity-75 transition-opacity duration-300"
-         src={(PUBLIC_STRAPI_HOST + template?.images[0]) as string}
-         alt=""
-      />
+      <Carousel images={template?.images as string[]} client:load/>
       <ReaderMarkdown description={template?.description} />
       <div class="grid lg:grid-cols-2 lg:gap-16">
          <div
@@ -72,47 +70,27 @@ if (!template) Astro.response.status = 404;
          }
       </div>
       <div class="flex">
-         <a href="/templates"
-                class="flex-row text-2xl my3
-justify-center cursor-pointer hover:bg-slate-700
-focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-font-medium rounded-lg p-2.5 text-center
-inline-flex items-center dark:focus:ring-[#1da1f2]/55
-mr-2 hover:shadow-lg transition-all duration-200
-ease-in-out hover:scale-110 scale-90 gap-x-2
-opacity-90 hover:opacity-100"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-circle-arrow-left"
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18"></path>
-                    <path d="M8 12l4 4"></path>
-                    <path d="M8 12h8"></path>
-                    <path d="M12 8l-4 4"></path>
-                </svg>
-                Regresar
-            </a>
-         <a
-            class="flex-row text-2xl my3
- justify-center cursor-pointer hover:bg-slate-700
- focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
- font-medium rounded-lg p-2.5 text-center
- inline-flex items-center dark:focus:ring-[#1da1f2]/55
- mr-2 hover:shadow-lg transition-all duration-200
- ease-in-out hover:scale-110 scale-90 gap-x-2
- opacity-90 hover:opacity-100"
-            href={template?.url} target="_blank"
-         >
+            <LinkButton link="/templates" size="large">
+               <svg
+               xmlns="http://www.w3.org/2000/svg"
+               class="icon icon-tabler icon-tabler-circle-arrow-left"
+               width="40"
+               height="40"
+               viewBox="0 0 24 24"
+               stroke-width="1.5"
+               stroke="currentColor"
+               fill="none"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+           >
+               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+               <path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18"></path>
+               <path d="M8 12l4 4"></path>
+               <path d="M8 12h8"></path>
+               <path d="M12 8l-4 4"></path>
+           </svg>
+           Regresar</LinkButton>
+           <LinkButton link={template?.url ?? ""} size="large" target="_blank">
             <svg
                xmlns="http://www.w3.org/2000/svg"
                class="icon icon-tabler icon-tabler-eye"
@@ -132,7 +110,7 @@ opacity-90 hover:opacity-100"
                ></path>
             </svg>
             Vista previa
-         </a>
+         </LinkButton>
       </div>
    </div>
 </Layout>

@@ -2,7 +2,7 @@
 export interface Template{
  id?: number
  title:string
- images:String[]
+ images:string[]
  description:string
  categories: Category[]
  unitPrice:number

@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import ProjectRepository from "../../repositories/ProjectRepository";
 import ReaderMarkdown from "../../components/ReaderMarkdown";
+import LinkButton from "../../components/LinkButton";
 export const prerender = false;
 const { id } = Astro.params;
 
@@ -47,7 +48,9 @@ if (!project) Astro.response.status = 404;
                     class="text-gray-800 rounded p-3 text-xs absolute top-0 left-0"
                     >Autor</span
                 >
-                <a href=`/user/${project!.customer.username}` class="capitalize transition-all hover:text-2xl"
+                <a
+                    href=`/user/${project!.customer.username}`
+                    class="capitalize transition-all hover:text-2xl"
                     >{project!.customer.username}</a
                 >
                 <h1 class="mx-2">&#183;</h1>{project!.customer.email}
@@ -58,7 +61,7 @@ if (!project) Astro.response.status = 404;
                 >Tags:</span
             >
             {
-                project?.categories.map(({categoryName}) => (
+                project?.categories.map(({ categoryName }) => (
                     <span class="p-2 cursor-pointer hover:scale-105 transition-all capitalize rounded font-bold text-gray-400 border border-gray-400">
                         {categoryName}
                     </span>
@@ -66,16 +69,7 @@ if (!project) Astro.response.status = 404;
             }
         </div>
         <div class="flex">
-            <a href="/projects"
-                class="flex-row text-2xl my3
-justify-center cursor-pointer hover:bg-slate-700
-focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-font-medium rounded-lg p-2.5 text-center
-inline-flex items-center dark:focus:ring-[#1da1f2]/55
-mr-2 hover:shadow-lg transition-all duration-200
-ease-in-out hover:scale-110 scale-90 gap-x-2
-opacity-90 hover:opacity-100"
-            >
+            <LinkButton link="/projects" size="large">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon icon-tabler icon-tabler-circle-arrow-left"
@@ -95,24 +89,32 @@ opacity-90 hover:opacity-100"
                     <path d="M12 8l-4 4"></path>
                 </svg>
                 Regresar
-            </a>
-            <a href="/user/contact"
-                class="flex-row text-2xl my3
-justify-center cursor-pointer hover:bg-slate-700
-focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-font-medium rounded-lg p-2.5 text-center
-inline-flex items-center dark:focus:ring-[#1da1f2]/55
-mr-2 hover:shadow-lg transition-all duration-200
-ease-in-out hover:scale-110 scale-90 gap-x-2
-opacity-90 hover:opacity-100"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail-filled" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z" stroke-width="0" fill="currentColor" />
-                <path d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z" stroke-width="0" fill="currentColor" />
-              </svg>
+            </LinkButton>
+            <LinkButton link="/user/contact" size="large">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-mail-filled"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke=""
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path
+                        d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z"
+                        stroke-width="0"
+                        fill="currentColor"></path>
+                    <path
+                        d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z"
+                        stroke-width="0"
+                        fill="currentColor"></path>
+                </svg>
                 Contactar
-            </a>
+            </LinkButton>
         </div>
     </div>
 </Layout>

@@ -2,18 +2,12 @@ import {type Template} from '../types/api';
 import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
 import type ITemplateRepository from './ITemplateRepository';
 import {templateMaper, templatesMaper} from '../maper/templateMaper'
-import { PUBLIC_STRAPI_HOST } from '../env/config';
+import {PUBLIC_STRAPI_HOST} from '../env/config';
 export default class TemplateRepository implements ITemplateRepository {
   constructor() {
     this.total = 0;
     this.pageCount = 0;
     this.pageSize = 0
-  }
-  uploadImages(files: FileList): Promise<number[]> {
-    throw new Error('Method not implemented.');
-  }
-  uploadFile(file: File): Promise<number> {
-    throw new Error('Method not implemented.');
   }
   total: number;
   pageCount: number;
@@ -88,7 +82,10 @@ export default class TemplateRepository implements ITemplateRepository {
 
       const formData = new FormData();
 
-      formData.append('data', JSON.stringify(data),);
+      formData.append(
+          'data',
+          JSON.stringify(data),
+      );
       for (let i = 0; i < images.length; i++) {
         formData.append('files.images', images[i]);
       }
@@ -98,20 +95,43 @@ export default class TemplateRepository implements ITemplateRepository {
       const response = await fetch(PUBLIC_STRAPI_HOST + '/api/templates', {
         method: 'post',
         body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: {Authorization: `Bearer ${token}`}
       });
 
       const res = await response.json()
 
       if (!res.data) return;
       alert('Se ha creado la plantilla satisfactoriamente!')
-      // location.href = '/user/profile'
+      location.href = '/user/profile'
     } catch (error) {
       alert((error as Error).message)
     }
   }
+
+  async update(template: Template, token: string): Promise<void> {
+    const {id, title, description, unitPrice, url} = template;
+    let data: any = {};
+    if(!unitPrice || isNaN(unitPrice) || unitPrice === 0) return;
+    if (title.trim()) data.title = title.trim();
+    if (description.trim()) data.description = description;
+    if (unitPrice) data.unitPrice = unitPrice;
+    if (url.trim()) data.url = url;
+
+    try {
+      const res = await fetchDataFromAPI({
+        url: `/api/templates/${id}`,
+        method: 'PUT',
+        data: {data},
+        token
+      });
+
+      alert('Se ha actualizado la plantilla satisfactoriamente!')
+      location.href = '/user/profile'
+    } catch (error) {
+      alert((error as Error).message)
+    }
+  }
+
   async downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}):
       Promise<void> {
     const template = await fetch('')

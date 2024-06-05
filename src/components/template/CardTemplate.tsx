@@ -1,8 +1,10 @@
+import type { Category } from "../../types/api";
+
 interface Props {
 	id: string;
 	title: string;
 	img: string
-	categories: string[]
+	categories: Category[]
 	unitPrice: number
 }
 
@@ -15,7 +17,7 @@ export default function CardTemplate({ id, title, img, categories, unitPrice }: 
 
 			<picture>
 				<img src={img} alt={`For ${title}`}
-					class="rounded-t-lg w-full object-fill h-60" />
+					class="rounded-t-lg w-full h-60 object-cover" />
 			</picture>
 			<header class="px-4 py-3 flex-grow">
 				<h1 class="text-sm line-clamp-2 lg:text-xl font-bold tracking-tight text-white">
@@ -25,7 +27,7 @@ export default function CardTemplate({ id, title, img, categories, unitPrice }: 
 			<div class="flex flex-wrap gap-1 my-2 justify-center">
 				{categories.map(category => (
 					<span class="text-xs border-gray-500 bg-gray-500 hover:bg-gray-300 p-1 rounded-sm font-bold tracking-tight text-white ">
-						{category}
+						{category.categoryName}
 					</span>
 				))}
 			</div>

@@ -4,6 +4,7 @@ import { ProjectStatus, Role } from "../../types/api";
 import CategoryRepository from "../../repositories/CategoryRepository";
 import Tags from "../Tags";
 import useProject from "../../hooks/useProject";
+import LinkButton from "../LinkButton";
 
 export default function Form({ customerID, username, email, token }: { customerID: number, username: string, email: string, token: string }) {
    const categoryRepository = new CategoryRepository();
@@ -57,7 +58,7 @@ export default function Form({ customerID, username, email, token }: { customerI
       <div class="p-3">
          <form id="project-form" onSubmit={handleSubmit}>
             <input
-            title="Este campo es requerido!"
+               title="Este campo es requerido!"
                type="text"
                name="title"
                id="title"
@@ -119,17 +120,7 @@ export default function Form({ customerID, username, email, token }: { customerI
                <Tags categories={categories} onTagsChange={setTags} />
             </div>
             <div class="flex"></div>
-            <a
-               href="/projects"
-               class="flex-row text-2xl my3
-            justify-center cursor-pointer hover:bg-slate-700
-            focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-            font-medium rounded-lg p-2.5 text-center
-            inline-flex items-center dark:focus:ring-[#1da1f2]/55
-            mr-2 hover:shadow-lg transition-all duration-200
-            ease-in-out hover:scale-110 scale-90 gap-x-2
-            opacity-90 hover:opacity-100"
-            >
+            <LinkButton link="/projects" size="large">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="icon icon-tabler icon-tabler-circle-arrow-left"
@@ -149,7 +140,7 @@ export default function Form({ customerID, username, email, token }: { customerI
                   <path d="M12 8l-4 4"></path>
                </svg>
                Regresar
-            </a>
+            </LinkButton>
             <button
                class="flex-row text-2xl my3
             justify-center cursor-pointer hover:bg-slate-700
@@ -159,7 +150,7 @@ export default function Form({ customerID, username, email, token }: { customerI
             mr-2 hover:shadow-lg transition-all duration-200
             ease-in-out hover:scale-110 scale-90 gap-x-2
             opacity-90 hover:opacity-100"
-               type="submit"
+            type={'submit'}
             >
                <svg
                   xmlns="http://www.w3.org/2000/svg"

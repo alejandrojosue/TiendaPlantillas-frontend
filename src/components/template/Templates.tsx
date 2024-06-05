@@ -6,14 +6,10 @@ import Pagination from '../Pagination';
 import CardTemplate from './CardTemplate';
 import CardTemplateSkeleton from './CardTemplateSkeleton';
 
-export default function Templates() {
-  const { template: templates, loading, error, pageCount, pageSize, total, get } = useTemplate()
+export default function Templates({ username }: { username?: string }) {
+  const { template: templates, loading, error, pageCount, pageSize, total, get, getByUsername } = useTemplate()
   useEffect(() => {
-    setTimeout(()=>{get()}, 0)
-    console.log(templates);
-    console.log(loading);
-    
-    
+    if (username) getByUsername({ username }); else get();
   }, [])
   if (loading) {
     return (
@@ -35,18 +31,20 @@ export default function Templates() {
               key={template.id}
               id={template.id + ''}
               title={template.title}
-              img={`${PUBLIC_STRAPI_HOST}${template.images[0]}`}
+              img={template.images[0]}
               categories={template.categories}
               unitPrice={template.unitPrice}
             />
           ))
         }
       </div>
-      <Pagination
+      {
+        username ? '' : <Pagination
         pageCount={pageCount}
         pageSize={pageSize}
         total={total}
       />
+      }
     </>
   )
 }

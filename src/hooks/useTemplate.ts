@@ -74,6 +74,16 @@ const useTemplate = () => {
     zip: File,
     token: string
   }) => {
+    if (images.length < 1) {
+      alert('No ha seleccionado imágenes');
+      return;
+    }
+
+    if (!zip) {
+      alert('No ha seleccionado un archivo zip');
+      return;
+    }
+
     // Crear un nuevo objeto DataTransfer
     const dataTransfer = new DataTransfer();
 
@@ -84,8 +94,13 @@ const useTemplate = () => {
         templateData, dataTransfer.files, zip, token)
   }
 
+  const update =
+      async (template: Template, token: string) => {
+    await templateRepository.update(template, token)
+  }
+
   return {
-    ...state, get, getByUsername, create
+    ...state, get, getByUsername, create, update
   }
 };
 

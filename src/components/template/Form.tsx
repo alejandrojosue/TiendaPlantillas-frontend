@@ -6,25 +6,28 @@ import Tags from '../Tags';
 import useTemplate from '../../hooks/useTemplate';
 import UploadFile from '../../components/template/UploadFile';
 import { EMOTICONS_SET, TOOLBARS, TEXT_EXAMPLE } from '../../util/froalaConstants';
+import LinkButton from '../LinkButton';
+import Carousel from './Carousel';
 
 interface Props {
    customerID: number
    username: string
    email: string
    token: string
+   template?: Template
 }
 
-export default function Form({ customerID, username, email, token }: Props) {
+export default function Form({ customerID, username, email, token, template }: Props) {
    const categoryRepository = new CategoryRepository();
-   const [title, setTitle] = useState('dasdas');
-   const [url, setURL] = useState('https://chatgpt.com/c/6364e379-ea45-4e89-9400-e2f14a5f7f8d');
-   const [description, setDescription] = useState(TEXT_EXAMPLE);
-   const [price, setPrice] = useState(100);
-   const [tags, setTags] = useState<Category[]>([]);
+   const [title, setTitle] = useState(template?.title ?? '');
+   const [url, setURL] = useState(template?.url ?? '');
+   const [description, setDescription] = useState(template?.description ?? TEXT_EXAMPLE);
+   const [price, setPrice] = useState(template?.unitPrice ?? 0);
+   const [tags, setTags] = useState<Category[]>(template?.categories ?? []);
    const [categories, setCategories] = useState<Category[]>([]);
    const [images, setImages] = useState<File[]>([]);
    const [zips, setZips] = useState<File[]>([]);
-   const { create } = useTemplate();
+   const { create, update } = useTemplate();
 
    useEffect(() => {
       categoryRepository.get().then(data => setCategories(data));
@@ -62,13 +65,14 @@ export default function Form({ customerID, username, email, token }: Props) {
 
    const handleSubmit = async (event: Event) => {
       event.preventDefault();
-      if (images.length < 1) {
-         alert('No ha seleccionado imágenes');
+
+      if(price === 0 || isNaN(price)){
+         alert('El precio debe ser mayor a cero!');
          return;
       }
 
-      if (zips.length < 1 || !zips || !zips[0]) {
-         alert('No ha seleccionado un archivo zip');
+      if (tags.length < 3) {
+         alert('Debe seleccionar al menos 3 tags!');
          return;
       }
 
@@ -78,6 +82,7 @@ export default function Form({ customerID, username, email, token }: Props) {
       };
 
       const templateData: Template = {
+         id: template?.id,
          title,
          description,
          unitPrice: price,
@@ -88,8 +93,10 @@ export default function Form({ customerID, username, email, token }: Props) {
          template: '',
          url
       };
-      console.log(templateData, zips, images, token)
-       await create({templateData, zip: zips[0], images, token});
+
+      if (!template)
+         await create({ templateData, zip: zips[0], images, token });
+      else await update(templateData, token);
    };
 
    return (
@@ -107,10 +114,15 @@ export default function Form({ customerID, username, email, token }: Props) {
                //@ts-ignore
                onInput={(e) => setTitle(e.target.value)}
             />
-            <textarea id="editor" class="my-2">{TEXT_EXAMPLE}</textarea>
+            <textarea id="editor" class="my-2">{template?.description ?? TEXT_EXAMPLE}</textarea>
+            {template ? <Carousel images={template.images ?? []} /> : ''}
             <div class="grid lg:grid-cols-1">
-               <UploadFile type={TypeFileToUpload.IMAGE} onFilesAdded={(files) => handleFilesAdded(files, TypeFileToUpload.IMAGE)} onFilesRemoved={(index) => handleRemoveFile(index, TypeFileToUpload.IMAGE)} />
-               <UploadFile type={TypeFileToUpload.ZIP} onFilesAdded={(files) => handleFilesAdded(files, TypeFileToUpload.ZIP)} onFilesRemoved={(index) => handleRemoveFile(index, TypeFileToUpload.ZIP)} />
+               {
+                  !template
+                     ? <><UploadFile type={TypeFileToUpload.IMAGE} onFilesAdded={(files) => handleFilesAdded(files, TypeFileToUpload.IMAGE)} onFilesRemoved={(index) => handleRemoveFile(index, TypeFileToUpload.IMAGE)} />
+                        <UploadFile type={TypeFileToUpload.ZIP} onFilesAdded={(files) => handleFilesAdded(files, TypeFileToUpload.ZIP)} onFilesRemoved={(index) => handleRemoveFile(index, TypeFileToUpload.ZIP)} /></>
+                     : ''
+               }
                <div class="bg-gray-800 text-gray-400 p-8 text-3xl font-semibold my-3 rounded-md flex items-center justify-center">
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +147,8 @@ export default function Form({ customerID, username, email, token }: Props) {
                      name="unitPrice"
                      id="unitPrice"
                      required
-                     value={price}
+                     min={1}
+                     value={price > 0 ? price : ''}
                      class="p-1 text-center rounded-md w-full bg-transparent"
                      placeholder="Ingrese valor ($)"
                      //@ts-ignore
@@ -150,9 +163,9 @@ export default function Form({ customerID, username, email, token }: Props) {
                   <h1 class="mx-2">&#183;</h1>{email}
                </div>
                <div class="bg-gray-800 text-gray-400 p-8 text-3xl font-semibold my-3 rounded-md flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" 
-                  class="icon icon-tabler icon-tabler-circles-relation mr-2" 
-                  width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                     class="icon icon-tabler icon-tabler-circles-relation mr-2"
+                     width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                      <path d="M9.183 6.117a6 6 0 1 0 4.511 3.986" />
                      <path d="M14.813 17.883a6 6 0 1 0 -4.496 -3.954" />
@@ -176,12 +189,9 @@ export default function Form({ customerID, username, email, token }: Props) {
                </div>
             </div>
             <div class="flex flex-wrap justify-center my-3 gap-4 mb-10">
-               <Tags categories={categories} onTagsChange={setTags} />
+               <Tags categories={categories} tags={tags} onTagsChange={setTags} />
             </div>
-            <a
-               href="/Templates"
-               class="flex-row text-2xl my3 justify-center cursor-pointer hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg p-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-110 scale-90 gap-x-2 opacity-90 hover:opacity-100"
-            >
+            <LinkButton link="/templates" size="large">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="icon icon-tabler icon-tabler-circle-arrow-left"
@@ -201,9 +211,9 @@ export default function Form({ customerID, username, email, token }: Props) {
                   <path d="M12 8l-4 4"></path>
                </svg>
                Regresar
-            </a>
+            </LinkButton>
             <button
-               class="flex-row text-2xl my3 justify-center cursor-pointer hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg p-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-110 scale-90 gap-x-2 opacity-90 hover:opacity-100"
+               class="flex-row text-2xl justify-center cursor-pointer hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg p-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-110 scale-90 gap-x-2 opacity-90 hover:opacity-100"
                type="submit"
             >
                <svg

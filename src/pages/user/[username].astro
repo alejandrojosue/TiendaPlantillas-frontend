@@ -2,9 +2,9 @@
 import Sidebar from "../../components/Sidebar.astro";
 import Layout from "../../layouts/Layout.astro";
 import { Role } from "../../types/api";
-import ByUserProjects from "../../components/project/ByUserProjects";
+import Projects from "../../components/project/Projects";
 import UserRepository from "../../repositories/UserRepository";
-import ByUserTemplates from "../../components/template/ByUserTemplates";
+import Templates from "../../components/template/Templates";
 
 export const prerender = false;
 interface Props {
@@ -40,8 +40,8 @@ let role = user?.role.name
     Mis {role === Role.customer ? "Proyectos" : "Plantillas"}
    </h2>
    <div>
-    {role === Role.customer && <ByUserProjects username={username} client:visible />}
-    {role == Role.freelancer && <ByUserTemplates username={username} client:visible/>}
+    {role === Role.customer && <Projects username={username} client:visible />}
+    {role == Role.freelancer && <Templates username={username} client:visible/>}
    </div>
   </div>
  </div>
