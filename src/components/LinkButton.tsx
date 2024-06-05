@@ -3,16 +3,14 @@ interface Props {
   link: string
   target?: '_blank' | '_self'
   size: 'small' | 'medium' | 'large'
-  onClick?: () => void
   children: any
 }
 
-export default function LinkButton({ link, target, size, onClick, children }: Props) {
+export default function LinkButton({ link, target, size, children }: Props) {
   return (<>
     <a
       href={link}
       target={target ?? '_self'}
-      onClick={onClick}
       class={`flex-row 
  justify-center cursor-pointer hover:bg-slate-700
  focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50

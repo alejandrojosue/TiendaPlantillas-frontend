@@ -4,7 +4,7 @@ import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
 import type IUserRepository from './IUserRepository';
 
 export default class UserRepository {
-  async signin(identifier: String, password: String): Promise<User|null> {
+  async signin(identifier: String, password: String): Promise<User|Error> {
     try {
       const res = await fetchDataFromAPI({
         url: `/api/auth/local`,
@@ -13,11 +13,8 @@ export default class UserRepository {
       });
      return res
     } catch (error) {
-      return null
+      return error as Error
     }
-  }
-  signup(): Promise<void> {
-    throw new Error('Method not implemented.');
   }
 
   async me({token}:{token:string}):Promise<User|null>{

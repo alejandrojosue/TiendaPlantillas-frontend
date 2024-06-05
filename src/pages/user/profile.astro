@@ -14,48 +14,44 @@ if (!token) return Astro.redirect("/login");
 const userRepository = new UserRepository();
 const user = await userRepository.me({ token });
 
-if (!user) {
- Astro.response.status = 404;
- return;
-}
-let _role: any = user.role;
+if (!user) Astro.response.status = 404;
+let _role: any = user?.role;
 ---
 
 <Layout title="Profile">
  <div class="w-full flex flex-col lg:flex-row" slot="before-main">
   <Sidebar
-   username={user.username ?? ""}
+   username={user?.username ?? ""}
    isProfile={true}
-   email={user.email ?? ""}
+   email={user?.email ?? ""}
    role={_role === "Customer" ? "Cliente" : _role}
-   githubLink={user.githubLink ?? ""}
-   instagramLink={user.instagramLink ?? ""}
-   LinkedInLink={user.LinkedInLink ?? ""}
-   />
+   githubLink={user?.githubLink ?? ""}
+   instagramLink={user?.instagramLink ?? ""}
+   LinkedInLink={user?.LinkedInLink ?? ""}
+  />
   <div class="w-full p-4">
    <h2 class="text-2xl">Mi Biografía</h2>
    <p class="text-gray-400 my-4">
-    {user.biography ? user.biography : "// Nada aún"}
+    {user?.biography ? user?.biography : "// Nada aún"}
    </p>
    <h2 class="text-2xl mb-4">
-    Mis {user.role && user.role === Role.customer ? "Proyectos" : "Plantillas"}
+    Mis {
+     user?.role && user?.role === Role.customer ? "Proyectos" : "Plantillas"
+    }
    </h2>
    <div>
     {
-     user.role === Role.customer && (
+     user?.role === Role.customer && (
       <Projects
-       username={(user.username as string) ?? ""}
+       username={(user?.username as string) ?? ""}
        isProfile={true}
        client:visible
       />
      )
     }
     {
-     user.role == Role.freelancer && (
-      <Templates
-       username={(user.username as string) ?? ""}
-       client:visible
-      />
+     user?.role == Role.freelancer && (
+      <Templates username={(user?.username as string) ?? ""} client:visible />
      )
     }
    </div>

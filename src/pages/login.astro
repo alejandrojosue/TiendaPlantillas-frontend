@@ -4,37 +4,9 @@ import Layout from "../layouts/Layout.astro";
 import UserRepository from "../repositories/UserRepository";
 
 export const prerender = false;
-const token = Astro.cookies.get('jwt')?.value
-
-if(token) return Astro.redirect(`/user/profile`)
-
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const identifier = data.get("email") as string;
-    const password = data.get("password") as string;
-    // Do something with the data
-    const userRepository = new UserRepository();
-    const user = await userRepository.signin(identifier, password);
-    
-    if(!user) return;
-    
-    //@ts-ignore
-    Astro.cookies.set("email", user?.user?.email + "");
-    //@ts-ignore
-    Astro.cookies.set("username", user?.user?.username + "");
-    //@ts-ignore
-    Astro.cookies.set("jwt", user?.jwt + "");
-    //@ts-ignore
-    Astro.cookies.set("id", user?.user?.id + "");
-    //@ts-ignore
-    return Astro.redirect(`/user/profile`)
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-  }
-}
+const token = Astro.cookies.get("jwt")?.value;
+let errorMessage = "";
+if (token) return Astro.redirect(`/user/profile`);
 ---
 
 <Layout title="Login">
@@ -48,7 +20,9 @@ if (Astro.request.method === "POST") {
       height="60"
       class="mx-auto bg-white rounded-lg"
     />
-    <h1 class="text-center text-3xl text-slate-400">Bienvenido a {PUBLIC_COMPANY_NAME}</h1>
+    <h1 class="text-center text-3xl text-slate-400">
+      Bienvenido a {PUBLIC_COMPANY_NAME}
+    </h1>
     <span class="text-center text-lg text-slate-500">
       Inicie sesión en su cuenta {PUBLIC_COMPANY_NAME}
     </span>
@@ -100,5 +74,31 @@ if (Astro.request.method === "POST") {
         Enviar</button
       >
     </form>
+    {errorMessage && <div class="text-red-500">{errorMessage}</div>}
   </div>
+  <script>
+    import UserRepository from "../repositories/UserRepository";
+    import {setCookie} from "../util/cookies"
+
+    document.querySelector("form")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form as HTMLFormElement);
+      const userRepository = new UserRepository();
+      const identifier = data.get("email") as string;
+      const password = data.get("password") as string;
+      const user = await userRepository.signin(identifier, password);
+      if(user instanceof Error){
+        alert(user.message);
+      }else{
+        setCookie('email', user.email as string)
+        //@ts-ignore
+        setCookie('jwt', user.jwt as string)
+        setCookie('id', user.id + '')
+        setCookie('username', user.username as string)
+
+      }
+      location.href = '/user/profile'
+    });
+  </script>
 </Layout>
