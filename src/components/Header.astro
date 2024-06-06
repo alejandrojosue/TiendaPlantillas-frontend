@@ -1,9 +1,9 @@
 ---
 import HeaderButton from "./HeaderButton.astro";
-import ShoppingCar from "./ShoppingCar";
+import ShoppingCar from "../components/cart/CartButton";
 ---
 
-<header class="w-full" transition:persist>
+<header class="w-full">
  <nav
   class="flex bg-slate-800 col-auto gap-x-3 items-center py-3 justify-center w-full text-center"
  >
@@ -47,7 +47,7 @@ import ShoppingCar from "./ShoppingCar";
    </svg>
    <span class="hidden lg:block">Nosotros</span>
   </HeaderButton>
-  <HeaderButton href={"/about"}>
+  <HeaderButton href={"/license"}>
    <svg
     xmlns="http://www.w3.org/2000/svg"
     class="icon icon-tabler icon-tabler-certificate-2"
@@ -91,8 +91,8 @@ import ShoppingCar from "./ShoppingCar";
    </svg>
    <span class="hidden lg:block">Login</span>
   </HeaderButton>
-  <!-- <HeaderButton href="#">
+  <HeaderButton href="#">
    <ShoppingCar client:load />
-  </HeaderButton> -->
+  </HeaderButton>
  </nav>
 </header>

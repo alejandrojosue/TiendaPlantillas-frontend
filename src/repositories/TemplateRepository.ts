@@ -6,10 +6,12 @@ import {PUBLIC_STRAPI_HOST} from '../env/config';
 export default class TemplateRepository implements ITemplateRepository {
   constructor() {
     this.total = 0;
+    this.page = 0;
     this.pageCount = 0;
     this.pageSize = 0
   }
   total: number;
+  page: number;
   pageCount: number;
   pageSize: number;
 
@@ -17,13 +19,14 @@ export default class TemplateRepository implements ITemplateRepository {
       Promise<Template[]> {
     try {
       const res = await fetchDataFromAPI({
-        url: `/api/templates?populate=*&sort[0]=id:${sort}&pagination[page]=${
+        url: `/api/templates?populate=*&filters[status][$eq]=APPROVED&sort[0]=id:${sort}&pagination[page]=${
             pageNumber}`
       });
 
       if (!res.data) return [];
 
       this.total = res.meta.pagination.total;
+      this.page = res.meta.pagination.page;
       this.pageCount = res.meta.pagination.pageCount;
       this.pageSize = res.meta.pagination.pageSize;
 
@@ -58,9 +61,10 @@ export default class TemplateRepository implements ITemplateRepository {
 
       if (!res.data) return [];
 
-      // this.total = res.meta.pagination.total
-      // this.pageCount = res.meta.pagination.pageCount
-      // this.pageSize = res.meta.pagination.pageSize
+      this.total = res.meta.pagination.total
+      this.page = res.meta.pagination.page
+      this.pageCount = res.meta.pagination.pageCount
+      this.pageSize = res.meta.pagination.pageSize
 
       return templatesMaper(res.data)
     } catch (error) {

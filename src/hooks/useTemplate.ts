@@ -8,6 +8,7 @@ const useTemplate = () => {
   const [state, setState] = useState<{
     template: Template[] | Template,
     total: number,
+    page: number,
     pageCount: number,
     pageSize: number,
     loading: boolean,
@@ -15,6 +16,7 @@ const useTemplate = () => {
   }>({
     template: [],
     total: 0,
+    page: 0,
     pageCount: 0,
     pageSize: 0,
     loading: true,
@@ -38,6 +40,7 @@ const useTemplate = () => {
       setState(prev => ({
                  ...prev,
                  template: templatesData,
+                 page: templateRepository.page,
                  pageCount: templateRepository.pageCount,
                  pageSize: templateRepository.pageSize,
                  total: templateRepository.total
@@ -56,6 +59,7 @@ const useTemplate = () => {
       setState(prev => ({
                  ...prev,
                  template: templatesData,
+                 page: templateRepository.page,
                  pageCount: templateRepository.pageCount,
                  pageSize: templateRepository.pageSize,
                  total: templateRepository.total

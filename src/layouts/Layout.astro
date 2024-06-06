@@ -2,6 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import List from "../components/cart/List.astro";
 interface Props {
 	title: string;
 }
@@ -23,6 +24,9 @@ const { title } = Astro.props;
 	</head>
 	<body class="bg-gray-900 min-h-screen w-full absolute pb-24">
 		<Header />
+		<section transition:persist>
+			<List />
+		</section>
 		<section id="up"></section>
 		<slot name="before-main" />
 		<main class="max-w-5xl py-3 mx-auto">
@@ -59,11 +63,11 @@ const { title } = Astro.props;
 			color-scheme: dark light;
 		}
 
-		body::-webkit-scrollbar {
+		*::-webkit-scrollbar {
 			background-color: none;
 			width: 6px;
 		}
-		body::-webkit-scrollbar-thumb {
+		*::-webkit-scrollbar-thumb {
 			background: rgb(255, 255, 255, 0.7);
 			border-radius: 10px;
 		}

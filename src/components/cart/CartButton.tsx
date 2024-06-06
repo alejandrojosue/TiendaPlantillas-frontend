@@ -7,7 +7,7 @@ export default function ShoppingCar({ }) {
  return (
   <div class="flex relative">
    <svg xmlns="http://www.w3.org/2000/svg"
-   onClick={() => { setCounter((counter) => counter + 1) }}
+   onClick={() => { document.getElementById('cart-list')?.classList.toggle('hidden') }}
     class="icon icon-tabler icon-tabler-shopping-cart" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />

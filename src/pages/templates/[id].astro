@@ -1,9 +1,9 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import TemplateRepository from '../../repositories/TemplateRepository';
-import ReaderMarkdown from '../../components/ReaderMarkdown';
-import Carousel from '../../components/template/Carousel';
-import LinkButton from '../../components/LinkButton';
+import Layout from "../../layouts/Layout.astro";
+import TemplateRepository from "../../repositories/TemplateRepository";
+import ReaderMarkdown from "../../components/ReaderMarkdown";
+import Carousel from "../../components/template/Carousel";
+import LinkButton from "../../components/LinkButton";
 export const prerender = false;
 const { id } = Astro.params;
 if (!id) return;
@@ -12,14 +12,12 @@ const templateRepository = new TemplateRepository();
 
 const template = await templateRepository.getById(id);
 if (!template) Astro.response.status = 404;
-
 ---
 
-<Layout title={template?.title || ''}>
-   
+<Layout title={template?.title || ""}>
    <div class="p-3 overflow-hidden">
       <h1 class="text-5xl my-2">{template?.title}</h1>
-      <Carousel images={template?.images as string[]} client:load/>
+      <Carousel images={template?.images as string[]} client:load />
       <ReaderMarkdown description={template?.description} />
       <div class="grid lg:grid-cols-2 lg:gap-16">
          <div
@@ -53,7 +51,9 @@ if (!template) Astro.response.status = 404;
                class="text-gray-800 rounded p-3 text-xs absolute top-0 left-0"
                >Autor</span
             >
-            <a href=`/user/${template?.freelancer.username}` class="capitalize transition-all hover:text-2xl"
+            <a
+               href=`/user/${template?.freelancer.username}`
+               class="capitalize transition-all hover:text-2xl"
                >{template?.freelancer.username}</a
             >
             <h1 class="mx-2">&#183;</h1>{template?.freelancer.email}
@@ -62,16 +62,16 @@ if (!template) Astro.response.status = 404;
       <div class="flex flex-wrap justify-center my-3 gap-4 mb-10">
          <span class="p-2 rounded-s-full bg-gray-400 text-gray-800">Tags:</span>
          {
-            template?.categories.map((categoryName) => (
+            template?.categories.map(({ categoryName }) => (
                <span class="p-2 cursor-pointer hover:scale-105 transition-all capitalize rounded font-bold text-gray-400 border border-gray-400">
                   {categoryName}
                </span>
             ))
          }
       </div>
-      <div class="flex">
-            <LinkButton link="/templates" size="large">
-               <svg
+      <div class="flex flex-wrap">
+         <LinkButton link="/templates" size="large">
+            <svg
                xmlns="http://www.w3.org/2000/svg"
                class="icon icon-tabler icon-tabler-circle-arrow-left"
                width="40"
@@ -82,15 +82,16 @@ if (!template) Astro.response.status = 404;
                fill="none"
                stroke-linecap="round"
                stroke-linejoin="round"
-           >
+            >
                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                <path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18"></path>
                <path d="M8 12l4 4"></path>
                <path d="M8 12h8"></path>
                <path d="M12 8l-4 4"></path>
-           </svg>
-           Regresar</LinkButton>
-           <LinkButton link={template?.url ?? ""} size="large" target="_blank">
+            </svg>
+            Regresar
+         </LinkButton>
+         <LinkButton link={template?.url ?? ""} size="large" target="_blank">
             <svg
                xmlns="http://www.w3.org/2000/svg"
                class="icon icon-tabler icon-tabler-eye"
@@ -111,6 +112,57 @@ if (!template) Astro.response.status = 404;
             </svg>
             Vista previa
          </LinkButton>
+         <LinkButton link="#" size="large">
+            <div
+               id="add-cart"
+               data-id={template?.id}
+               data-name={template?.title}
+               data-price={template?.unitPrice}
+               data-img={template?.images[0]}
+               class="flex gap-x-2 items-center"
+            >
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-circle-plus"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                  <path d="M9 12h6"></path>
+                  <path d="M12 9v6"></path>
+               </svg>
+               Agregar al carrito
+            </div>
+         </LinkButton>
       </div>
    </div>
 </Layout>
+<script>
+   const btnAddToCart = document.getElementById("add-cart") as HTMLDivElement;
+   btnAddToCart.addEventListener("click", () => {
+      const template = {
+         id: btnAddToCart.attributes.getNamedItem("data-id")?.value,
+         name: btnAddToCart.attributes.getNamedItem("data-name")?.value,
+         price: btnAddToCart.attributes.getNamedItem("data-price")?.value,
+         img: btnAddToCart.attributes.getNamedItem("data-img")?.value,
+      };
+      const templates =
+         JSON.parse(localStorage.getItem("cart") as string) || []; // almacena un Array
+
+      if (
+         Array.isArray(templates) &&
+         templates.findIndex(({ id }) => id === template.id) === -1
+      )
+         localStorage.setItem(
+            "cart",
+            JSON.stringify(templates.concat(template)),
+         );
+   });
+</script>

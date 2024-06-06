@@ -9,6 +9,7 @@ const useProject = () => {
   const [state, setState] = useState<{
     project: Project[] | Project,
     total: number,
+    page: number,
     pageCount: number,
     pageSize: number,
     loading: boolean,
@@ -16,6 +17,7 @@ const useProject = () => {
   }>({
     project: [],
     total: 0,
+    page: 0,
     pageCount: 0,
     pageSize: 0,
     loading: true,
@@ -27,7 +29,7 @@ const useProject = () => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       let pageNumber = urlParams.get('page') || '1';
-      let sort = urlParams.get('sort') || 'asc';
+      let sort = urlParams.get('sort') || 'desc';
       if (sort !== 'asc' && sort !== 'desc') {
         throw new Error('El parámetro de ``sort debe ser `asc` o `desc`.')
       }
@@ -40,6 +42,7 @@ const useProject = () => {
       setState(prev => ({
                  ...prev,
                  project: projectsData,
+                 page: projectRepository.page,
                  pageCount: projectRepository.pageCount,
                  pageSize: projectRepository.pageSize,
                  total: projectRepository.total
@@ -59,6 +62,7 @@ const useProject = () => {
       setState(prev => ({
                  ...prev,
                  project: projectsData,
+                 page: projectRepository.page,
                  pageCount: projectRepository.pageCount,
                  pageSize: projectRepository.pageSize,
                  total: projectRepository.total

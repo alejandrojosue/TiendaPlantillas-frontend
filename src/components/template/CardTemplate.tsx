@@ -16,7 +16,7 @@ export default function CardTemplate({ id, title, img, categories, unitPrice }: 
 		>
 
 			<picture>
-				<img src={img} alt={`For ${title}`}
+				<img src={img} alt={`For ${title}`} loading="lazy"
 					class="rounded-t-lg w-full h-60 object-cover" />
 			</picture>
 			<header class="px-4 py-3 flex-grow">

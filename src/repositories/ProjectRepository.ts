@@ -6,24 +6,27 @@ import type IProjectRepository from './IProjectRepository';
 export default class ProjectRepository implements IProjectRepository {
   constructor() {
     this.total = 0;
+    this.page = 0;
     this.pageCount = 0;
     this.pageSize = 0;
   }
 
   total: number;
+  page: number;
   pageCount: number;
   pageSize: number;
   async get({pageNumber, sort}: {pageNumber: string; sort: string;}):
       Promise<Project[]> {
     try {
       const res = await fetchDataFromAPI({
-        url: `/api/projects?populate=*&sort[0]=id:${sort}&pagination[page]=${
+        url: `/api/projects?populate=*&filters[status][$eq]=Open&sort[0]=id:${sort}&pagination[page]=${
             pageNumber}`
       });      
       
       if (!res.data) return [];
 
       this.total = res.meta.pagination.total;
+      this.page = res.meta.pagination.page;
       this.pageCount = res.meta.pagination.pageCount;
       this.pageSize = res.meta.pagination.pageSize;
 

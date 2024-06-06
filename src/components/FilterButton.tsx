@@ -1,3 +1,4 @@
+import {setParam} from "../util/urlParams"
 interface Props {
  link: string;
  sort?: string
@@ -5,20 +6,10 @@ interface Props {
 }
 
 export default function FilterButton({ link, sort, children }: Props) {
- const setParamSort = (_sort: string) => {
-  const urlParams = new URLSearchParams(window.location.search);
-  urlParams.set('sort', _sort);
-  // Construir la nueva URL con los parámetros actualizados
-  const nuevaURL = `${window.location.pathname}?${urlParams.toString()}`;
-
-  // Redireccionar a la nueva URL
-  window.location.href = nuevaURL;
-
- }
  return (
   <a
    href={link}
-   onClick={(e) => { setParamSort(sort!) }}
+   onClick={(e) => { setParam('sort', sort!) }}
    class="flex-row text-xl
  justify-center cursor-pointer hover:bg-slate-700 
  focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 

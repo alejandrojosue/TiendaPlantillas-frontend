@@ -7,7 +7,7 @@ import CardTemplate from './CardTemplate';
 import CardTemplateSkeleton from './CardTemplateSkeleton';
 
 export default function Templates({ username }: { username?: string }) {
-  const { template: templates, loading, error, pageCount, pageSize, total, get, getByUsername } = useTemplate()
+  const { template: templates, loading, error, page, pageCount, pageSize, total, get, getByUsername } = useTemplate()
   useEffect(() => {
     if (username) getByUsername({ username }); else get();
   }, [])
@@ -40,6 +40,7 @@ export default function Templates({ username }: { username?: string }) {
       </div>
       {
         username ? '' : <Pagination
+        page={page}
         pageCount={pageCount}
         pageSize={pageSize}
         total={total}
