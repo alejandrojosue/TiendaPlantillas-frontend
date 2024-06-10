@@ -3,6 +3,7 @@ import {useState} from 'preact/hooks'
 import TemplateRepository from '../repositories/TemplateRepository'
 
 import type {Template} from '../types/api'
+import {getParam} from '../util/urlParams';
 
 const useTemplate = () => {
   const [state, setState] = useState<{
@@ -26,9 +27,9 @@ const useTemplate = () => {
   const get =
       async () => {
     try {
-      const urlParams = new URLSearchParams(window.location.search);
-      let pageNumber = urlParams.get('page') || '1';
-      let sort = urlParams.get('sort') || 'asc';
+      let pageNumber = getParam('page') || '1'
+      let sort = getParam('sort') || 'asc'
+      let categories = getParam('categories')?.split(',') || [];
       if (sort !== 'asc' && sort !== 'desc') {
         throw new Error('El parámetro de ``sort debe ser `asc` o `desc`.')
       }
@@ -36,7 +37,9 @@ const useTemplate = () => {
       if (isNaN(pageNumber)) {
         throw new Error('El parámetro de `page` debe ser un número.')
       }
-      const templatesData = await templateRepository.get({pageNumber, sort});
+      if (categories.includes('all')) categories = [];
+      const templatesData =
+          await templateRepository.get({pageNumber, sort, categories});
       setState(prev => ({
                  ...prev,
                  template: templatesData,

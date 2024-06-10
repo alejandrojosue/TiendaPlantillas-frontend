@@ -10,7 +10,7 @@ export default class UserRepository {
         url: `/api/auth/local`,
         method: 'POST',
         data: {identifier, password}
-      });
+      });      
      return res
     } catch (error) {
       return error as Error

@@ -1,9 +1,13 @@
-export const setParam = (paramName: string, value: string) => {
- const urlParams = new URLSearchParams(window.location.search);
- urlParams.set(paramName, value);
- // Construir la nueva URL con los parámetros actualizados
- const nuevaURL = `${window.location.pathname}?${urlParams.toString()}`;
+export const setParam =
+    (paramName: string, value: string) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set(paramName, value);
+      const newURI = `${window.location.pathname}?${urlParams.toString()}`;
+      // window.location.href = newURI; // --> Reload page
+      history.pushState({}, '', newURI); // --> No reload page
+    }
 
- // Redireccionar a la nueva URL
- window.location.href = nuevaURL;
+export const getParam = (paramName: string): string|null => {
+  const urlParams = new URLSearchParams(location.search);
+  return urlParams.get(paramName)
 }

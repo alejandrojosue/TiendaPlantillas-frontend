@@ -17,12 +17,12 @@ export default function Pagination({pageName = "templates", page, pageCount, pag
    </span>
    {/*<!-- Buttons -->*/}
    <div class="inline-flex mt-2 xs:mt-0">
-    <a href={`#`} onClick={(e) => { page > 1 ? handlePage(page - 1) : e.preventDefault(); }}
+    <a href={`#up`} onClick={(e) => { page > 1 ? handlePage(page - 1) : e.preventDefault(); }}
      class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
     >
      Anterior
     </a>
-    <a href={`#`} onClick={(e) => { page < pageCount ? handlePage(page + 1) : e.preventDefault() }}
+    <a href={`#up`} onClick={(e) => { page < pageCount ? handlePage(page + 1) : e.preventDefault() }}
      class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
     >
      Siguiente

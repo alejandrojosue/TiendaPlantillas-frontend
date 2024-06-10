@@ -2,7 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import List from "../components/cart/List.astro";
+import CartList from "../components/cart/CartList.astro";
 interface Props {
 	title: string;
 }
@@ -17,7 +17,6 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<ViewTransitions />
@@ -25,7 +24,7 @@ const { title } = Astro.props;
 	<body class="bg-gray-900 min-h-screen w-full absolute pb-24">
 		<Header />
 		<section transition:persist>
-			<List />
+			<CartList />
 		</section>
 		<section id="up"></section>
 		<slot name="before-main" />
@@ -56,56 +55,58 @@ const { title } = Astro.props;
 					fill="currentColor"></path>
 			</svg>
 		</a>
-	</body><style is:global>
-		html {
-			font-family: system-ui, sans-serif;
-			color: #fff;
-			color-scheme: dark light;
-		}
+		<style is:global>
+			html {
+				font-family: system-ui, sans-serif;
+				color: #fff;
+				color-scheme: dark light;
+			}
 
-		*::-webkit-scrollbar {
-			background-color: none;
-			width: 6px;
-		}
-		*::-webkit-scrollbar-thumb {
-			background: rgb(255, 255, 255, 0.7);
-			border-radius: 10px;
-		}
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			font-weight: bold;
-		}
-		h1 {
-			font-size: 1.75em;
-			line-height: 1.225;
-		}
-		h2 {
-			font-size: 1.75em;
-			line-height: 1.225;
-		}
-		h3 {
-			font-size: 1.5em;
-			line-height: 1.43;
-		}
-		h4 {
-			font-size: 1.25em;
-			line-height: 1.4;
-		}
-		h5 {
-			line-height: 1.4;
-		}
-		h6 {
-			font-size: 1em;
-		}
-		#fr-logo {
-			display: none;
-		}
-		.fr-quick-insert {
-			display: none;
-		}
-	</style>
+			*::-webkit-scrollbar {
+				background-color: none;
+				width: 6px;
+				height: 4px;
+			}
+			*::-webkit-scrollbar-thumb {
+				background: rgb(255, 255, 255, 0.7);
+				border-radius: 10px;
+			}
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-weight: bold;
+			}
+			h1 {
+				font-size: 1.75em;
+				line-height: 1.225;
+			}
+			h2 {
+				font-size: 1.75em;
+				line-height: 1.225;
+			}
+			h3 {
+				font-size: 1.5em;
+				line-height: 1.43;
+			}
+			h4 {
+				font-size: 1.25em;
+				line-height: 1.4;
+			}
+			h5 {
+				line-height: 1.4;
+			}
+			h6 {
+				font-size: 1em;
+			}
+			#fr-logo {
+				display: none;
+			}
+			.fr-quick-insert {
+				display: none;
+			}
+		</style>
+	</body>
 </html>

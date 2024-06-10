@@ -18,7 +18,6 @@ interface Props {
 }
 
 export default function Form({ customerID, username, email, token, template }: Props) {
-   const categoryRepository = new CategoryRepository();
    const [title, setTitle] = useState(template?.title ?? '');
    const [url, setURL] = useState(template?.url ?? '');
    const [description, setDescription] = useState(template?.description ?? TEXT_EXAMPLE);
@@ -30,7 +29,13 @@ export default function Form({ customerID, username, email, token, template }: P
    const { create, update } = useTemplate();
 
    useEffect(() => {
-      categoryRepository.get().then(data => setCategories(data));
+      if (localStorage.getItem('categories')) {
+         setCategories(JSON.parse(localStorage.getItem('categories') + ''))
+      } else {
+         const categoryRepository = new CategoryRepository();
+         categoryRepository.get().then(data => setCategories(data));
+      }
+
       // Inicialización de Froala
       //@ts-ignore
       new FroalaEditor('#editor', {
@@ -66,7 +71,7 @@ export default function Form({ customerID, username, email, token, template }: P
    const handleSubmit = async (event: Event) => {
       event.preventDefault();
 
-      if(price === 0 || isNaN(price)){
+      if (price === 0 || isNaN(price)) {
          alert('El precio debe ser mayor a cero!');
          return;
       }

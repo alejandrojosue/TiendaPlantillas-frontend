@@ -15,12 +15,17 @@ export default class ProjectRepository implements IProjectRepository {
   page: number;
   pageCount: number;
   pageSize: number;
-  async get({pageNumber, sort}: {pageNumber: string; sort: string;}):
+  async get({pageNumber, sort = 'asc', categories}:
+    {pageNumber: string, sort?: string, categories?: string[]}):
       Promise<Project[]> {
     try {
+      let categoriesFilter = '';
+      categories?.forEach(
+          category => categoriesFilter +=
+          `&filters[categories][categoryName][$eqi]=${category}`)
       const res = await fetchDataFromAPI({
         url: `/api/projects?populate=*&filters[status][$eq]=Open&sort[0]=id:${sort}&pagination[page]=${
-            pageNumber}`
+            pageNumber}${categoriesFilter}`
       });      
       
       if (!res.data) return [];

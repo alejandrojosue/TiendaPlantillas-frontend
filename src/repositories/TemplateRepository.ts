@@ -15,12 +15,18 @@ export default class TemplateRepository implements ITemplateRepository {
   pageCount: number;
   pageSize: number;
 
-  async get({pageNumber, sort = 'asc'}: {pageNumber: string, sort?: string}):
+  async get({pageNumber, sort = 'asc', categories}:
+                {pageNumber: string, sort?: string, categories?: string[]}):
       Promise<Template[]> {
     try {
+      let categoriesFilter = '';
+      categories?.forEach(
+          category => categoriesFilter +=
+          `&filters[categories][categoryName][$eqi]=${category}`)
       const res = await fetchDataFromAPI({
-        url: `/api/templates?populate=*&filters[status][$eq]=APPROVED&sort[0]=id:${sort}&pagination[page]=${
-            pageNumber}`
+        url:
+            `/api/templates?populate=*&filters[status][$eq]=APPROVED&sort[0]=id:${
+                sort}&pagination[page]=${pageNumber}${categoriesFilter}`
       });
 
       if (!res.data) return [];
@@ -55,16 +61,17 @@ export default class TemplateRepository implements ITemplateRepository {
   async getByUsername({username}: {username: string;}): Promise<Template[]> {
     try {
       const res = await fetchDataFromAPI({
-        url: `/api/templates?populate=*&filters[freelancer][username][$eqi]=${
-            username}`
+        url:
+            `/api/templates?populate=*&filters[status][$eq]=APPROVED&filters[freelancer][username][$eqi]=${
+                username}`
       });
 
       if (!res.data) return [];
 
-      this.total = res.meta.pagination.total
-      this.page = res.meta.pagination.page
-      this.pageCount = res.meta.pagination.pageCount
-      this.pageSize = res.meta.pagination.pageSize
+      this.total = res.meta.pagination.total;
+      this.page = res.meta.pagination.page;
+      this.pageCount = res.meta.pagination.pageCount;
+      this.pageSize = res.meta.pagination.pageSize;
 
       return templatesMaper(res.data)
     } catch (error) {
@@ -115,19 +122,15 @@ export default class TemplateRepository implements ITemplateRepository {
   async update(template: Template, token: string): Promise<void> {
     const {id, title, description, unitPrice, url} = template;
     let data: any = {};
-    if(!unitPrice || isNaN(unitPrice) || unitPrice === 0) return;
+    if (!unitPrice || isNaN(unitPrice) || unitPrice === 0) return;
     if (title.trim()) data.title = title.trim();
     if (description.trim()) data.description = description;
     if (unitPrice) data.unitPrice = unitPrice;
     if (url.trim()) data.url = url;
 
     try {
-      const res = await fetchDataFromAPI({
-        url: `/api/templates/${id}`,
-        method: 'PUT',
-        data: {data},
-        token
-      });
+      const res = await fetchDataFromAPI(
+          {url: `/api/templates/${id}`, method: 'PUT', data: {data}, token});
 
       alert('Se ha actualizado la plantilla satisfactoriamente!')
       location.href = '/user/profile'

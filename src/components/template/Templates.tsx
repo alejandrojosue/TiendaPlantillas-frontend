@@ -1,5 +1,4 @@
 import { useEffect } from 'preact/hooks';
-import { PUBLIC_STRAPI_HOST } from '../../env/config';
 import useTemplate from '../../hooks/useTemplate';
 import type { Template } from '../../types/api';
 import Pagination from '../Pagination';

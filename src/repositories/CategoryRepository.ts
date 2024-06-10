@@ -7,12 +7,13 @@ export default class CategoryRepository{
  async get():Promise<Category[]>{
   try {
    const res = await fetchDataFromAPI({
-     url: `/api/categories`
+     url: `/api/categories?pagination[pageSize]=120`
    });
 
    if (!res.data) return [];
-
-   return categoriesMaper(res.data)
+   const categories = categoriesMaper(res.data)
+   localStorage.setItem('categories', JSON.stringify(categories))
+   return categories
  } catch (error) {
  }
   return []

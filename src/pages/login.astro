@@ -91,12 +91,14 @@ if (token) return Astro.redirect(`/user/profile`);
       if(user instanceof Error){
         alert(user.message);
       }else{
-        setCookie('email', user.email as string)
+        //@ts-ignore
+        setCookie('email', user.user.email as string)
         //@ts-ignore
         setCookie('jwt', user.jwt as string)
-        setCookie('id', user.id + '')
-        setCookie('username', user.username as string)
-
+        //@ts-ignore
+        setCookie('id', user.user.id + '')
+        //@ts-ignore
+        setCookie('username', user.user.username as string)
       }
       location.href = '/user/profile'
     });

@@ -4,6 +4,7 @@ import ProjectRepository from '../repositories/ProjectRepository'
 
 import type {Project} from '../types/api'
 import {isEmpty} from '../util/isEmpy';
+import {getParam} from '../util/urlParams';
 
 const useProject = () => {
   const [state, setState] = useState<{
@@ -27,9 +28,9 @@ const useProject = () => {
   const get =
       async () => {
     try {
-      const urlParams = new URLSearchParams(window.location.search);
-      let pageNumber = urlParams.get('page') || '1';
-      let sort = urlParams.get('sort') || 'desc';
+      let pageNumber = getParam('page') || '1'
+      let sort = getParam('sort') || 'asc'
+      let categories = getParam('categories')?.split(',') || [];
       if (sort !== 'asc' && sort !== 'desc') {
         throw new Error('El parámetro de ``sort debe ser `asc` o `desc`.')
       }
@@ -37,8 +38,10 @@ const useProject = () => {
       if (isNaN(pageNumber)) {
         throw new Error('El parámetro de `page` debe ser un número.')
       }
-      const projectsData = await projectRepository.get({pageNumber, sort});
-      
+      if (categories.includes('all')) categories = [];
+      const projectsData =
+          await projectRepository.get({pageNumber, sort, categories});
+
       setState(prev => ({
                  ...prev,
                  project: projectsData,
@@ -79,11 +82,12 @@ const useProject = () => {
     if (projectData.unitPrice < 1 || isNaN(projectData.unitPrice)) {
       alert('Debe ingresar un precio válido!')
       return;
-    }if (isEmpty([projectData.title])) {
+    }
+    if (isEmpty([projectData.title])) {
       alert('Debe ingresar el título!');
       return;
     }
-    
+
     if (isEmpty([projectData.description])) {
       alert('Debe ingresar la descripción!');
       return;

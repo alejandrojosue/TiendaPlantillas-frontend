@@ -1,7 +1,7 @@
 import type {Template} from '../types/api';
 
 export default interface ITemplateRepository {
-  get({pageNumber, sort}:{pageNumber:string, sort:string}): Promise<Template[]>;
+  get({pageNumber, sort, categories}:{pageNumber:string, sort:string, categories?:string[]}): Promise<Template[]>;
   getById(id: string): Promise<Template|null>;
   getByUsername({username}:{username:string}): Promise<Template[]>;
   create(template: Template, images:FileList|null, templateZIP:File, token:string): Promise<void>;

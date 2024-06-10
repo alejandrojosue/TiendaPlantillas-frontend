@@ -7,7 +7,6 @@ import useProject from "../../hooks/useProject";
 import LinkButton from "../LinkButton";
 
 export default function Form({ customerID, username, email, token }: { customerID: number, username: string, email: string, token: string }) {
-   const categoryRepository = new CategoryRepository();
    const [title, setTitle] = useState("");
    const [description, setDescription] = useState("");
    const [price, setPrice] = useState(0);
@@ -16,7 +15,12 @@ export default function Form({ customerID, username, email, token }: { customerI
    const { create } = useProject()
 
    useEffect(() => {
-      categoryRepository.get().then(data => setCategories(data))
+      if (localStorage.getItem('categories')) {
+         setCategories(JSON.parse(localStorage.getItem('categories') + ''))
+      } else {
+         const categoryRepository = new CategoryRepository();
+         categoryRepository.get().then(data => setCategories(data));
+      }
       // Inicialización de Froala
       //@ts-ignore
       new FroalaEditor("#editor", {
@@ -117,7 +121,7 @@ export default function Form({ customerID, username, email, token }: { customerI
                </div>
             </div>
             <div class="flex flex-wrap justify-center my-3 gap-4 mb-10">
-               <Tags categories={categories} onTagsChange={setTags} />
+               <Tags categories={categories} tags={tags} onTagsChange={setTags} />
             </div>
             <div class="flex"></div>
             <LinkButton link="/projects" size="large">
@@ -150,7 +154,7 @@ export default function Form({ customerID, username, email, token }: { customerI
             mr-2 hover:shadow-lg transition-all duration-200
             ease-in-out hover:scale-110 scale-90 gap-x-2
             opacity-90 hover:opacity-100"
-            type={'submit'}
+               type={'submit'}
             >
                <svg
                   xmlns="http://www.w3.org/2000/svg"

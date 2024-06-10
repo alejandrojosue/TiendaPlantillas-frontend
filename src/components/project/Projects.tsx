@@ -9,8 +9,6 @@ export default function Projects({ username, isProfile }: { username?: string, i
   const { project: projects, loading, error, page, pageCount, pageSize, total, get, getByUsername } = useProject()
   useEffect(() => {
     if (username) getByUsername({ username }); else get();
-    console.log();
-
   }, [])
   if (loading) {
     return (

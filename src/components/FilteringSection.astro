@@ -1,5 +1,6 @@
 ---
-import FilterButton from './FilterButton';
+import Multiselect from "./Multiselect";
+import FilterButton from "./FilterButton";
 ---
 
 <div
@@ -48,4 +49,7 @@ import FilterButton from './FilterButton';
 
   <span>Los más viejos</span>
  </FilterButton>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 mb-5 font-semibold relative py-2 mx-2">
+ <Multiselect multiple client:load/>
 </div>
