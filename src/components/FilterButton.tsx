@@ -1,6 +1,6 @@
 import {setParam} from "../util/urlParams"
 interface Props {
- link: string;
+ link?: string;
  sort?: string
  children: any
 }
@@ -9,7 +9,10 @@ export default function FilterButton({ link, sort, children }: Props) {
  return (
   <a
    href={link}
-   onClick={(e) => { setParam('sort', sort!) }}
+   onClick={(e) => { 
+    if(!link) return false;
+    setParam('sort', sort!);
+   }}
    class="flex-row text-xl
  justify-center cursor-pointer hover:bg-slate-700 
  focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 

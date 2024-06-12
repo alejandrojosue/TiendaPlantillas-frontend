@@ -54,7 +54,6 @@ export default function Select({ multiple }: { multiple: boolean }) {
       .then(categories=>localStorage.setItem('categories', JSON.stringify(categories)))
       .catch(err=>{
         console.error(err);
-        localStorage.setItem('categories', JSON.stringify([]))
       })
     }
     setOptions([{ id: 0, categoryName: 'all' }, ...JSON.parse(localStorage.getItem('categories') || '[]')]);
@@ -106,7 +105,6 @@ export default function Select({ multiple }: { multiple: boolean }) {
   return (
     <div
       ref={containerRef}
-      onBlur={() => setIsOpen(true)}
       onClick={() => setIsOpen(prev => !prev)}
       tabIndex={0}
       className={'relative w-full min-h-6 flex items-center gap-2 p-2 rounded-md border-white outline-none'}

@@ -15,19 +15,26 @@ export default class ProjectRepository implements IProjectRepository {
   page: number;
   pageCount: number;
   pageSize: number;
-  async get({pageNumber, sort = 'asc', categories}:
-    {pageNumber: string, sort?: string, categories?: string[]}):
-      Promise<Project[]> {
+  async get({pageNumber, sort = 'asc', categories, min, max}: {
+    pageNumber: string,
+    sort?: string,
+    categories?: string[], min: string, max: string
+  }): Promise<Project[]> {
     try {
-      let categoriesFilter = '';
+      let categoriesFilter = '', maxPriceFilter = '';
       categories?.forEach(
-          category => categoriesFilter +=
-          `&filters[categories][categoryName][$eqi]=${category}`)
+          (category) => categoriesFilter +=
+          `&filters[categories][categoryName][$eqi]=${category}`);
+      if (max.length)
+        maxPriceFilter = `&filters[$and][1][unitPrice][$lte]=${max}`;
+
       const res = await fetchDataFromAPI({
-        url: `/api/projects?populate=*&filters[status][$eq]=Open&sort[0]=id:${sort}&pagination[page]=${
-            pageNumber}${categoriesFilter}`
-      });      
-      
+        url: `/api/projects?populate=*&filters[status][$eq]=Open&sort[0]=id:${
+            sort}&pagination[page]=${pageNumber}${
+            categoriesFilter}&filters[$and][0][unitPrice][$gte]=${min}${
+            maxPriceFilter}`
+      });
+
       if (!res.data) return [];
 
       this.total = res.meta.pagination.total;
@@ -38,7 +45,6 @@ export default class ProjectRepository implements IProjectRepository {
       return projectsMaper(res.data)
     } catch (error) {
       console.error(error);
-      
     }
     return []
   }

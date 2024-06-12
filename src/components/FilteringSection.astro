@@ -1,55 +1,49 @@
 ---
 import Multiselect from "./Multiselect";
-import FilterButton from "./FilterButton";
+// import FilterButton from "./FilterButton";
+import {
+ IconFilterAdd,
+ IconFilterClear,
+ IconArrowDown,
+ IconArrowUp,
+} from "../components/icons/Icons";
+import LinkButton from "../components/LinkButton";
+import FilterPrice from "../components/FilterPrice";
+const { href: URL_BASE } = Astro.url;
 ---
 
 <div
  class="flex col-auto gap-x-3 items-center mb-5 justify-center w-full text-center lg:flex-row"
 >
- <FilterButton link="#" sort="desc" client:load>
-  <svg
-   xmlns="http://www.w3.org/2000/svg"
-   class="icon icon-tabler icon-tabler-circle-arrow-up"
-   width="44"
-   height="44"
-   viewBox="0 0 24 24"
-   stroke-width="1.5"
-   stroke="currentColor"
-   fill="none"
-   stroke-linecap="round"
-   stroke-linejoin="round"
-  >
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
-   <path d="M12 8l-4 4"></path>
-   <path d="M12 8v8"></path>
-   <path d="M16 12l-4 -4"></path>
-  </svg>
+ <LinkButton target="_self" link="#" size="large" sort="desc" client:load>
+  <IconArrowUp width="44" height="44" />
   <span>Los más nuevos</span>
- </FilterButton>
- <FilterButton link="#" sort="asc" client:load>
-  <svg
-   xmlns="http://www.w3.org/2000/svg"
-   class="icon icon-tabler icon-tabler-circle-arrow-down"
-   width="44"
-   height="44"
-   viewBox="0 0 24 24"
-   stroke-width="1.5"
-   stroke="currentColor"
-   fill="none"
-   stroke-linecap="round"
-   stroke-linejoin="round"
-  >
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
-   <path d="M8 12l4 4"></path>
-   <path d="M12 8v8"></path>
-   <path d="M16 12l-4 4"></path>
-  </svg>
-
+ </LinkButton>
+ <LinkButton target="_self" link="#" size="large" sort="asc" client:load>
+  <IconArrowDown width="44" height="44" />
   <span>Los más viejos</span>
- </FilterButton>
+ </LinkButton>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-2 mb-5 font-semibold relative py-2 mx-2">
- <Multiselect multiple client:load/>
+<div
+ id="filter-section"
+ class="grid grid-cols-1 lg:grid-cols-2 text-gray-400 gap-1 mb-5 font-semibold relative py-2 mx-2"
+>
+ <div class="flex flex-col gap-y-1 pt-2 px-1">
+  <label class="font-semibold">Filtrar por Categorías</label>
+  <Multiselect multiple client:load />
+ </div>
+ <div class="flex flex-col gap-y-1 pt-2 px-1">
+  <label class="font-semibold">Filtrar por Rango de Precio</label>
+  <FilterPrice client:load />
+ </div>
+ <div>
+  <LinkButton link="#" size="small">
+   <IconFilterAdd width="25" height="25" />
+   <span>Filtrar</span>
+  </LinkButton>
+  <LinkButton link={URL_BASE} size="small">
+   <IconFilterClear width="25" height="25" />
+   <span>Quitar Filtros</span>
+  </LinkButton>
+ </div>
 </div>

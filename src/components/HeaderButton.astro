@@ -5,8 +5,8 @@ interface Props {
 
 const { href } = Astro.props;
 ---
-
 <a
+ onclick={!href ? `return false;` : ''}
  href={href}
  class="flex-row text-xl
  justify-center cursor-pointer

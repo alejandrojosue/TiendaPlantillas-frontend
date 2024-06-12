@@ -1,18 +1,24 @@
+import { setParam } from "../util/urlParams"
 
 interface Props {
-  link: string
+  link?: string
+  sort?: 'asc' | 'desc'
   target?: '_blank' | '_self'
   size: 'small' | 'medium' | 'large'
   children: any
 }
 
-export default function LinkButton({ link, target, size, children }: Props) {
+export default function LinkButton({ link, sort, target, size, children }: Props) {
   return (<>
     <a
       href={link}
       target={target ?? '_self'}
+      onClick={(e) => {
+        if (!link) return false;
+        if (sort) setParam('sort', sort!);
+      }}
       class={`flex-row 
- justify-center cursor-pointer hover:bg-slate-700
+ justify-center cursor-pointer hover:bg-slate-700 dark:bg-slate-50
  focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
  rounded-lg p-2.5 text-center 
  inline-flex items-center dark:focus:ring-[#1da1f2]/55

@@ -2,16 +2,18 @@
 import { ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import CartList from "../components/cart/CartList.astro";
+import Drawable from "../components/Drawable.astro";
+import { IconArrowUpFilled } from "../components/icons/Icons";
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
+
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" class=`scroll-smooth`>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -23,8 +25,8 @@ const { title } = Astro.props;
 	</head>
 	<body class="bg-gray-900 min-h-screen w-full absolute pb-24">
 		<Header />
-		<section transition:persist>
-			<CartList />
+		<Drawable />
+		<section class="relative" transition:persist>
 		</section>
 		<section id="up"></section>
 		<slot name="before-main" />
@@ -36,24 +38,7 @@ const { title } = Astro.props;
 			href="#up"
 			class="fixed bottom-8 right-8 font-extrabold text-center text-slate-300 rounded-full"
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="icon icon-tabler icon-tabler-circle-arrow-up-filled"
-				width="44"
-				height="44"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-				fill="none"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-				<path
-					d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-4.98 3.66l-.163 .01l-.086 .016l-.142 .045l-.113 .054l-.07 .043l-.095 .071l-.058 .054l-4 4l-.083 .094a1 1 0 0 0 1.497 1.32l2.293 -2.293v5.586l.007 .117a1 1 0 0 0 1.993 -.117v-5.585l2.293 2.292l.094 .083a1 1 0 0 0 1.32 -1.497l-4 -4l-.082 -.073l-.089 -.064l-.113 -.062l-.081 -.034l-.113 -.034l-.112 -.02l-.098 -.006z"
-					stroke-width="0"
-					fill="currentColor"></path>
-			</svg>
+			<IconArrowUpFilled width="44" height="44" />
 		</a>
 		<style is:global>
 			html {
@@ -107,6 +92,65 @@ const { title } = Astro.props;
 			.fr-quick-insert {
 				display: none;
 			}
+
+			input[type="range"]::-webkit-slider-runnable-track {
+				width: 100%;
+				height: 8px;
+				background: #475569; /* slate-600 */
+			}
+
+			input[type="range"]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				outline: none;
+				transform: translateY(-25%);
+				background: #475569; /* slate-600 */
+				cursor: pointer;
+			}
+
+			input[type="range"]:focus::-webkit-slider-runnable-track {
+				background: #334155; /* slate-700 */
+			}
+
+			input[type="range"]::-moz-range-track {
+				width: 100%;
+				height: 8px;
+				background: #475569; /* slate-600 */
+				border-radius: 4px;
+			}
+
+			input[type="range"]::-moz-range-thumb {
+				border-radius: 50%;
+				transform: translateY(-25%);
+				background: #475569; /* slate-600 */
+				cursor: pointer;
+			}
+
+			input[type="range"]::-ms-track {
+				width: 100%;
+				height: 8px;
+				background: transparent;
+				border-color: transparent;
+				color: transparent;
+			}
+
+			input[type="range"]::-ms-fill-lower {
+				background: #475569; /* slate-600 */
+				border-radius: 4px;
+			}
+
+			input[type="range"]::-ms-fill-upper {
+				background: #475569; /* slate-600 */
+				border-radius: 4px;
+			}
+
+			input[type="range"]::-ms-thumb {
+				border-radius: 50%;
+				transform: translateY(-25%);
+				cursor: pointer;
+			}
 		</style>
+		<script>
+			document.querySelector('html')?.classList.add(localStorage.getItem('astroErrorOverlayTheme') + '')
+		</script>
 	</body>
 </html>

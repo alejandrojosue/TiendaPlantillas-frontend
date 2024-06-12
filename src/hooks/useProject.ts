@@ -5,6 +5,7 @@ import ProjectRepository from '../repositories/ProjectRepository'
 import type {Project} from '../types/api'
 import {isEmpty} from '../util/isEmpy';
 import {getParam} from '../util/urlParams';
+import {initialMaxPrice, initialMinPrice} from '../components/FilterPrice';
 
 const useProject = () => {
   const [state, setState] = useState<{
@@ -31,6 +32,8 @@ const useProject = () => {
       let pageNumber = getParam('page') || '1'
       let sort = getParam('sort') || 'asc'
       let categories = getParam('categories')?.split(',') || [];
+      let min = getParam('min') || initialMinPrice + '';
+      let max = getParam('max') || '';
       if (sort !== 'asc' && sort !== 'desc') {
         throw new Error('El parámetro de ``sort debe ser `asc` o `desc`.')
       }
@@ -38,9 +41,22 @@ const useProject = () => {
       if (isNaN(pageNumber)) {
         throw new Error('El parámetro de `page` debe ser un número.')
       }
+
+      // @ts-ignore
+      if (isNaN(min)) {
+        throw new Error('El parámetro de `min` debe ser un número.')
+      }
+
+      // @ts-ignore
+      if (isNaN(max)) {
+        throw new Error('El parámetro de `max` debe ser un número.')
+      }
+
+      if (parseInt(max) >= initialMaxPrice) max = '';
+
       if (categories.includes('all')) categories = [];
       const projectsData =
-          await projectRepository.get({pageNumber, sort, categories});
+          await projectRepository.get({pageNumber, sort, categories, min, max});
 
       setState(prev => ({
                  ...prev,
