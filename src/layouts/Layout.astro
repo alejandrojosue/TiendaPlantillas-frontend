@@ -2,18 +2,17 @@
 import { ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Drawable from "../components/Drawable.astro";
+import Drawable from "../components/cart/Drawable.astro";
 import { IconArrowUpFilled } from "../components/icons/Icons";
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
-
 ---
 
 <!doctype html>
-<html lang="es" class=`scroll-smooth`>
+<html lang="es" class=`scroll-smooth drk`>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -23,11 +22,10 @@ const { title } = Astro.props;
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
-	<body class="bg-gray-900 min-h-screen w-full absolute pb-24">
+	<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen w-full absolute pb-24">
 		<Header />
 		<Drawable />
-		<section class="relative" transition:persist>
-		</section>
+		<section class="relative" transition:persist></section>
 		<section id="up"></section>
 		<slot name="before-main" />
 		<main class="max-w-5xl py-3 mx-auto">
@@ -149,8 +147,6 @@ const { title } = Astro.props;
 				cursor: pointer;
 			}
 		</style>
-		<script>
-			document.querySelector('html')?.classList.add(localStorage.getItem('astroErrorOverlayTheme') + '')
-		</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 	</body>
 </html>

@@ -3,6 +3,7 @@ import styles from "../css/select.module.css";
 import { getParam, setParam } from "../util/urlParams";
 import type { Category } from "../types/api";
 import CategoryRepository from "../repositories/CategoryRepository";
+import { IconSearch } from "./icons/Icons";
 
 export default function Select({ multiple }: { multiple: boolean }) {
   const [options, setOptions] = useState<Category[]>([{ id: 0, categoryName: 'all' }]);
@@ -21,7 +22,7 @@ export default function Select({ multiple }: { multiple: boolean }) {
     multiple ? setValue([options[0]]) : setValue(undefined);
   }
 
-  function Category(option: Category) {
+  function selectCategory(option: Category) {
     if (multiple) {
       if (!Array.isArray(value)) return;
       if (option.categoryName === 'all') {
@@ -43,18 +44,22 @@ export default function Select({ multiple }: { multiple: boolean }) {
     }
   }
 
+  const handleInputClick = (e: MouseEvent) => {
+    e.stopPropagation();
+  };
+
   function isOptionSelected(option: Category) {
     return multiple && Array.isArray(value) ? value.includes(option) : option === value;
   }
 
   useEffect(() => {
-    if(!localStorage.getItem('categories')){
+    if (!localStorage.getItem('categories')) {
       new CategoryRepository()
-      .get()
-      .then(categories=>localStorage.setItem('categories', JSON.stringify(categories)))
-      .catch(err=>{
-        console.error(err);
-      })
+        .get()
+        .then(categories => localStorage.setItem('categories', JSON.stringify(categories)))
+        .catch(err => {
+          console.error(err);
+        })
     }
     setOptions([{ id: 0, categoryName: 'all' }, ...JSON.parse(localStorage.getItem('categories') || '[]')]);
   }, []);
@@ -71,7 +76,7 @@ export default function Select({ multiple }: { multiple: boolean }) {
         case "Enter":
         case "Space":
           setIsOpen(prev => !prev);
-          if (isOpen) Category(filteredOptions[highlightedIndex]);
+          if (isOpen) selectCategory(filteredOptions[highlightedIndex]);
           break;
         case "ArrowUp":
         case "ArrowDown": {
@@ -98,79 +103,84 @@ export default function Select({ multiple }: { multiple: boolean }) {
     };
   }, [isOpen, highlightedIndex, filteredOptions, searchTerm]);
 
-  const handleInputClick = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
   return (
     <div
       ref={containerRef}
       onClick={() => setIsOpen(prev => !prev)}
       tabIndex={0}
-      className={'relative w-full min-h-6 flex items-center gap-2 p-2 rounded-md border-white outline-none'}
+      className={'relative w-full min-h-6 flex flex-col items-center gap-2 p-2 rounded-md border-slate-600 dark:border-white outline-none'}
       style={{ borderWidth: '0.05rem' }}
     >
-      <span className={`flex gap-2 flex-wrap flex-grow`}>
-        {multiple && Array.isArray(value)
-          ? value?.map(v => (
-            <button
-              key={v.categoryName}
-              onClick={e => {
-                e.stopPropagation();
-                Category(v);
-              }}
-              className={`flex items-center border-white rounded-md px-2 py-1 cursor-pointer bg-transparent outline-none hover:bg-white hover:text-slate-600`}
-              style={{ borderWidth: '0.05em' }}
-            >
-              {v.categoryName}
-              <span style={{ fontSize: '1.25em' }}>&times;</span>
-            </button>
-          ))
-          // @ts-ignore
-          : value?.categoryName}
-      </span>
-      <button
-        onClick={e => {
-          e.stopPropagation();
-          clearOptions();
-        }}
-        className="bg-transparent border-none outline-none cursor-pointer p-0"
-        style={{ fontSize: '1.25em' }}
-      >
-        &times;
-      </button>
-      <div className={`self-stretch`} style={{ width: '.05em' }}></div>
-      <div className={` translate-ys-1/4 border-4 cursor-pointer border-transparent border-t-white`} style={{ translate: '0 25%' }}></div>
+      <div class="w-full flex items-center">
+        <span className={`flex gap-2 flex-wrap flex-grow`}>
+          {multiple && Array.isArray(value)
+            ? value?.map(v => (
+              <button
+                key={v.categoryName}
+                onClick={e => {
+                  e.stopPropagation();
+                  selectCategory(v);
+                }}
+                className={`flex items-center dark:border-white rounded-md px-2 py-1 cursor-pointer bg-transparent outline-none dark:hover:bg-white hover:text-slate-600 hover:border-slate-600`}
+                style={{ borderWidth: '0.05em' }}
+              >
+                {v.categoryName}
+                <span style={{ fontSize: '1.25em' }}>&times;</span>
+              </button>
+            ))
+            // @ts-ignore
+            : value?.categoryName}
+        </span>
+        <button
+          onClick={e => {
+            e.stopPropagation();
+            clearOptions();
+          }}
+          className="bg-transparent border-none hover:text-slate-600 dark:hover:text-white outline-none cursor-pointer px-2"
+          style={{ fontSize: '1.25em' }}
+        >
+          &times;
+        </button>
+        <div
+          className={`translate-y-1/4 mx-1 border-4 cursor-pointer border-transparent border-t-slate-400 hover:border-t-slate-600 dark:border-t-slate-400 dark:hover:border-t-white`} style={{ translate: '0 25%' }}></div>
+      </div>
 
       {isOpen && (
-        <>
-          <ul className={`${styles.options} bg-slate-800 ${isOpen ? styles.show : ""}`}>
-          <input
-            type="search"
-            value={searchTerm}
-            // @ts-ignore
-            onChange={e => setSearchTerm(e.target.value)}
-            onClick={handleInputClick}
-            placeholder="Search..."
-            className="w-full p-2 mb-2 bg-transparent border border-gray-300 rounded"
-          />
+        <div class="absolute w-full shadow bg-white dark:bg-gray-900 z-10 border dark:shadow-slate-600" style={{ top: 'calc(100% + .25em)' }}>
+          <div class="p-3">
+            <label for="input-group-search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                <IconSearch />
+              </div>
+              <input type="search"
+                // @ts-ignore
+                onInput={e => setSearchTerm(e.target.value)}
+                class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search user"
+                onClick={handleInputClick} />
+            </div>
+          </div>
+          <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+          >
             {filteredOptions.map((option, index) => (
               <li
                 onClick={e => {
                   e.stopPropagation();
-                  Category(option);
+                  selectCategory(option);
                   setIsOpen(false);
                 }}
                 onMouseEnter={() => setHighlightedIndex(index)}
-                key={option.categoryName}
-                className={`${styles.option} ${isOptionSelected(option) ? "bg-slate-600" : ""
-                  } ${index === highlightedIndex ? 'bg-slate-600' : ""} bg-slate-800`}
-              >
-                {option.categoryName}
+                key={option.categoryName}>
+
+                <div class={`${isOptionSelected(option) ? 'bg-gray-100 dark:bg-gray-600' : ''} flex items-center ps-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600`}>
+                  <label for="checkbox-item-12" class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                    {option.categoryName}
+                  </label>
+                </div>
               </li>
             ))}
           </ul>
-        </>
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 ---
 import type { User } from "../types/api";
+import { IconCirclePlus, IconTablerLogout } from "./icons/Icons";
 import LinkButton from "./LinkButton";
 
 interface Props extends User {
@@ -108,44 +109,12 @@ const {
           link={`/${role === "Freelancer" ? "templates" : "projects"}/create`}
           size="small"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-circle-plus"
-            width="25"
-            height="25"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-            <path d="M9 12h6" />
-            <path d="M12 9v6" />
-          </svg>
+          <IconCirclePlus width="25" height="25" />
           Crear {role === "Freelancer" ? "plantilla" : "proyecto"}
         </LinkButton>
         <LinkButton link="#" size="small">
           <div id="logout" class="flex gap-x-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-logout"
-              width="25"
-              height="25"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-              <path d="M9 12h12l-3 -3" />
-              <path d="M18 15l3 -3" />
-            </svg>
+            <IconTablerLogout width="25" height="25" />
             Cerrar sesión
           </div>
         </LinkButton>
@@ -155,5 +124,7 @@ const {
 </div>
 <script>
   import { deleteAllCookies } from "../util/cookies";
-  document.getElementById("logout")?.addEventListener("click", deleteAllCookies);
+  document
+    .getElementById("logout")
+    ?.addEventListener("click", deleteAllCookies);
 </script>

@@ -1,6 +1,5 @@
 ---
 import Multiselect from "./Multiselect";
-// import FilterButton from "./FilterButton";
 import {
  IconFilterAdd,
  IconFilterClear,
@@ -9,6 +8,7 @@ import {
 } from "../components/icons/Icons";
 import LinkButton from "../components/LinkButton";
 import FilterPrice from "../components/FilterPrice";
+import Expand from "./Expand"
 const { href: URL_BASE } = Astro.url;
 ---
 
@@ -24,7 +24,8 @@ const { href: URL_BASE } = Astro.url;
   <span>Los más viejos</span>
  </LinkButton>
 </div>
-<div
+<Expand label={'<p>Agregar Filtros</p>'} client:load> 
+ <div
  id="filter-section"
  class="grid grid-cols-1 lg:grid-cols-2 text-gray-400 gap-1 mb-5 font-semibold relative py-2 mx-2"
 >
@@ -47,3 +48,5 @@ const { href: URL_BASE } = Astro.url;
   </LinkButton>
  </div>
 </div>
+</Expand>
+

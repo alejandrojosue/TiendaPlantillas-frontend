@@ -5,8 +5,12 @@ import ShoppingCar from "../components/cart/CartButton";
 
 <header class="w-full">
  <nav
-  class="flex bg-slate-800 col-auto gap-x-3 items-center py-3 justify-center w-full text-center"
- >
+  class="
+    flex col-auto gap-x-3 items-center py-3 justify-center w-full text-center
+    bg-gray-200 text-gray-900
+    dark:bg-slate-800 dark:text-gray-300
+  "
+>
   <HeaderButton href="/">
    <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +95,7 @@ import ShoppingCar from "../components/cart/CartButton";
    </svg>
    <span class="hidden lg:block">Login</span>
   </HeaderButton>
-  <HeaderButton href="">
+  <HeaderButton>
    <ShoppingCar client:load />
   </HeaderButton>
  </nav>
