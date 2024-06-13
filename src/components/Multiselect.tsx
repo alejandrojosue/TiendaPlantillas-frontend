@@ -114,17 +114,17 @@ export default function Select({ multiple }: { multiple: boolean }) {
       <div class="w-full flex items-center">
         <span className={`flex gap-2 flex-wrap flex-grow`}>
           {multiple && Array.isArray(value)
-            ? value?.map(v => (
+            ? value?.map(_value => (
               <button
-                key={v.categoryName}
+                key={_value.categoryName}
                 onClick={e => {
                   e.stopPropagation();
-                  selectCategory(v);
+                  selectCategory(_value);
                 }}
-                className={`flex items-center dark:border-white rounded-md px-2 py-1 cursor-pointer bg-transparent outline-none dark:hover:bg-white hover:text-slate-600 hover:border-slate-600`}
+                className={`flex items-center dark:border-white rounded-md px-2 py-1 cursor-pointer bg-transparent outline-none hover:text-slate-600 hover:border-slate-600`}
                 style={{ borderWidth: '0.05em' }}
               >
-                {v.categoryName}
+                {_value.categoryName}
                 <span style={{ fontSize: '1.25em' }}>&times;</span>
               </button>
             ))
@@ -136,7 +136,7 @@ export default function Select({ multiple }: { multiple: boolean }) {
             e.stopPropagation();
             clearOptions();
           }}
-          className="bg-transparent border-none hover:text-slate-600 dark:hover:text-white outline-none cursor-pointer px-2"
+          className="bg-transparent border-none text-slate-400 hover:text-slate-600 dark:hover:text-white outline-none cursor-pointer px-2"
           style={{ fontSize: '1.25em' }}
         >
           &times;

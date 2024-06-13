@@ -33,10 +33,10 @@ export default function FilterPrice() {
 
   return (
     <div class="w-full flex flex-col items-center gap-x-1">
-      <div class="flex w-full py-">
-      <span class="w-full text-right">${minPrice}</span>
-      <span class="px-2 text-center"> - </span>
-      <span class="w-full">${maxPrice === initialMaxPrice ? maxPrice + ' y más' : maxPrice}</span>
+      <div class="flex w-full py-2 text-gray-500 dark:text-gray-300">
+        <span class="w-full text-right">${minPrice}</span>
+        <span class="px-2 text-center"> - </span>
+        <span class="w-full">${maxPrice === initialMaxPrice ? maxPrice + ' y más' : maxPrice}</span>
       </div>
       <div className="flex w-full">
         <input
@@ -46,7 +46,7 @@ export default function FilterPrice() {
           max={parseInt(initialMaxPrice / 2 + '')}
           onInput={handleMinPriceChange}
           onChange={handleMinPriceChangeParam}
-          class="w-full"
+          class="w-full bg-gray-200 hover:bg-gray-400 cursor-pointer rounded-s h-2 appearance-none dark:bg-slate-600 dark:hover:bg-slate-800"
         />
         <input
           type="range"
@@ -55,10 +55,10 @@ export default function FilterPrice() {
           max={initialMaxPrice}
           onInput={handleMaxPriceChange}
           onChange={handleMaxPriceChangeParam}
-          class="w-full"
+          class="w-full bg-gray-200 hover:bg-gray-400 cursor-pointer rounded-e h-2 appearance-none dark:bg-slate-600 dark:hover:bg-slate-800"
         />
       </div>
-      <div className="flex w-full">
+      <div className="flex w-full text-gray-500 dark:text-gray-300">
         <span className="w-full">$0</span>
         <span className="w-full text-center">&nbsp;&nbsp;${parseInt(initialMaxPrice / 2 + '')}</span>
         <span className="w-full text-right">${initialMaxPrice}</span>

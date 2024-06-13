@@ -13,7 +13,7 @@ export default function Expand({label, children}: Props) {
   return (
     <>
       <div class="justify-center flex mb-5">
-        <span id="btnExpand" onClick={()=>setOpen(!open)}>
+        <span id="btnExpand" onClick={()=>setOpen(prev=> !prev)}>
           <LinkButton size="medium">
             <IconCirclePlus width="25" height="25" />
             <div dangerouslySetInnerHTML={{__html: label}}></div>

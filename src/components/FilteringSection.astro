@@ -8,7 +8,7 @@ import {
 } from "../components/icons/Icons";
 import LinkButton from "../components/LinkButton";
 import FilterPrice from "../components/FilterPrice";
-import Expand from "./Expand"
+import Expand from "./Expand";
 const { href: URL_BASE } = Astro.url;
 ---
 
@@ -24,29 +24,28 @@ const { href: URL_BASE } = Astro.url;
   <span>Los más viejos</span>
  </LinkButton>
 </div>
-<Expand label={'<p>Agregar Filtros</p>'} client:load> 
+<Expand label={"<p>Agregar Filtros</p>"} client:load>
  <div
- id="filter-section"
- class="grid grid-cols-1 lg:grid-cols-2 text-gray-400 gap-1 mb-5 font-semibold relative py-2 mx-2"
->
- <div class="flex flex-col gap-y-1 pt-2 px-1">
-  <label class="font-semibold">Filtrar por Categorías</label>
-  <Multiselect multiple client:load />
+  id="filter-section"
+  class="grid grid-cols-1 lg:grid-cols-2 text-gray-600 dark:text-gray-400 gap-1 mb-5 font-semibold relative py-2 mx-2"
+ >
+  <div class="flex flex-col gap-y-1 pt-2 px-1">
+   <label class="font-semibold">Filtrar por Categorías</label>
+   <Multiselect multiple client:load />
+  </div>
+  <div class="flex flex-col gap-y-1 pt-2 px-1">
+   <label class="font-semibold">Filtrar por Rango de Precio</label>
+   <FilterPrice client:load />
+  </div>
+  <div>
+   <LinkButton link="#" size="small">
+    <IconFilterAdd width="25" height="25" />
+    <span>Filtrar</span>
+   </LinkButton>
+   <LinkButton link={URL_BASE} size="small">
+    <IconFilterClear width="25" height="25" />
+    <span>Quitar Filtros</span>
+   </LinkButton>
+  </div>
  </div>
- <div class="flex flex-col gap-y-1 pt-2 px-1">
-  <label class="font-semibold">Filtrar por Rango de Precio</label>
-  <FilterPrice client:load />
- </div>
- <div>
-  <LinkButton link="#" size="small">
-   <IconFilterAdd width="25" height="25" />
-   <span>Filtrar</span>
-  </LinkButton>
-  <LinkButton link={URL_BASE} size="small">
-   <IconFilterClear width="25" height="25" />
-   <span>Quitar Filtros</span>
-  </LinkButton>
- </div>
-</div>
 </Expand>
-
