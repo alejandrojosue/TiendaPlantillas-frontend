@@ -35,7 +35,7 @@ export const fetchDataFromAPI = async(
 
           const response =
               await fetch(PUBLIC_STRAPI_HOST + url, requestOptions);
-
+              
           const errorList: {[key: string]: () => void} = {
             'Bad Request': () => {
               throw new Error('Datos no válidos')
@@ -56,13 +56,13 @@ export const fetchDataFromAPI = async(
               throw new Error('No hay conexión con el servidor')
             }
           };
-
+          
           if (!response.ok) {
-            console.error(await response.json())
             if (errorList[response.statusText])
             errorList[response.statusText]();
             else throw new Error(response.statusText);
           }
+          
           const responseData = await response.json();
           return responseData;
         } catch (error) {
@@ -71,13 +71,15 @@ export const fetchDataFromAPI = async(
           console.error(`Error fetching data (attempt ${retries} of ${
               MAX_RETRIES}): ${errorResponse.message}`);
           // Evitar que se ejecute otra vez si no es problema con el servidor
-          if (errorResponse.message != 'fetch failed' &&
+          if (errorResponse.message.trim() !== 'Failed to fetch' &&
               retries < MAX_RETRIES) {
             break;
           }
         }
       }
       // Si se alcanza el número máximo de intentos, se devuelve el último error
-      throw new Error(`Failed to fetch data after ${MAX_RETRIES} attempts: ${
-          errorResponse ? errorResponse.message : ''}`);
+      console.error(`Failed to fetch data after ${MAX_RETRIES} attempts: ${
+        errorResponse ? errorResponse.message : ''}`);
+      
+      throw new Error(`${errorResponse ? errorResponse.message : ''}`);
     };

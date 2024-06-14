@@ -1,34 +1,122 @@
 ---
-export const prerender = false
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const name = data.get("username");
-    const email = data.get("email");
-    const password = data.get("password");
-    // Do something with the data
-    console.log({name, email, password});
-    
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-  }
-}
+import { PUBLIC_COMPANY_NAME } from "../env/config";
+import Layout from "../layouts/Layout.astro";
+import { IconTablerBrandTelegram } from "../components/icons/Icons";
+export const prerender = false;
+const token = Astro.cookies.get("jwt")?.value;
+let errorMessage = "";
+if (token) return Astro.redirect(`/user/profile`);
 ---
-<h1>Register</h1>
-<form method="POST">
-  <label>
-    Username:
-    <input type="text" name="username" required />
-  </label>
-  <label>
-    Email:
-    <input type="email" name="email" required />
-  </label>
-  <label>
-    Password:
-    <input type="password" name="password" required minlength="6" />
-  </label>
-  <button>Submit</button>
-</form>
+
+<Layout title="Register">
+  <div
+    class="mx-auto lg:max-w-lg md:max-w-sm bg-slate-800 p-8 flex flex-col rounded-md gap-4"
+  >
+    <img
+      src="/public/favicon.svg"
+      alt="icon"
+      width="60"
+      height="60"
+      class="mx-auto bg-white rounded-lg"
+    />
+    <h1 class="text-center text-3xl text-slate-400">
+      Bienvenido a {PUBLIC_COMPANY_NAME}
+    </h1>
+    <span class="text-center text-lg text-slate-500">
+      Cree su cuenta en {PUBLIC_COMPANY_NAME}
+    </span>
+    <form method="POST" class="flex flex-col">
+      <label class="flex flex-col my-2 text-slate-400 font-semibold">
+        Correo:
+        <input
+          type="email"
+          name="email"
+          required
+          class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+        />
+      </label>
+      <label class="flex flex-col my-2 text-slate-400 font-semibold">
+        Nombre de Usuario:
+        <input
+          type="text"
+          name="username"
+          required
+          class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+        />
+      </label>
+      <label class="flex flex-col my-2 text-slate-400 font-semibold">
+        Password:
+        <input
+          type="password"
+          name="password"
+          required
+          class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+        />
+      </label>
+      <label class="flex my-2 text-slate-400 font-semibold">
+        <select
+          id="role"
+          name="role"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-400 dark:focus:ring-blue-500 dark:focus:border-slate-400"
+        >
+          <option selected>Elige tu tipo de Cuenta</option>
+          <option value="freelancer">Soy Freelancer</option>
+          <option value="customer">Soy Cliente</option>
+        </select>
+      </label>
+      <button
+        type="submit"
+        class="flex-row text-2xl
+      justify-center cursor-pointer hover:bg-slate-700
+      focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
+      font-medium rounded-lg p-2.5 text-center
+      inline-flex items-center dark:focus:ring-[#1da1f2]/55
+      mr-2 hover:shadow-lg transition-all duration-200
+      ease-in-out hover:scale-110 scale-90 gap-x-2
+      opacity-90 hover:opacity-100"
+      >
+        <IconTablerBrandTelegram width="25" height="25" />
+        Enviar</button
+      >
+    </form>
+    {errorMessage && <div class="text-red-500">{errorMessage}</div>}
+  </div>
+  <script>
+    import UserRepository from "../repositories/UserRepository";
+    import { Role } from "../types/api";
+    import { setCookie } from "../util/cookies";
+
+    document.querySelector("form")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form as HTMLFormElement);
+      console.log(data.get("role") as string);
+      const userRepository = new UserRepository();
+      const email = data.get("email") as string;
+      const username = data.get("username") as string;
+      const role = data.get("role") as string;
+      const password = data.get("password") as string;
+      const user = await userRepository.signup({
+        username,
+        email,
+        password,
+        // @ts-ignore
+        role: Role[role],
+      });
+
+      if (user instanceof Error) {
+        alert(user.message);
+      } else {
+        //@ts-ignore
+        setCookie("email", user.user.email as string);
+        //@ts-ignore
+        setCookie("jwt", user.jwt as string);
+        //@ts-ignore
+        setCookie("id", user.user.id + "");
+        //@ts-ignore
+        setCookie("username", user.user.username as string);
+      }
+      location.href = "/user/profile";
+    });
+  </script>
+</Layout>

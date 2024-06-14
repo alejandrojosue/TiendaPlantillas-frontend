@@ -1,7 +1,6 @@
 ---
 import { PUBLIC_COMPANY_NAME } from "../env/config";
 import Layout from "../layouts/Layout.astro";
-import UserRepository from "../repositories/UserRepository";
 
 export const prerender = false;
 const token = Astro.cookies.get("jwt")?.value;
