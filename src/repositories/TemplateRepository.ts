@@ -38,6 +38,7 @@ export default class TemplateRepository implements ITemplateRepository {
 
       return templatesMaper(res.data)
     } catch (error) {
+      alert((error as Error).message)
     }
     return []
   }
@@ -53,7 +54,7 @@ export default class TemplateRepository implements ITemplateRepository {
       this.pageCount = 1;
       return templateMaper(res.data.id, res.data.attributes)
     } catch (error) {
-      console.log((error as Error).message)
+      alert((error as Error).message)
     }
     return null
   }
@@ -75,6 +76,7 @@ export default class TemplateRepository implements ITemplateRepository {
 
       return templatesMaper(res.data)
     } catch (error) {
+      alert((error as Error).message)
     }
     return []
   }
@@ -89,7 +91,6 @@ export default class TemplateRepository implements ITemplateRepository {
           !categories || !freelancer || !url)
         return;
       const data = {title, description, unitPrice, categories, freelancer, url};
-      console.log(data);
 
       const formData = new FormData();
 
@@ -141,7 +142,7 @@ export default class TemplateRepository implements ITemplateRepository {
 
   async downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}):
       Promise<void> {
-    const template = await fetch('')
+    // const template = await fetch('')
 
     throw new Error('Method not implemented.');
   }

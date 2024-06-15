@@ -39,6 +39,9 @@ export default function Projects({ username, isProfile }: { username?: string, i
           isProfile={isProfile}
         />
       })}
+      {
+        (Array.isArray(projects) && projects.length < 1) && (<p class="text-gray-400 my-4"> // Nada aún </p>)
+      }
     </div>
     {
       username ? '' : <Pagination

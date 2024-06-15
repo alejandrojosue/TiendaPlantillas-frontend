@@ -36,6 +36,9 @@ export default function Templates({ username }: { username?: string }) {
             />
           ))
         }
+        {
+          (Array.isArray(templates) && templates.length < 1) && (<p class="text-gray-400 my-4"> // Nada aún </p>)
+        }
       </div>
       {
         username ? '' : <Pagination

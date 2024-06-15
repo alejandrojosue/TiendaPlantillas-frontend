@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import type { Category } from "../types/api";
+import CategoryTag from "./CategoyTag";
 
 export default function Tags({ categories, tags, onTagsChange }: { categories: Category[], tags: Category[], onTagsChange: (tags: Category[]) => void }) {
 
@@ -11,8 +12,8 @@ export default function Tags({ categories, tags, onTagsChange }: { categories: C
   };
 
   const addTag = (categoryName: string) => {
-    if (!tags.some(tag=>tag.categoryName === categoryName)) {
-      const newTags = [...tags, ({categoryName} as Category)];
+    if (!tags.some(tag => tag.categoryName === categoryName)) {
+      const newTags = [...tags, ({ categoryName } as Category)];
       onTagsChange(newTags);
     }
   };
@@ -27,24 +28,8 @@ export default function Tags({ categories, tags, onTagsChange }: { categories: C
         }
       </select>
       <span class="p-2 rounded-s-full bg-gray-400 text-gray-800">Tags:</span>
-      {tags.map(({categoryName}) => (
-        <span class="p-2 hover:scale-105 flex transition-all capitalize rounded font-bold text-gray-400 border border-gray-400">
-          <span>{categoryName}</span>
-          <button
-            type="button"
-            onClick={() => deleteTag(categoryName)}
-            class="ml-2 text-red-500 cursor-pointer hover:text-red-800"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M4 7l16 0" />
-              <path d="M10 11l0 6" />
-              <path d="M14 11l0 6" />
-              <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-              <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-            </svg>
-          </button>
-        </span>
+      {tags.map(({ categoryName }) => (
+        <CategoryTag size="large" categoryName={categoryName} onDeleteTag={() => deleteTag(categoryName)} />
       ))}
     </>
   );
