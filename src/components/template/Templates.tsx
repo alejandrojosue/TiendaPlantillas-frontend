@@ -5,22 +5,38 @@ import Pagination from '../Pagination';
 import CardTemplate from './CardTemplate';
 import CardTemplateSkeleton from './CardTemplateSkeleton';
 
+/**
+ * Componente Templates
+ * 
+ * Muestra una lista de plantillas de acuerdo a ciertos criterios, ya sea todas las plantillas o las de un usuario específico.
+ * 
+ * @param {string} username - Nombre de usuario opcional para filtrar las plantillas.
+ */
 export default function Templates({ username }: { username?: string }) {
-  const { template: templates, loading, error, page, pageCount, pageSize, total, get, getByUsername } = useTemplate()
+  const { template: templates, loading, error, page, pageCount, pageSize, total, get, getByUsername } = useTemplate();
+
   useEffect(() => {
     if (username) getByUsername({ username }); else get();
-  }, [])
+  }, []);
+
   if (loading) {
+    // Renderiza los esqueletos de tarjetas mientras se carga la información.
     return (
       <div class="text-white px-2 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <CardTemplateSkeleton /><CardTemplateSkeleton />
         <CardTemplateSkeleton /><CardTemplateSkeleton />
-      </div>)
+      </div>
+    );
   }
 
   if (error) {
-    return (<h1 class="text-4xl text-center py-4 text-white">{error}</h1>)
+    // Renderiza un mensaje de error si ocurre algún problema al cargar las plantillas.
+    return (
+      <h1 class="text-4xl text-center py-4 text-white">{error}</h1>
+    );
   }
+
+  // Renderiza la lista de plantillas si no hay errores ni cargando.
   return (
     <>
       <div class="text-white px-2 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -37,17 +53,19 @@ export default function Templates({ username }: { username?: string }) {
           ))
         }
         {
+          // Renderiza un mensaje si no hay plantillas para mostrar.
           (Array.isArray(templates) && templates.length < 1) && (<p class="text-gray-400 my-4"> // Nada aún </p>)
         }
       </div>
       {
+        // Renderiza la paginación si no se está filtrando por usuario.
         username ? '' : <Pagination
-        page={page}
-        pageCount={pageCount}
-        pageSize={pageSize}
-        total={total}
-      />
+          page={page}
+          pageCount={pageCount}
+          pageSize={pageSize}
+          total={total}
+        />
       }
     </>
-  )
+  );
 }
