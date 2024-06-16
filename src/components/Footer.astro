@@ -1,17 +1,17 @@
 ---
 import {PUBLIC_COMPANY_NAME} from '../env/config'
 ---
-<footer class="bg-gray-200 dark:bg-slate-800 absolute bottom-0 w-full">
+<footer class="dark:bg-gray-900 absolute bottom-0 w-full border-t text-blue-500 font-semibold text-lg dark:text-gray-400 border-blue-500 dark:border-gray-400">
     <div
         class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
     >
-        <span class="text-sm sm:text-center dark:text-gray-400"
+        <span class="sm:text-center"
             >© {(new Date()).getFullYear()} <a href="https://flowbite.com/" class="hover:underline"
                 >{PUBLIC_COMPANY_NAME}™</a
             >. Derechos de Autor Reservados.
         </span>
         <ul
-            class="flex flex-wrap items-center mt-3 text-sm font-medium dark:text-gray-400 sm:mt-0"
+            class="flex flex-wrap items-center mt-3 font-medium sm:mt-0"
         >
             <li>
                 <a href="/about" class="hover:underline me-4 md:me-6">Sobre Nosotros</a>

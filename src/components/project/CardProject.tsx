@@ -1,5 +1,6 @@
 import type { Project } from '../../types/api';
 import { setCookie } from '../../util/cookies';
+import CategoryTag from '../CategoyTag';
 import { IconTablerCoin, IconTablerEmailFilled, IconTablerEyeFilled } from '../icons/Icons';
 import LinkButton from '../LinkButton';
 import ReaderMarkdown from '../ReaderMarkdown';
@@ -23,21 +24,17 @@ export default function CardProject({ id, title, description, categories, unitPr
   }
 
   return (
-    <div class="p-4 mb-5 rounded-md border-2 w-full border-gray-200 dark:border-gray-400">
+    <div class="p-4 mb-5 rounded-md border-2 w-full border-gray-400 dark:border-gray-400">
       <h1 class="text-gray-600 dark:text-white capitalize">{title}</h1>
       <div class="flex flex-col justify-between items-center lg:flex-row gap-3">
-        <p class="font-semibold text-gray-400 dark:text-gray-600">Publicado el {createdAt!.split(',')[0]} a las {createdAt!.split(',')[1]}</p>
+        <p class="font-semibold text-gray-300 dark:text-gray-600">Publicado el {createdAt!.split(',')[0]} a las {createdAt!.split(',')[1]}</p>
         <strong class="text-gray-600 bg-gray-200 dark:bg-gray-800 dark:text-white px-2 py-1 rounded flex items-center">
           <IconTablerCoin width='25' height='25' />
           {unitPrice}</strong>
       </div>
       <p class="my-1 text-justify line-clamp-5 text-gray-500 dark:text-gray-400"><ReaderMarkdown description={description} /></p>
       <div class="flex flex-wrap gap-1 my-2 mb-3">
-        {categories.map(({ categoryName }) =>
-          <span class="text-xs text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 p-1 rounded-sm font-bold tracking-tight dark:text-white ">
-            {categoryName}
-          </span>
-        )}
+        {categories.map(({ categoryName }) => <CategoryTag size="small" categoryName={categoryName} />)}
       </div>
       <hr />
       <div class="flex flex-col lg:flex-row mt-2 items-center justify-between">

@@ -1,20 +1,67 @@
-# Astro Starter Kit: Basics
+<a name="readme-top"></a>
 
-```sh
-npm create astro@latest -- --template basics
-```
+<div align="center">
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+# Web oficial de Plataforma de Contratación Freelance y Venta de Plantillas 🌟
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+¡Bienvenido a la web oficial de la Plataforma de Contratación Freelance y Venta de Plantillas! Aquí encontrarás toda la información relevante sobre nuestro proyecto y cómo contribuir a él.
+[Reportar error](https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues) · [Sugerir algo](https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues)
+</div>
 
-## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+## Características principales
+
+- **Contratación Freelance**: Conoce los detalles de cómo contratar freelancers para tus proyectos.
+- **Venta de Plantillas**: Explora una amplia variedad de plantillas disponibles para su compra.
+- **Información sobre el Proyecto**: Accede a detalles sobre el proyecto, su misión y visión.
+
+<details>
+<summary>Tabla de contenidos</summary>
+
+- [Web oficial de Plataforma de Contratación Freelance y Venta de Plantillas 🌟](#web-oficial-de-plataforma-de-contratación-freelance-y-venta-de-plantillas-)
+  - [Características principales](#características-principales)
+  - [Para empezar](#para-empezar)
+    - [Prerequisitos](#prerequisitos)
+  - [🧞 Comandos](#-comandos)
+    - [🛠️ Stack](#️-stack)
+
+</details>
+
+## Para empezar
+
+### Prerequisitos
+
+- NVM (recomendado para asegurar versión de Node) ver [documentación oficial](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
+
+  ```sh
+  nvm use
+  # o
+  nvm use <version>
+
+## Contribuir al proyecto
+
+Las contribuciones son lo que hacen que la comunidad de código abierto sea un lugar increíble para aprender, inspirar y crear. ¡Cualquier contribución que hagas es **muy apreciada**!
+
+Si tienes alguna sugerencia que podría mejorar el proyecto, por favor haz un [_fork_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/fork) del repositorio y crea una [_pull request_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/pulls). También puedes simplemente abrir un [_issue_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues) con la etiqueta "enhancement".
+
+Aquí tienes una guía rápida:
+
+1. Haz un [_fork_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/fork) del Proyecto
+2. Clona tu [_fork_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/fork) (`git clone <URL del fork>`)
+3. Añade el repositorio original como remoto (`git remote add upstream <URL del repositorio original>`)
+4. Crea tu Rama de Funcionalidad (`git switch -c feature/CaracteristicaIncreible`)
+5. Realiza tus Cambios (`git commit -m 'Add: alguna CaracterísticaIncreible'`)
+6. Haz Push a la Rama (`git push origin feature/CaracteristicaIncreible`)
+7. Abre una [_pull request_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/pulls)
+
+## 🚀 Estructura del Proyecto
+
+Dentro del proyecto, verá las siguientes carpetas y archivos:
 
 ```text
 /
@@ -22,33 +69,77 @@ Inside of your Astro project, you'll see the following folders and files:
 │   └── favicon.svg
 ├── src/
 │   ├── components/
-│   │   └── Card.astro
+│   ├── css/
+│   ├── env/
+│   ├── hooks/
 │   ├── layouts/
 │   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
+│   ├── maper/
+│   ├── pages/
+│   ├── repositories/
+│   ├── types/
+│   └── util/
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Astro busca archivos `.astro` o `.md` en el directorio `src/pages/`. Cada página se expone como una ruta según su nombre de archivo.
 
-Any static assets, like images, can be placed in the `public/` directory.
+En `src/components/` es donde se colocan los componentes hechos con Astro/React/Vue/Svelte/Preact.
 
-## 🧞 Commands
+Cualquier activo estático, como imágenes, se puede colocar en el directorio `public/`.
 
-All commands are run from the root of the project, from a terminal:
+Directorio `src/repositories/` es donde se crearan todas las conexiones a las apis que deba conectarse para mantener totalmente funcional el proyecto.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Todos los tipos de datos enviados u obtenidos por la api se encontrarán en `src/types/`.
 
-## 👀 Want to learn more?
+`src/hooks/` En este directorio se colocan los hooks personalizados de Preact que se utilizan en toda la aplicación.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Las utilidades y funciones auxiliares que pueden ser reutilizadas en diferentes partes del proyecto se encuentra en `src/util/`.
+
+En `src/env/` se encuentran los archivos relacionados con la configuración del entorno, como variables de entorno necesarias para la configuración del proyecto.
+
+En `src/layouts/` se colocan los layouts utilizados en las páginas de la aplicación. Los layouts son plantillas que permiten reutilizar estructuras comunes entre diferentes páginas.
+
+## 🧞 Comandos
+
+Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal.
+
+| Comandos                  | Descripción                                           |
+| :------------------------ | :---------------------------------------------------- |
+| `npm install`             | Instalar dependencias                                 |
+| `npm run dev`             | Iniciar servidor local dev en `localhost:4321`        |
+| `npm run build`           | Contruye para producción tu proyecto `./dist/`        |
+| `npm run preview`         | Vista previa de su compilación antes de implementarla |
+| `npm run astro ...`       | Ejecute comandos CLI como `astro add`, `astro check`  |
+| `npm run astro -- --help` | Obtenga ayuda para usar Astro CLI                     |
+
+### 🛠️ Stack
+
+- [![Astro][astro-badge]][astro-url] - El framework web para sitios web impulsados por contenido.
+- [![Typescript][typescript-badge]][typescript-url] - JavaScript con sintaxis para tipos.
+- [![Tailwind CSS][tailwind-badge]][tailwind-url] - Un framework CSS de utilidades para construir diseños personalizados rápidamente.
+- [![Strapi][strapi-badge]][strapi-url] - Headless CMS para gestionar contenido.
+- [![Preact][preact-badge]][preact-url] - Librería de frontend más veloz y ligera queReact.
+  
+[astro-url]: https://astro.build/
+[typescript-url]: https://www.typescriptlang.org/
+[tailwind-url]: https://tailwindcss.com/
+[strapi-url]: https://github.com/strapi/strapi
+[preact-url]: https://preactjs.com/
+
+[astro-badge]: https://img.shields.io/badge/Astro-fff?style=for-the-badge&logo=astro&logoColor=bd303a&color=352563
+[typescript-badge]: https://img.shields.io/badge/Typescript-007ACC?style=for-the-badge&logo=typescript&logoColor=white&color=blue
+[tailwind-badge]: https://img.shields.io/badge/Tailwind-ffffff?style=for-the-badge&logo=tailwindcss&logoColor=38bdf8
+[animations-badge]: https://img.shields.io/badge/@alejandrojosue/tailwind-animations-ff69b4?style=for-the-badge&logo=node.js&logoColor=white&color=blue
+[strapi-badge]: https://img.shields.io/badge/Strapi-000000?style=for-the-badge&logo=strapi&logoColor=2e7df7&color=black
+[preact-badge]: https://img.shields.io/badge/preact-bage?style=for-the-badge&logo=preact&logoColor=white&color=673ab8
+
+[contributors-url]: https://github.com/alejandrojosue/TiendaPlantillas-frontend/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/alejandrojosue/TiendaPlantillas-frontend.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/alejandrojosue/TiendaPlantillas-frontend.svg?style=for-the-badge
+[forks-url]: https://github.com/alejandrojosue/TiendaPlantillas-frontend/network/members
+[stars-shield]: https://img.shields.io/github/stars/alejandrojosue/TiendaPlantillas-frontend.svg?style=for-the-badge
+[stars-url]: https://github.com/alejandrojosue/TiendaPlantillas-frontend/stargazers
+[issues-shield]: https://img.shields.io/github/issues/alejandrojosue/TiendaPlantillas-frontend.svg?style=for-the-badge
+[issues-url]: https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues

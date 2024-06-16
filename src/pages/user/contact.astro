@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { isEmpty } from "../../util/isEmpy";
-import Backdrop from "../../components/Backdrop.astro"
+import Backdrop from "../../components/Backdrop.astro";
 import Username from "./[username].astro";
 export const prerender = false;
 const senderEmail = Astro.cookies.get("senderEmail")?.value;
@@ -11,13 +11,16 @@ const projectID = Astro.cookies.get("projectID")?.value;
 const customerName = Astro.cookies.get("customerName")?.value;
 const customer = Astro.cookies.get("username")?.value;
 
-if(isEmpty([Username]) ){
- return Astro.redirect('/projects')
+if (isEmpty([Username])) {
+ return Astro.redirect("/projects");
 }
 ---
 
 <Layout title="contact">
- <Backdrop title={projectTitle + ''}/>
+ <Backdrop>
+  En el siguiente formulario se redactará el correo a la persona que desea
+  contactar por motivos del proyecto: <b>{projectTitle}</b>.
+ </Backdrop>
  <form id="contactForm" method="post" class="tex-gray-800 p-3">
   <div>
    <label for="email-recipient" class="block text-white text-sm font-bold"
@@ -73,7 +76,23 @@ if(isEmpty([Username]) ){
     rows="12"
     class="mt-1 block w-full rounded-md p-2 bg-slate-800 text-justify"
     required
-   >Estimado/a {customerName}, Espero que este correo le encuentre bien. Mi nombre es [Nombre del Freelancer] y soy un/a [tu profesión o especialidad, por ejemplo, desarrollador web, diseñador gráfico, redactor, etc.]. {'\n\n'}Estoy muy interesado/a en su proyecto titulado {projectTitle} y me gustaría postularme para trabajar en él. Puede conocer más sobre mi experiencia y trabajos anteriores visitando mi perfil en el siguiente enlace: [URL del Perfil del Freelancer]. Considero que mis habilidades y experiencia se alinean perfectamente con los requisitos de su proyecto. Me especializo en [menciona brevemente tus habilidades relevantes y experiencias previas que se relacionan con el proyecto] y estoy seguro/a de que puedo contribuir de manera significativa a su equipo. Quedo a su disposición para cualquier pregunta adicional o para discutir más detalles sobre cómo puedo ayudar en su proyecto. {'\n\n'}Saludos cordiales, [Nombre del Freelancer] [Correo Electrónico del Freelancer] [Teléfono del Freelancer, opcional] [URL del Perfil del Freelancer]. {'\n\n'}Atentamente, [Nombre del Freelancer].</textarea>
+    >Estimado/a {customerName}, Espero que este correo le encuentre bien. Mi
+    nombre es [Nombre del Freelancer] y soy un/a [tu profesión o especialidad,
+    por ejemplo, desarrollador web, diseñador gráfico, redactor, etc.]. {
+     "\n\n"
+    }Estoy muy interesado/a en su proyecto titulado {projectTitle} y me gustaría
+    postularme para trabajar en él. Puede conocer más sobre mi experiencia y trabajos
+    anteriores visitando mi perfil en el siguiente enlace: [URL del Perfil del Freelancer].
+    Considero que mis habilidades y experiencia se alinean perfectamente con los
+    requisitos de su proyecto. Me especializo en [menciona brevemente tus habilidades
+    relevantes y experiencias previas que se relacionan con el proyecto] y estoy
+    seguro/a de que puedo contribuir de manera significativa a su equipo. Quedo a
+    su disposición para cualquier pregunta adicional o para discutir más detalles
+    sobre cómo puedo ayudar en su proyecto. {"\n\n"}Saludos cordiales, [Nombre
+    del Freelancer] [Correo Electrónico del Freelancer] [Teléfono del
+    Freelancer, opcional] [URL del Perfil del Freelancer]. {"\n\n"}Atentamente,
+    [Nombre del Freelancer].</textarea
+   >
   </div>
   <br />
   <div class="w-full flex justify-center">

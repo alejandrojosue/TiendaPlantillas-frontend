@@ -9,7 +9,7 @@ interface Props {
 export default function CategoryTag({ categoryName, size, onDeleteTag }: Props) {
 
   return (
-    <span class="p-2 hover:scale-105 flex transition-all capitalize rounded font-bold text-gray-400 border border-gray-400">
+    <span class={`${size === 'large' ? 'p-2' : 'text-sm p-1'} hover:scale-105 flex transition-all capitalize rounded font-bold border-blue-500 text-blue-500 dark:text-gray-400 border dark:border-gray-400`}>
       <span>{categoryName}</span>
       {
         onDeleteTag

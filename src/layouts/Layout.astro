@@ -94,7 +94,10 @@ const { title } = Astro.props;
 				display: none;
 			}
 		</style>
-
+		<script>
+			const themeMode = localStorage.getItem("astroErrorOverlayTheme") as string;
+			// document.querySelector("html")?.classList.add(themeMode);
+		</script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
 		></script>

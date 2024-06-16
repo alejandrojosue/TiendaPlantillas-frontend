@@ -1,11 +1,13 @@
 ---
 import Sidebar from "../../components/Sidebar.astro";
+import Backdrop from "../../components/Backdrop.astro";
+import { IconTablerBrandTelegram } from "../../components/icons/Icons";
 import Layout from "../../layouts/Layout.astro";
 import { Role } from "../../types/api";
 import Projects from "../../components/project/Projects";
 import UserRepository from "../../repositories/UserRepository";
 import Templates from "../../components/template/Templates";
-
+import { PUBLIC_COMPANY_NAME } from "../../env/config";
 export const prerender = false;
 
 const token = Astro.cookies.get("jwt")?.value as string;
@@ -19,6 +21,60 @@ let _role: any = user?.role;
 ---
 
 <Layout title="Profile">
+ <Backdrop>
+  <div onblur="return false;"
+   class="mx-auto lg:max-w-lg md:max-w-sm bg-slate-800 p-8 flex flex-col rounded-md gap-4"
+  >
+   <img
+    src="/public/favicon.svg"
+    alt="icon"
+    width="60"
+    height="60"
+    class="mx-auto bg-white rounded-lg"
+   />
+   <h1 class="text-center text-3xl text-slate-400">
+    Bienvenido a {PUBLIC_COMPANY_NAME}
+   </h1>
+   <span class="text-center text-lg text-slate-500">
+    Inicie sesión en su cuenta {PUBLIC_COMPANY_NAME}
+   </span>
+   <form method="POST" class="flex flex-col">
+    <label class="flex flex-col my-2 text-lg text-slate-400 font-semibold">
+     Email:
+     <input
+      type="email"
+      name="email"
+      required
+      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+     />
+    </label>
+    <label class="flex flex-col my-2 text-lg text-slate-400 font-semibold">
+     Password:
+     <input
+      type="password"
+      name="password"
+      required
+      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+     />
+    </label>
+    <button
+     type="submit"
+     class="flex-row text-2xl
+      justify-center cursor-pointer hover:bg-slate-700
+      focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
+      font-medium rounded-lg p-2.5 text-center
+      inline-flex items-center dark:focus:ring-[#1da1f2]/55
+      mr-2 hover:shadow-lg transition-all duration-200
+      ease-in-out hover:scale-110 scale-90 gap-x-2
+      opacity-90 hover:opacity-100"
+    >
+     <IconTablerBrandTelegram width="25" height="25" />
+
+     Enviar</button
+    >
+   </form>
+  </div>
+ </Backdrop>
  <div class="w-full flex flex-col lg:flex-row" slot="before-main">
   <Sidebar
    username={user?.username ?? ""}

@@ -1,6 +1,6 @@
 ---
 import type { User } from "../types/api";
-import { IconCirclePlus, IconTablerLogout } from "./icons/Icons";
+import { IconCirclePlus, IconTablerLogout, IconUserEdit } from "./icons/Icons";
 import LinkButton from "./LinkButton";
 
 interface Props extends User {
@@ -21,17 +21,17 @@ const {
   <img
     src="/public/favicon.svg"
     alt="user-image"
-    class="bg-slate-800 rounded-full mx-auto border border-slate-400 object-fill"
+    class="dark:bg-slate-800 rounded-full mx-auto border border-blue-500 dark:border-slate-400 object-fill"
     width="150"
     height="150"
   />
-  <p class="text-xl lg:text-2xl text-center my-2 text-slate-400 font-semibold">
+  <p class="text-xl lg:text-2xl text-center my-2 text-blue-400 dark:text-slate-400 font-semibold">
     <span class="capitalize">{username}</span>
   </p>
   <div class="mx-auto">
-    <span class="text-slate-500 text-lg">{role}</span>
+    <span class="text-blue-500 dark:text-slate-500 text-lg">{role}</span>
   </div>
-  <div class="flex justify-center gap-x-1 text-slate-400 my-2">
+  <div class="flex justify-center gap-x-1 text-blue-400 dark:text-slate-400 my-2">
     {
       githubLink && (
         <a href={githubLink} target="_blank">
@@ -112,6 +112,12 @@ const {
           <IconCirclePlus width="25" height="25" />
           Crear {role === "Freelancer" ? "plantilla" : "proyecto"}
         </LinkButton>
+        <LinkButton size="small">
+          <div id="btnEditProfile" class="flex gap-x-2">
+            <IconUserEdit width="25" height="25" />
+            Editar mi perfil
+          </div>
+        </LinkButton>
         <LinkButton link="#" size="small">
           <div id="logout" class="flex gap-x-2">
             <IconTablerLogout width="25" height="25" />
@@ -124,7 +130,12 @@ const {
 </div>
 <script>
   import { deleteAllCookies } from "../util/cookies";
+  const backdrop = document.getElementById("backdrop") as HTMLDivElement;
   document
     .getElementById("logout")
     ?.addEventListener("click", deleteAllCookies);
+
+    document.getElementById('btnEditProfile')?.addEventListener('click',()=>{
+      backdrop.style.display = 'flex';
+    })
 </script>

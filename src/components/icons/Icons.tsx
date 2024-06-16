@@ -2,6 +2,113 @@ type Dimention = {
   width: string
   height: string
 }
+export const IconX = ({ width, height }: Dimention) =>(
+  <svg
+      aria-hidden="true"
+      class="btn-close"
+      fill="currentColor"
+      width={width}
+      height={height}
+      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg"
+      ><path
+        fill-rule="evenodd"
+        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+        clip-rule="evenodd"></path></svg>
+)
+export const IconUserEdit = ({ width, height }: Dimention) => (
+  <svg xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-user-edit"
+    width={width} height={height}
+    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+    fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+    <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" />
+    <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z" />
+  </svg>
+)
+
+export const IconHome = ({ width, height }: Dimention) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-home-2"
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    stroke-width="2.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+    <path d="M10 12h4v4h-4z"></path>
+  </svg>
+)
+export const IconCertificate = ({ width, height }: Dimention) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-certificate-2"
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M12 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+    <path d="M10 7h4"></path>
+    <path d="M10 18v4l2 -1l2 1v-4"></path>
+    <path
+      d="M10 19h-2a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2"
+    ></path>
+  </svg>
+)
+export const IconInfoCircle = ({ width, height }: Dimention) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-info-circle"
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    stroke-width="2.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+    <path d="M12 9h.01"></path>
+    <path d="M11 12h1v4h1"></path>
+  </svg>
+)
+export const IconUserCircle = ({ width, height }: Dimention) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-user-circle"
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+    <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"
+    ></path>
+  </svg>
+)
 
 export const IconTrash = ({ width, height }: Dimention) => (
   <svg xmlns="http://www.w3.org/2000/svg"
