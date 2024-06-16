@@ -64,6 +64,7 @@ Aquí tienes una guía rápida:
 6. Haz Push a la Rama (`git push origin feature/CaracteristicaIncreible`)
 7. Abre una [_pull request_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/pulls)
 
+Para más información detallada, abre [CONTRIBUTING.md](https://github.com/alejandrojosue/TiendaPlantillas-frontend/blob/main/CONTRIBUTING.md)
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 ## 🚀 Estructura del Proyecto
