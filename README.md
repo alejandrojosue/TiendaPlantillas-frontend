@@ -2,10 +2,10 @@
 
 <div align="center">
 
-[![Contributors][contributors-shield]][contributors-url]
+<!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![Issues][issues-shield]][issues-url] -->
 
 # Web oficial de Plataforma de Contratación Freelance y Venta de Plantillas 🌟
 
@@ -27,8 +27,10 @@
   - [Características principales](#características-principales)
   - [Para empezar](#para-empezar)
     - [Prerequisitos](#prerequisitos)
+  - [Contribuir al proyecto](#contribuir-al-proyecto)
+  - [🚀 Estructura del Proyecto](#-estructura-del-proyecto)
   - [🧞 Comandos](#-comandos)
-    - [🛠️ Stack](#️-stack)
+  - [🛠️ Stack](#️-stack)
 
 </details>
 
@@ -42,6 +44,9 @@
   nvm use
   # o
   nvm use <version>
+  ```
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 ## Contribuir al proyecto
 
@@ -58,6 +63,8 @@ Aquí tienes una guía rápida:
 5. Realiza tus Cambios (`git commit -m 'Add: alguna CaracterísticaIncreible'`)
 6. Haz Push a la Rama (`git push origin feature/CaracteristicaIncreible`)
 7. Abre una [_pull request_](https://github.com/alejandrojosue/TiendaPlantillas-frontend/pulls)
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 ## 🚀 Estructura del Proyecto
 
@@ -82,6 +89,7 @@ Dentro del proyecto, verá las siguientes carpetas y archivos:
 └── package.json
 ```
 
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 Astro busca archivos `.astro` o `.md` en el directorio `src/pages/`. Cada página se expone como una ruta según su nombre de archivo.
 
@@ -101,6 +109,8 @@ En `src/env/` se encuentran los archivos relacionados con la configuración del 
 
 En `src/layouts/` se colocan los layouts utilizados en las páginas de la aplicación. Los layouts son plantillas que permiten reutilizar estructuras comunes entre diferentes páginas.
 
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
 ## 🧞 Comandos
 
 Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal.
@@ -114,14 +124,18 @@ Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal.
 | `npm run astro ...`       | Ejecute comandos CLI como `astro add`, `astro check`  |
 | `npm run astro -- --help` | Obtenga ayuda para usar Astro CLI                     |
 
-### 🛠️ Stack
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
+## 🛠️ Stack
 
 - [![Astro][astro-badge]][astro-url] - El framework web para sitios web impulsados por contenido.
 - [![Typescript][typescript-badge]][typescript-url] - JavaScript con sintaxis para tipos.
 - [![Tailwind CSS][tailwind-badge]][tailwind-url] - Un framework CSS de utilidades para construir diseños personalizados rápidamente.
 - [![Strapi][strapi-badge]][strapi-url] - Headless CMS para gestionar contenido.
 - [![Preact][preact-badge]][preact-url] - Librería de frontend más veloz y ligera queReact.
-  
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
 [astro-url]: https://astro.build/
 [typescript-url]: https://www.typescriptlang.org/
 [tailwind-url]: https://tailwindcss.com/
@@ -143,3 +157,14 @@ Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal.
 [stars-url]: https://github.com/alejandrojosue/TiendaPlantillas-frontend/stargazers
 [issues-shield]: https://img.shields.io/github/issues/alejandrojosue/TiendaPlantillas-frontend.svg?style=for-the-badge
 [issues-url]: https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues
+
+
+<!-- 
+Para generar las etiquetas como esta:
+[astro-badge]: https://img.shields.io/badge/Astro-fff?style=for-the-badge&logo=astro&logoColor=bd303a&color=352563
+
+1. hay que visitar: https://shields.io/badges
+2. En el panel derecho, llenar los campos: badge-Content, style (for-the-bagde), logo (tecnología como astro), colot y logoColor.
+3. seleccionar formato al final (url, md, ...)
+4. Ejecutar y copiar al final
+-->
