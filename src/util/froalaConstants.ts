@@ -1,8 +1,22 @@
+/*
+ Froala es una librería UI para leer y escribir Markdown.
+ La siguiente configuración define las barras de herramientas y los conjuntos de
+ emoticonos para ser utilizados con Froala.
+*/
+
+// Definición de las barras de herramientas que estarán disponibles en el
+// editor.
+
 export const TOOLBARS = [
-  ['bold', 'italic', 'underline', 'paragraphFormat', 'formatOL', 'formatUL'],
-  ['insertHR', 'undo', 'redo', 'emoticons', 'html'],
+  [
+    'bold', 'italic', 'underline', 'paragraphFormat', 'formatOL', 'formatUL'
+  ],  // Primera fila de la barra de herramientas
+  [
+    'insertHR', 'undo', 'redo', 'emoticons', 'html'
+  ],  // Segunda fila de la barra de herramientas
 ];
 
+// Definición de los conjuntos de emoticonos disponibles en el editor.
 export const EMOTICONS_SET = [
   {
     id: 'people',
@@ -22,26 +36,18 @@ export const EMOTICONS_SET = [
     ]
   },
   {
-    'id': 'nature',
-    'name': 'Animals & Nature',
-    'code': '1F435',
-    'emoticons': [
-      {code: '1F435', desc: 'Monkey Face'},
-      {code: '1F412', desc: 'Monkey'},
-      {code: '1F436', desc: 'Dog Face'},
-      {code: '1F415', desc: 'Dog'},
-      {code: '1F429', desc: 'Poodle'},
-      {code: '1F43A', desc: 'Wolf Face'},
-      {code: '1F431', desc: 'Cat Face'},
-      {code: '1F408', desc: 'Cat'},
-      {code: '1F42F', desc: 'Tiger Face'},
-      {code: '1F405', desc: 'Tiger'},
-      {code: '1F406', desc: 'Leopard'},
-      {code: '1F434', desc: 'Horse Face'},
-      {code: '1F40E', desc: 'Horse'},
-      {code: '1F42E', desc: 'Cow Face'},
-      {code: '1F402', desc: 'Ox'},
-      {code: '1F403', desc: 'Water Buffalo'},
+    id: 'nature',
+    name: 'Animals & Nature',
+    code: '1F435',
+    emoticons: [
+      {code: '1F435', desc: 'Monkey Face'}, {code: '1F412', desc: 'Monkey'},
+      {code: '1F436', desc: 'Dog Face'}, {code: '1F415', desc: 'Dog'},
+      {code: '1F429', desc: 'Poodle'}, {code: '1F43A', desc: 'Wolf Face'},
+      {code: '1F431', desc: 'Cat Face'}, {code: '1F408', desc: 'Cat'},
+      {code: '1F42F', desc: 'Tiger Face'}, {code: '1F405', desc: 'Tiger'},
+      {code: '1F406', desc: 'Leopard'}, {code: '1F434', desc: 'Horse Face'},
+      {code: '1F40E', desc: 'Horse'}, {code: '1F42E', desc: 'Cow Face'},
+      {code: '1F402', desc: 'Ox'}, {code: '1F403', desc: 'Water Buffalo'}
     ]
   },
   {
@@ -49,13 +55,11 @@ export const EMOTICONS_SET = [
     name: 'Food & Drink',
     code: '1F373',
     emoticons: [
-      {code: '1F371', desc: 'Bento Box'},
-      {code: '1F372', desc: 'Pot of Food'},
+      {code: '1F371', desc: 'Bento Box'}, {code: '1F372', desc: 'Pot of Food'},
       {code: '1F9C0', desc: 'Cheese Wedge'},
       {code: '1F375', desc: 'Teacup Without Handle'},
-      {code: '1F35D', desc: 'Pizza'},
-      {code: '1F354', desc: 'Hamburger'},
-      {code: '1F355', desc: 'French Fries'},
+      {code: '1F35D', desc: 'Pizza'}, {code: '1F354', desc: 'Hamburger'},
+      {code: '1F355', desc: 'French Fries'}
     ]
   },
   {
@@ -63,14 +67,12 @@ export const EMOTICONS_SET = [
     name: 'Activities',
     code: '26BD',
     emoticons: [
-      {code: '26BD', desc: 'Soccer Ball'},
-      {code: '26BE', desc: 'Baseball'},
+      {code: '26BD', desc: 'Soccer Ball'}, {code: '26BE', desc: 'Baseball'},
       {code: '1F3C0', desc: 'Basketball and Hoop'},
       {code: '1F3C8', desc: 'American Football'},
       {code: '1F3BE', desc: 'Tennis Racquet and Ball'},
-      {code: '1F3AF', desc: 'Direct Hit'},
-      {code: '1F3D1', desc: 'Ping Pong'},
-      {code: '1F3B1', desc: 'Billiards'},
+      {code: '1F3AF', desc: 'Direct Hit'}, {code: '1F3D1', desc: 'Ping Pong'},
+      {code: '1F3B1', desc: 'Billiards'}
     ]
   },
   {
@@ -119,6 +121,8 @@ export const EMOTICONS_SET = [
     ]
   }
 ];
+
+// Plantilla md usada para cuando crear una descripción de una plantilla
 
 export const TEXT_EXAMPLE = `
 <h2>[Nombre del Producto] - [Breve descripción del producto]</h2>

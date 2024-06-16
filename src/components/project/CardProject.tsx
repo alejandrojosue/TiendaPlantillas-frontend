@@ -1,6 +1,6 @@
 import type { Project } from '../../types/api';
 import { setCookie } from '../../util/cookies';
-import CategoryTag from '../CategoyTag';
+import CategoryTag from '../CategoryTag';
 import { IconTablerCoin, IconTablerEmailFilled, IconTablerEyeFilled } from '../icons/Icons';
 import LinkButton from '../LinkButton';
 import ReaderMarkdown from '../ReaderMarkdown';

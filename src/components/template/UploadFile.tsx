@@ -1,3 +1,14 @@
+/**
+ * The UploadFile component in TypeScript React allows users to upload files, with validation based on
+ * file type, size, and quantity, displaying previews for images and handling file removal.
+ * @param {Props}  - The `UploadFile` component is a file upload component that allows users to upload
+ * either images or a .zip file based on the `type` prop passed to it. Here's a breakdown of the
+ * parameters used in the component:
+ * @returns The `UploadFile` component is being returned. It consists of a file upload area where users
+ * can drag and drop files or click to select files. It displays previews of the selected files (images
+ * or .zip) and allows users to remove previews. It also provides feedback messages for errors such as
+ * invalid file types or sizes.
+ */
 import { useState } from 'preact/hooks';
 
 interface Props {

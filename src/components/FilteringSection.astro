@@ -1,5 +1,5 @@
 ---
-import Multiselect from "./Multiselect";
+import Select from "./Select"
 import {
  IconFilterAdd,
  IconFilterClear,
@@ -31,7 +31,7 @@ const { href: URL_BASE } = Astro.url;
  >
   <div class="flex flex-col gap-y-1 pt-2 px-1">
    <label class="font-semibold">Filtrar por Categorías</label>
-   <Multiselect multiple client:load />
+   <Select multiple client:load />
   </div>
   <div class="flex flex-col gap-y-1 pt-2 px-1">
    <label class="font-semibold">Filtrar por Rango de Precio</label>

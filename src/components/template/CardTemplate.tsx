@@ -1,5 +1,5 @@
 import type { Category } from "../../types/api";
-import CategoryTag from "../CategoyTag";
+import CategoryTag from "../CategoryTag";
 import { IconTablerEyeFilled } from "../icons/Icons";
 import LinkButton from "../LinkButton";
 
