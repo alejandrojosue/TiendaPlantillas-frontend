@@ -15,6 +15,7 @@ export default class ProjectRepository implements IProjectRepository {
   page: number;
   pageCount: number;
   pageSize: number;
+
   async get({pageNumber, sort = 'asc', categories, min, max}: {
     pageNumber: string,
     sort?: string,
@@ -101,6 +102,18 @@ export default class ProjectRepository implements IProjectRepository {
       alert((error as Error).message)
     }
   }
+
+  async count(): Promise<number|Error> {
+    try {
+      const {meta} = await fetchDataFromAPI(
+          {url: `/api/projects?filters[status][$eq]=Open`})
+      if (!meta) return 0;
+      return meta.pagination.total as number
+    } catch (error) {
+      return error as Error
+    }
+  }
+
   downLoad({idProject, idUser}: {idProject: String; idUser: String;}):
       Promise<void> {
     throw new Error('Method not implemented.');

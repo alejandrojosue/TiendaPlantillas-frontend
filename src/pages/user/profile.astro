@@ -21,7 +21,7 @@ let _role: any = user?.role;
 ---
 
 <Layout title="Profile">
- <Backdrop>
+ <!-- <Backdrop>
   <div onblur="return false;"
    class="mx-auto lg:max-w-lg md:max-w-sm bg-slate-800 p-8 flex flex-col rounded-md gap-4"
   >
@@ -74,7 +74,7 @@ let _role: any = user?.role;
     >
    </form>
   </div>
- </Backdrop>
+ </Backdrop> -->
  <div class="w-full flex flex-col lg:flex-row" slot="before-main">
   <Sidebar
    username={user?.username ?? ""}
@@ -107,7 +107,7 @@ let _role: any = user?.role;
     }
     {
      user?.role == Role.freelancer && (
-      <Templates username={(user?.username as string) ?? ""} client:visible />
+      <Templates username={(user?.username as string) ?? ""} isProfile client:visible />
      )
     }
    </div>

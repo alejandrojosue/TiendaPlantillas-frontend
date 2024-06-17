@@ -11,7 +11,7 @@ import '../css/ReaderMarkdown.css';
  */
 export default function ReaderMarkdown({ description }: { description?: string }) {
   return (
-    <div id="reader-markdown-component" class="text-justify my-2" dangerouslySetInnerHTML={{ __html: description + '' }}>
+    <div id="reader-markdown-component" class="text-justify my-2 text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: description + '' }}>
     </div>
   );
 }

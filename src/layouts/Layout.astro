@@ -12,7 +12,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es" class=`scroll-smooth dark`>
+<html lang="es" class=`scroll-smooth drk`>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -33,6 +33,7 @@ const { title } = Astro.props;
 
 		<main class="max-w-5xl py-3 mx-auto">
 			<slot />
+			<div class="lg:py-0 py-10"></div>
 		</main>
 		<Footer />
 		<a

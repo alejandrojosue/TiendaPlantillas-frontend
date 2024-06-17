@@ -6,6 +6,23 @@ import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
 import type IUserRepository from './IUserRepository';
 
 export default class UserRepository implements IUserRepository {
+  async countByRole():
+      Promise<{countFreelancers: number, countCustomers: number}|Error> {
+    try {
+      const [freelancers, customers] = await Promise.all([
+        fetchDataFromAPI({url: `/api/users?filters[role][name]=Freelancer`}),
+        fetchDataFromAPI({url: `/api/users?filters[role][name]=Customer`})
+      ])
+      const countFreelancers = (freelancers as []).length
+      const countCustomers = (customers as []).length
+      return {
+        countFreelancers, countCustomers
+      }
+    } catch (error) {
+      console.error((error as Error).message);
+      return error as Error
+    }
+  }
   async signin(identifier: String, password: String): Promise<User|Error> {
     try {
       const res = await fetchDataFromAPI({

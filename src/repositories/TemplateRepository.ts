@@ -59,12 +59,16 @@ export default class TemplateRepository implements ITemplateRepository {
     return null
   }
 
-  async getByUsername({username}: {username: string;}): Promise<Template[]> {
+  async getByUsername({username, isProfile}:
+                          {username: string, isProfile?: boolean}):
+      Promise<Template[]> {
     try {
       const res = await fetchDataFromAPI({
-        url:
-            `/api/templates?populate=*&filters[status][$eq]=APPROVED&filters[freelancer][username][$eqi]=${
-                username}`
+        url: `/api/templates?populate=*${
+            isProfile ?
+                '' :
+                '&filters[status][$eq]=APPROVED'}&filters[freelancer][username][$eqi]=${
+            username}`
       });
 
       if (!res.data) return [];
@@ -137,6 +141,17 @@ export default class TemplateRepository implements ITemplateRepository {
       location.href = '/user/profile'
     } catch (error) {
       alert((error as Error).message)
+    }
+  }
+
+  async count(): Promise<number|Error> {
+    try {
+      const {meta} = await fetchDataFromAPI(
+          {url: `/api/templates?filters[status][$eq]=APPROVED`})
+      if (!meta) return 0;
+      return meta.pagination.total as number
+    } catch (error) {
+      return error as Error
     }
   }
 

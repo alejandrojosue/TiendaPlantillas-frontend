@@ -1,40 +1,192 @@
 ---
-import { IconTablerTemplate, IconAirBallon } from "../components/icons/Icons";
 import Layout from "../layouts/Layout.astro";
+import { PUBLIC_COMPANY_NAME } from "../env/config";
+import UserRepository from "../repositories/UserRepository";
+import TemplateRepository from "../repositories/TemplateRepository";
+import ProjectRepository from "../repositories/ProjectRepository";
+
+let _countFreelancers: number = 0,
+ _countCustomers: number = 0,
+ _countTemplates: number = 0,
+ _countProjects: number = 0;
+try {
+ const templateRepository = new TemplateRepository();
+ const projectRepository = new ProjectRepository();
+
+ const [
+  //@ts-ignore
+  { countFreelancers, countCustomers },
+  countTemplates,
+  countProjects,
+ ] = await Promise.all([
+  new UserRepository().countByRole(),
+  templateRepository.count(),
+  projectRepository.count(),
+ ]);
+
+ if (typeof countTemplates === "number" || typeof countProjects === "number") {
+  _countFreelancers = countFreelancers;
+  _countCustomers = countCustomers;
+  // @ts-ignore
+  _countTemplates = countTemplates;
+  // @ts-ignore
+  _countProjects = countProjects;
+ }
+} catch (error) {
+ console.error((error as Error).message);
+}
 ---
 
 <Layout title="Home">
- <div
-  class="w-full py-3 lg:px-11 grid lg:grid-cols-2 gap-7 justify-around align-middle items-center sm:grid-cols-1"
- >
- 
-  <a
-   class="py-9 px-12 text-center items-center hover:scale-110 transition-all mx-3
-   bg-gray-200 text-gray-700 hover:bg-gray-300
-   dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-600"
-   href="/templates"
+ <section class="lg:min-h-screen flex items-center">
+  <div
+   class="container flex flex-col items-center px-4 py-8 lg:py-0 mx-auto text-center md:px-10 lg:px-32"
   >
-   <IconTablerTemplate width="70" height="70" />
-   <h1 class="text-3xl mb-3 font-bold">Plantillas</h1>
-   <p class="text-justify leading-relaxed text-gray-500 lg:text-xl font-semibold">
-    Encontrarás plantillas de cualquier tecnología web, propósito e incluso
-    temática, va desde lo más simple hasta aplicaciones totalmente completas,
-    listas solo para descargar!
+   <h1
+    class="text-4xl font-bold leading-none sm:text-6xl text-gray-700 dark:text-white"
+   >
+    Encuentra y Contrata a los Mejores Freelancers en
+    <span class="text-blue-500">{PUBLIC_COMPANY_NAME}</span>
+   </h1>
+   <p class="px-8 mt-8 mb-12 text-lg text-gray-400">
+    Descubre una amplia variedad de plantillas y publica tus proyectos para
+    contratar a profesionales altamente cualificados.
    </p>
-  </a>
-  <a
-   class="py-9 px-12 text-center items-center hover:scale-110 transition-all mx-3
-   bg-gray-200 text-gray-700 hover:bg-gray-300
-   dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-600"
-   href="/projects"
+   <div class="flex flex-wrap justify-center">
+    <a
+     href="#get-started"
+     class="px-8 py-3 m-2 text-lg font-semibold rounded bg-blue-500 text-gray-50"
+    >
+     Comenzar
+    </a>
+   </div>
+  </div>
+ </section>
+
+ <section class="p-6">
+  <span
+   class="block mb-2 p-6 text-xs font-bold tracking-widest uppercase lg:text-center text-blue-500"
+   >Nuestra web</span
   >
-   <IconAirBallon width="70" height="70" />
-   <h1 class="text-3xl mb-3 font-bold">Proyectos</h1>
-   <p class="text-justify leading-relaxed text-gray-500 lg:text-xl font-semibold">
-    Encontrarás plantillas de cualquier tecnología web, propósito e incluso
-    temática, va desde lo más simple hasta aplicaciones totalmente completas,
-    listas solo para descargar!
-   </p>
-  </a>
- </div>
+  <div class="container grid justify-center grid-cols-2 mx-auto text-center">
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {_countCustomers}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Clientes Satisfechos
+    </p>
+   </div>
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {_countFreelancers}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Freelancers Disponibles
+    </p>
+   </div>
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {_countTemplates}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Plantillas Publicadas
+    </p>
+   </div>
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {_countProjects}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Proyectos Publicados
+    </p>
+   </div>
+  </div>
+ </section>
+ <section class="p-6">
+  <a id="get-started"></a>
+  <span
+   class="block mb-2 p-6 text-xs font-bold tracking-widest uppercase text-center text-blue-500"
+   >Empecemos</span
+  >
+  <h2 class="text-5xl font-bold lg:text-center text-gray-700 dark:text-white">
+   Buscar en {PUBLIC_COMPANY_NAME} es simple
+  </h2>
+  <div class="grid gap-6 my-16 lg:grid-cols-2">
+   <div
+    class="flex flex-col p-8 space-y-4 rounded-md bg-gray-100 dark:bg-slate-800"
+   >
+    <div
+     class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-blue-500 text-gray-50"
+    >
+     1
+    </div>
+    <p class="text-2xl font-semibold">
+     <b>Plantillas.</b> Encontrarás plantillas de cualquier tecnología web, propósito
+     e incluso temática.
+    </p>
+    <a
+     href="/templates"
+     class="text-blue-500 hover:text-blue-800"
+     rel="noopener noreferrer">Leer más</a
+    >
+   </div>
+   <div
+    class="flex flex-col p-8 space-y-4 rounded-md bg-gray-100 dark:bg-slate-800"
+   >
+    <div
+     class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-blue-500 text-gray-50"
+    >
+     2
+    </div>
+    <p class="text-2xl font-semibold">
+     <b>Proyectos.</b> Publica todos tus proyectos y encuentra a la persona indicada
+     para ayudarte!
+    </p>
+    <a
+     href="/projects"
+     class="text-blue-500 hover:text-blue-800"
+     rel="noopener noreferrer"
+    >
+     Leer más
+    </a>
+   </div>
+  </div>
+ </section>
+
+ <section>
+  <div class="container flex flex-col justify-center p-4 mx-auto md:p-8">
+   <span
+    class="block mb-6 text-xs font-bold tracking-widest uppercase text-center text-blue-500"
+    >Resolviendo dudas</span
+   >
+   <h2 class="mb-12 text-4xl font-bold leading-none text-center sm:text-5xl">
+    Preguntas Frecuentes
+   </h2>
+   <div class="grid gap-10 md:gap-8 sm:p-3 md:grid-cols-2 lg:px-12 xl:px-32">
+    <div>
+     <h3 class="font-semibold">¿Qué es un freelancer?</h3>
+     <p class="mt-1 dark:text-gray-400">
+      Freelancer es un profesional que se encarga de vender plantillas en
+      nuestra plataforma y al mismo tiempo ofrece sus servicios a los clientes.
+     </p>
+    </div>
+    <div>
+     <h3 class="font-semibold">¿Cuándo soy un cliente?</h3>
+     <p class="mt-1 dark:text-gray-400">
+      Cuando te registras como cliente y empiezas a publicar proyectos para que
+      los freelancers puedan ofrecer soluciones a esos proyectos.
+     </p>
+    </div>
+   </div>
+  </div>
+ </section>
 </Layout>

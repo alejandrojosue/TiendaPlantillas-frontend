@@ -56,9 +56,9 @@ const useTemplate = () => {
   }
 
   const getByUsername =
-      async ({username}: {username: string}) => {
+      async ({username, isProfile}: {username: string, isProfile?:boolean}) => {
     try {
-      const templatesData = await templateRepository.getByUsername({username});
+      const templatesData = await templateRepository.getByUsername({username, isProfile});
       setState(prev => ({
                  ...prev,
                  template: templatesData,

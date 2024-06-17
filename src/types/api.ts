@@ -51,10 +51,10 @@ export enum ProjectStatus {
 }
 
 export enum TemplateStatus {
- 'PENDING REVIEW',
- 'APPROVED',
- 'REVIEWING',
- 'NOT APPROVED'
+ 'PENDING REVIEW' = 'PENDING REVIEW',
+ APPROVED = 'APPROVED',
+ REVIEWING = 'REVIEWING',
+ 'NOT APPROVED' = 'NOT APPROVED'
 }
 
 export enum TypeFileToUpload {
