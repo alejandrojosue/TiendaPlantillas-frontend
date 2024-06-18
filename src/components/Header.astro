@@ -1,6 +1,6 @@
 ---
 import HeaderButton from "./HeaderButton.astro";
-import ShoppingCar from "../components/cart/CartButton";
+import CartButton from "../components/cart/CartButton";
 import {
   IconUserCircle,
   IconHome,
@@ -10,7 +10,8 @@ import {
 const username = Astro.cookies.get("username")?.value;
 ---
 
-<header class="w-full">
+<header class="w-full" transition:persist>
+  <section id="up"></section>
   <nav
     class="flex col-auto gap-x-3 items-center py-3 justify-center w-full text-center
     text-gray-900
@@ -30,11 +31,10 @@ const username = Astro.cookies.get("username")?.value;
     </HeaderButton>
     <HeaderButton href="/login">
       <IconUserCircle width="30" height="30" />
-      
-      <span class="hidden lg:block">{username ? 'Perfil' : 'Login'}</span>
+      <span class="hidden lg:block">{username ? "Perfil" : "Login"}</span>
     </HeaderButton>
     <HeaderButton>
-      <ShoppingCar client:load />
+      <CartButton client:load />
     </HeaderButton>
   </nav>
 </header>
