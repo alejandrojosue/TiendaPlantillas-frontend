@@ -2,19 +2,21 @@ import { useEffect, useState } from "preact/hooks";
 import { IconX } from "../icons/Icons";
 import Item, { type Props as CartItemProps } from "./Item";
 
-
 export default function Drawable() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [cart, setCart] = useState<Array<CartItemProps>>([])
+  useEffect(() => {
+    document.getElementById('drawer-navigation')?.classList.remove('-translate-x-full');
+  }, [isOpen]);
 
   useEffect(() => {
-    const cartStorage = localStorage.getItem('cart');
-    setCart(JSON.parse(cartStorage || '') || [])
+    const cartStorage = localStorage.getItem('cart') as string;
+    setCart(JSON.parse(cartStorage) || [])
   }, [cart, isOpen])
 
-  return (<div
+  return (<aside
     id="drawer-navigation"
-    class={`${isOpen ? 'translate-x-full' : ''} w-64 h-screen p-4 overflow-y-auto fixed top-0 left-full z-50 transition-transform bg-gray-100 dark:bg-gray-800`}
+    class={`w-64 h-screen p-4 overflow-y-auto fixed top-0 left-full z-50 transition-transform bg-gray-100 dark:bg-gray-800`}
     tabindex={-1}
     aria-labelledby="drawer-navigation-label"
   >
@@ -40,5 +42,5 @@ export default function Drawable() {
         <Item {...item} />
       ))}
     </div>
-  </div>)
+  </aside>)
 }

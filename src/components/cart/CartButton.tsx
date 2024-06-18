@@ -7,8 +7,8 @@ export default function CartButton() {
  const [cart, setCart] = useState<[]>([])
 
  useEffect(() => {
-  const cartStorage = localStorage.getItem('cart');
-  setCart(JSON.parse(cartStorage || '') || [])
+  const cartStorage = localStorage.getItem('cart') as string;
+  setCart(JSON.parse(cartStorage) || [])
   setCounter(cart.length)
  }, [cart, isOpen, counter])
 
