@@ -17,13 +17,13 @@ if (token) return Astro.redirect(`/user/profile`);
       slot="header-before-form"
       class="mx-auto bg-white rounded-lg"
     />
-    <h1 slot="header-before-form" class="text-center text-3xl text-slate-400">
+    <h1 slot="header-before-form" class="text-center text-3xl" >
       Bienvenido a {PUBLIC_COMPANY_NAME}
     </h1>
     <span slot="header-before-form" class="text-center text-lg text-slate-500">
       Inicie sesión en su cuenta {PUBLIC_COMPANY_NAME}
     </span>
-    <label class="flex flex-col my-2 text-slate-400 font-semibold">
+    <label class="flex flex-col my-2 font-semibold">
       Email:
       <input
         type="email"
@@ -32,7 +32,7 @@ if (token) return Astro.redirect(`/user/profile`);
         class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
       />
     </label>
-    <label class="flex flex-col my-2 text-slate-400 font-semibold">
+    <label class="flex flex-col my-2 font-semibold">
       Password:
       <input
         type="password"
@@ -42,7 +42,7 @@ if (token) return Astro.redirect(`/user/profile`);
       />
     </label>
     <section slot="footer-after-form" class="mx-auto">
-      <p class="text-slate-400">¿No tienes cuenta? <a href="/register" class="text-blue-500 hover:underline">Registrarme</a></p>
+      <p>¿No tienes cuenta? <a href="/register" class="text-blue-500 hover:underline">Registrarme</a></p>
     </section>
   </PrettyForm>
   <script>

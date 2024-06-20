@@ -7,64 +7,91 @@ const token = Astro.cookies.get("jwt")?.value;
 if (token) return Astro.redirect(`/user/profile`);
 ---
 
+<!-- Página de Registro -->
+<!-- 
+  Esta página proporciona un formulario de registro para que los usuarios puedan crear una cuenta en la plataforma.
+  Si el usuario ya está autenticado, será redirigido a su perfil.
+-->
+
 <Layout title="Register">
+  <!-- Formulario de Registro -->
   <PrettyForm>
+    <!-- Imagen de Encabezado -->
     <img 
-    slot="header-before-form"
-    src="/public/favicon.svg"
-    alt="icon"
-    width="60"
-    height="60"
-    class="mx-auto bg-blue-500 rounded-lg"
-  />
-  <h1 slot="header-before-form" class="text-center text-3xl">
-    Bienvenido a {PUBLIC_COMPANY_NAME}
-  </h1>
-  <span slot="header-before-form" class="text-center text-lg text-0 dark:text-slate-500">
-    Cree su cuenta en {PUBLIC_COMPANY_NAME}
-  </span>
-  <label class="flex flex-col my-2  font-semibold">
-    Correo:
-    <input
-      type="email"
-      name="email"
-      required
-      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+      slot="header-before-form"
+      src="/public/favicon.svg"
+      alt="icon"
+      width="60"
+      height="60"
+      class="mx-auto bg-blue-500 rounded-lg"
     />
-  </label>
-  <label class="flex flex-col my-2  font-semibold">
-    Nombre de Usuario:
-    <input
-      type="text"
-      name="username"
-      required
-      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-    />
-  </label>
-  <label class="flex flex-col my-2  font-semibold">
-    Password:
-    <input
-      type="password"
-      name="password"
-      required
-      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-    />
-  </label>
-  <label class="flex my-2  font-semibold">
-    <select
-      id="role"
-      name="role"
-      class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-slate-400"
-    >
-      <option selected>Elige tu tipo de Cuenta</option>
-      <option value="freelancer">Soy Freelancer</option>
-      <option value="customer">Soy Cliente</option>
-    </select>
-  </label>
-  <section slot="footer-after-form" class="mx-auto">
-    <p class="">¿Ya tienes cuenta? <a href="/login" class="text-blue-500 hover:underline">Iniciar sesión</a></p>
-  </section>
+    <!-- Título del Formulario -->
+    <h1 slot="header-before-form" class="text-center text-3xl">
+      Bienvenido a {PUBLIC_COMPANY_NAME}
+    </h1>
+    <!-- Descripción del Formulario -->
+    <span slot="header-before-form" class="text-center text-lg text-0 dark:text-slate-500">
+      Cree su cuenta en {PUBLIC_COMPANY_NAME}
+    </span>
+
+    <!-- Campo de Correo Electrónico -->
+    <label class="flex flex-col my-2 font-semibold">
+      Correo:
+      <input
+        type="email"
+        name="email"
+        required
+        class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+      />
+    </label>
+
+    <!-- Campo de Nombre de Usuario -->
+    <label class="flex flex-col my-2 font-semibold">
+      Nombre de Usuario:
+      <input
+        type="text"
+        name="username"
+        required
+        class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+      />
+    </label>
+
+    <!-- Campo de Contraseña -->
+    <label class="flex flex-col my-2 font-semibold">
+      Password:
+      <input
+        type="password"
+        name="password"
+        required
+        class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+      />
+    </label>
+
+    <!-- Campo de Tipo de Cuenta -->
+    <label class="flex my-2 font-semibold">
+      <select
+        id="role"
+        name="role"
+        class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-slate-400"
+      >
+        <option selected>Elige tu tipo de Cuenta</option>
+        <option value="freelancer">Soy Freelancer</option>
+        <option value="customer">Soy Cliente</option>
+      </select>
+    </label>
+
+    <!-- Campo de Términos y Condiciones -->
+    <label class="flex items-center gap-x-1 mx-auto cursor-pointer my-2">
+      <input type="checkbox" name="ckTermsAndConditions" id="ckTermsAndConditions" class="cursor-pointer w-4 h-4" /> Estoy de acuerdo con los <a href="/terms" class="text-blue-500 hover:underline">términos y condiciones</a>
+    </label>
+
+    <!-- Pie de Página del Formulario -->
+    <section slot="footer-after-form" class="mx-auto">
+      <p>¿Ya tienes cuenta? <a href="/login" class="text-blue-500 hover:underline">Iniciar sesión</a></p>
+    </section>
   </PrettyForm>
+
+  <!-- Script para manejar el envío del formulario -->
   <script>
     import UserRepository from "../repositories/UserRepository";
     import { Role } from "../types/api";
@@ -80,6 +107,11 @@ if (token) return Astro.redirect(`/user/profile`);
       const username = data.get("username") as string;
       const role = data.get("role") as string;
       const password = data.get("password") as string;
+      const ck = data.get('ckTermsAndConditions');
+      if (!ck) {
+        alert('Debe aceptar los términos y condiciones!')
+        return
+      }
       const user = await userRepository.signup({
         username,
         email,
@@ -104,4 +136,3 @@ if (token) return Astro.redirect(`/user/profile`);
     });
   </script>
 </Layout>
-

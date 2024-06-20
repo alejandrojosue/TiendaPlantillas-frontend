@@ -2,13 +2,32 @@
 import PrettyButton from "./PrettyButton.astro";
 import { IconTablerBrandTelegram } from "../icons/Icons";
 ---
+
+<!-- Componente PrettyForm -->
+<!-- 
+  Este componente proporciona un formulario estilizado con soporte para slots personalizados.
+  Incluye un botón de envío con un icono de Telegram.
+
+  Slots:
+  - header-before-form: Contenido que se mostrará antes del formulario.
+  - default: Campos del formulario.
+  - footer-after-form: Contenido que se mostrará después del formulario.
+-->
+
 <div class="mx-auto lg:max-w-lg md:max-w-sm bg-gray-100 dark:bg-slate-800 dark:text-slate-400 p-8 flex flex-col rounded-md gap-4">
- <slot name="header-before-form"/>
- <form method="POST" class="flex flex-col">
-  <slot />
-  <PrettyButton type="submit">
-   <IconTablerBrandTelegram width="35" height="35" /> Enviar
-  </PrettyButton>
- </form>
- <slot name="footer-after-form"/>
+  <!-- Slot para contenido antes del formulario -->
+  <slot name="header-before-form" />
+
+  <!-- Formulario -->
+  <form method="POST" class="flex flex-col">
+    <!-- Slot para los campos del formulario -->
+    <slot />
+    <!-- Botón de envío -->
+    <PrettyButton type="submit">
+      <IconTablerBrandTelegram width="35" height="35" /> Enviar
+    </PrettyButton>
+  </form>
+
+  <!-- Slot para contenido después del formulario -->
+  <slot name="footer-after-form" />
 </div>
