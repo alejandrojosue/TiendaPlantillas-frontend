@@ -1,86 +1,70 @@
 ---
 import { PUBLIC_COMPANY_NAME } from "../env/config";
 import Layout from "../layouts/Layout.astro";
-import { IconTablerBrandTelegram } from "../components/icons/Icons";
+import PrettyForm from "../components/common/PrettyForm.astro";
 export const prerender = false;
 const token = Astro.cookies.get("jwt")?.value;
-let errorMessage = "";
 if (token) return Astro.redirect(`/user/profile`);
 ---
 
 <Layout title="Register">
-  <div
-    class="mx-auto lg:max-w-lg md:max-w-sm bg-slate-800 p-8 flex flex-col rounded-md gap-4"
-  >
-    <img
-      src="/public/favicon.svg"
-      alt="icon"
-      width="60"
-      height="60"
-      class="mx-auto bg-white rounded-lg"
+  <PrettyForm>
+    <img 
+    slot="header-before-form"
+    src="/public/favicon.svg"
+    alt="icon"
+    width="60"
+    height="60"
+    class="mx-auto bg-blue-500 rounded-lg"
+  />
+  <h1 slot="header-before-form" class="text-center text-3xl">
+    Bienvenido a {PUBLIC_COMPANY_NAME}
+  </h1>
+  <span slot="header-before-form" class="text-center text-lg text-0 dark:text-slate-500">
+    Cree su cuenta en {PUBLIC_COMPANY_NAME}
+  </span>
+  <label class="flex flex-col my-2  font-semibold">
+    Correo:
+    <input
+      type="email"
+      name="email"
+      required
+      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
     />
-    <h1 class="text-center text-3xl text-slate-400">
-      Bienvenido a {PUBLIC_COMPANY_NAME}
-    </h1>
-    <span class="text-center text-lg text-slate-500">
-      Cree su cuenta en {PUBLIC_COMPANY_NAME}
-    </span>
-    <form method="POST" class="flex flex-col">
-      <label class="flex flex-col my-2 text-slate-400 font-semibold">
-        Correo:
-        <input
-          type="email"
-          name="email"
-          required
-          class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-        />
-      </label>
-      <label class="flex flex-col my-2 text-slate-400 font-semibold">
-        Nombre de Usuario:
-        <input
-          type="text"
-          name="username"
-          required
-          class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-        />
-      </label>
-      <label class="flex flex-col my-2 text-slate-400 font-semibold">
-        Password:
-        <input
-          type="password"
-          name="password"
-          required
-          class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-        />
-      </label>
-      <label class="flex my-2 text-slate-400 font-semibold">
-        <select
-          id="role"
-          name="role"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-400 dark:focus:ring-blue-500 dark:focus:border-slate-400"
-        >
-          <option selected>Elige tu tipo de Cuenta</option>
-          <option value="freelancer">Soy Freelancer</option>
-          <option value="customer">Soy Cliente</option>
-        </select>
-      </label>
-      <button
-        type="submit"
-        class="flex-row text-2xl w-1/2 mx-auto
-    justify-center cursor-pointer hover:bg-slate-700
-    focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-    font-medium rounded-lg p-2.5 text-center
-    inline-flex items-center dark:focus:ring-[#1da1f2]/55
-    hover:shadow-lg transition-all duration-200
-    ease-in-out hover:scale-105 scale-90 gap-x-2
-    opacity-90 hover:opacity-100  "
-      >
-        <IconTablerBrandTelegram width="25" height="25" />
-        Enviar</button
-      >
-    </form>
-    {errorMessage && <div class="text-red-500">{errorMessage}</div>}
-  </div>
+  </label>
+  <label class="flex flex-col my-2  font-semibold">
+    Nombre de Usuario:
+    <input
+      type="text"
+      name="username"
+      required
+      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+    />
+  </label>
+  <label class="flex flex-col my-2  font-semibold">
+    Password:
+    <input
+      type="password"
+      name="password"
+      required
+      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
+    />
+  </label>
+  <label class="flex my-2  font-semibold">
+    <select
+      id="role"
+      name="role"
+      class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-slate-400"
+    >
+      <option selected>Elige tu tipo de Cuenta</option>
+      <option value="freelancer">Soy Freelancer</option>
+      <option value="customer">Soy Cliente</option>
+    </select>
+  </label>
+  <section slot="footer-after-form" class="mx-auto">
+    <p class="">¿Ya tienes cuenta? <a href="/login" class="text-blue-500 hover:underline">Iniciar sesión</a></p>
+  </section>
+  </PrettyForm>
   <script>
     import UserRepository from "../repositories/UserRepository";
     import { Role } from "../types/api";
@@ -115,8 +99,8 @@ if (token) return Astro.redirect(`/user/profile`);
         setCookie("id", user.user.id + "");
         //@ts-ignore
         setCookie("username", user.user.username as string);
+        location.href = "/user/profile";
       }
-      location.href = "/user/profile";
     });
   </script>
 </Layout>
