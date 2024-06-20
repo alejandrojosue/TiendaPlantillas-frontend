@@ -69,14 +69,14 @@ export default class ProjectRepository implements IProjectRepository {
     try {
       const res = await fetchDataFromAPI({
         url: `/api/projects?populate=*&filters[customer][username][$eqi]=${
-            username}`
+            username}&sort:desc`
       });
 
       if (!res.data) return [];
 
-      // this.total = res.meta.pagination.total;
-      // this.pageCount = res.meta.pagination.pageCount;
-      // this.pageSize = res.meta.pagination.pageSize;
+      this.total = res.meta.pagination.total;
+      this.pageCount = res.meta.pagination.pageCount;
+      this.pageSize = res.meta.pagination.pageSize;
 
       return projectsMaper(res.data)
     } catch (error) {

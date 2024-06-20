@@ -6,7 +6,7 @@ import Tags from '../Tags';
 import useTemplate from '../../hooks/useTemplate';
 import UploadFile from '../../components/template/UploadFile';
 import { EMOTICONS_SET, TOOLBARS, TEXT_EXAMPLE } from '../../util/froalaConstants';
-import LinkButton from '../LinkButton';
+import LinkButton from '../common/LinkButton';
 import Carousel from './Carousel';
 import { IconArrowLeft, IconRoundedPuls, IconTablerCoin, IconURL } from '../icons/Icons';
 

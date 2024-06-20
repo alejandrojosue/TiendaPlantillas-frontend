@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import { IconCirclePlus } from "./icons/Icons";
-import LinkButton from "./LinkButton";
+import LinkButton from "./common/LinkButton";
 
 // Definición de las propiedades que el componente Expand espera recibir
 interface Props {

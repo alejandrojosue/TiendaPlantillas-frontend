@@ -2,10 +2,27 @@ import {PUBLIC_USER_CREATE_TOKEN} from '../env/config';
 import {userMaper} from '../maper/userMaper';
 
 import {Role, type User} from '../types/api';
+import { getCookie } from '../util/cookies';
 import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
 import type IUserRepository from './IUserRepository';
 
 export default class UserRepository implements IUserRepository {
+  async edit({ biography, linkedinLink, githubLink, instagramLink }: { biography: string; linkedinLink: string; githubLink: string; instagramLink: string; }): Promise<User | Error> {
+    try {
+      const id = getCookie('id');
+      const token = getCookie('jwt') as string;
+      if(!id) throw new Error('ID no encontrada!')
+      const res = await fetchDataFromAPI({
+        method: 'PUT',
+        url: `/api/users/${id}`,
+        data: {biography, linkedinLink, githubLink, instagramLink},
+        token
+      })
+      return res as User
+    } catch (error) {
+      return error as Error
+    }
+  }
   async countByRole():
       Promise<{countFreelancers: number, countCustomers: number}|Error> {
     try {

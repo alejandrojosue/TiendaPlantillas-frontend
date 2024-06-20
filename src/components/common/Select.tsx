@@ -1,7 +1,7 @@
-import { IconSearch } from "./icons/Icons";
-import CategoryTag from "./CategoryTag";
-import { useSelectComponent } from "../hooks/useSelectComponent";
-import type { Category } from "../types/api";
+import { IconSearch } from "../icons/Icons";
+import CategoryTag from "../CategoryTag";
+import { useSelectComponent } from "../../hooks/useSelectComponent";
+import type { Category } from "../../types/api";
 
 /**
  * Componente Select

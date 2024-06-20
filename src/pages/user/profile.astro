@@ -1,13 +1,11 @@
 ---
-import Sidebar from "../../components/Sidebar.astro";
-import Backdrop from "../../components/Backdrop.astro";
-import { IconTablerBrandTelegram } from "../../components/icons/Icons";
+import Sidebar from "../../components/user/Sidebar.astro";
 import Layout from "../../layouts/Layout.astro";
 import { Role } from "../../types/api";
 import Projects from "../../components/project/Projects";
 import UserRepository from "../../repositories/UserRepository";
 import Templates from "../../components/template/Templates";
-import { PUBLIC_COMPANY_NAME } from "../../env/config";
+import ProfileEdit from "../../components/user/Profile.edit.astro";
 export const prerender = false;
 
 const token = Astro.cookies.get("jwt")?.value as string;
@@ -21,96 +19,79 @@ let _role: any = user?.role;
 ---
 
 <Layout title="Profile">
- <!-- <Backdrop>
-  <div onblur="return false;"
-   class="mx-auto lg:max-w-lg md:max-w-sm bg-slate-800 p-8 flex flex-col rounded-md gap-4"
-  >
-   <img
-    src="/public/favicon.svg"
-    alt="icon"
-    width="60"
-    height="60"
-    class="mx-auto bg-white rounded-lg"
-   />
-   <h1 class="text-center text-3xl text-slate-400">
-    Bienvenido a {PUBLIC_COMPANY_NAME}
-   </h1>
-   <span class="text-center text-lg text-slate-500">
-    Inicie sesión en su cuenta {PUBLIC_COMPANY_NAME}
-   </span>
-   <form method="POST" class="flex flex-col">
-    <label class="flex flex-col my-2 text-lg text-slate-400 font-semibold">
-     Email:
-     <input
-      type="email"
-      name="email"
-      required
-      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-     />
-    </label>
-    <label class="flex flex-col my-2 text-lg text-slate-400 font-semibold">
-     Password:
-     <input
-      type="password"
-      name="password"
-      required
-      class="rounded-md my-1 bg-transparent border border-slate-400 p-3 text-slate-500 focus:text-slate-300"
-     />
-    </label>
-    <button
-     type="submit"
-     class="flex-row text-2xl
-      justify-center cursor-pointer hover:bg-slate-700
-      focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-      font-medium rounded-lg p-2.5 text-center
-      inline-flex items-center dark:focus:ring-[#1da1f2]/55
-      mr-2 hover:shadow-lg transition-all duration-200
-      ease-in-out hover:scale-110 scale-90 gap-x-2
-      opacity-90 hover:opacity-100"
-    >
-     <IconTablerBrandTelegram width="25" height="25" />
-
-     Enviar</button
-    >
-   </form>
-  </div>
- </Backdrop> -->
- <div class="w-full flex flex-col lg:flex-row" slot="before-main">
-  <Sidebar
-   username={user?.username ?? ""}
-   isProfile={true}
-   email={user?.email ?? ""}
-   role={_role === "Customer" ? "Cliente" : _role}
-   githubLink={user?.githubLink ?? ""}
-   instagramLink={user?.instagramLink ?? ""}
-   LinkedInLink={user?.LinkedInLink ?? ""}
+  <ProfileEdit
+    biography={user?.biography ?? ""}
+    githubLink={user?.githubLink ?? ""}
+    instagramLink={user?.instagramLink ?? ""}
+    LinkedInLink={user?.LinkedInLink ?? ""}
   />
-  <div class="w-full p-4">
-   <h2 class="text-2xl">Mi Biografía</h2>
-   <p class="text-gray-400 my-4">
-    {user?.biography ? user?.biography : "// Nada aún"}
-   </p>
-   <h2 class="text-2xl mb-4">
-    Mis {
-     user?.role && user?.role === Role.customer ? "Proyectos" : "Plantillas"
-    }
-   </h2>
-   <div>
-    {
-     user?.role === Role.customer && (
-      <Projects
-       username={(user?.username as string) ?? ""}
-       isProfile={true}
-       client:visible
-      />
-     )
-    }
-    {
-     user?.role == Role.freelancer && (
-      <Templates username={(user?.username as string) ?? ""} isProfile client:visible />
-     )
-    }
-   </div>
+  <div class="w-full flex flex-col lg:flex-row" slot="before-main">
+    <Sidebar
+      username={user?.username ?? ""}
+      isProfile={true}
+      email={user?.email ?? ""}
+      role={_role === "Customer" ? "Cliente" : _role}
+      githubLink={user?.githubLink ?? ""}
+      instagramLink={user?.instagramLink ?? ""}
+      LinkedInLink={user?.LinkedInLink ?? ""}
+    />
+    <div class="w-full p-4">
+      <h2 class="text-2xl">Mi Biografía</h2>
+      <p class="text-gray-400 my-4">
+        {user?.biography ? user?.biography : "// Nada aún"}
+      </p>
+      <h2 class="text-2xl mb-4">
+        Mis {
+          user?.role && user?.role === Role.customer
+            ? "Proyectos"
+            : "Plantillas"
+        }
+      </h2>
+      <div>
+        {
+          user?.role === Role.customer && (
+            <Projects
+              username={(user?.username as string) ?? ""}
+              isProfile={true}
+              client:visible
+            />
+          )
+        }
+        {
+          user?.role == Role.freelancer && (
+            <Templates
+              username={(user?.username as string) ?? ""}
+              isProfile
+              client:visible
+            />
+          )
+        }
+      </div>
+    </div>
   </div>
- </div>
+  <script>
+    // Este es el código que sirve para el formulario del componente
+    // Profile.edit.astro
+    import UserRepository from "../../repositories/UserRepository";
+    document.querySelector("form")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form as HTMLFormElement);
+      const userRepository = new UserRepository();
+      const githubLink = data.get("githubLink") as string;
+      const instagramLink = data.get("instagramLink") as string;
+      const linkedinLink = data.get("linkedinLink") as string;
+      const biography = data.get("biography") as string;
+      const user = await userRepository.edit({
+        githubLink,
+        instagramLink,
+        linkedinLink,
+        biography,
+      });
+      if (user instanceof Error) {
+        alert(user.message);
+      }
+      location.href = '/user/profile'
+    });
+  </script>
 </Layout>

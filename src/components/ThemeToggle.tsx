@@ -1,4 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
+import { IconSettings } from "./icons/Icons";
 
 export default function ThemeToggle() {
  const [theme, setTheme] = useState('dark');
@@ -19,6 +20,11 @@ export default function ThemeToggle() {
   localStorage.setItem("theme", theme);
  }, [theme]);
 
- return (<><button class=" p-4 bg-slate-800 z-50" onClick={handleClick}>{theme === "light" ? "🌙" : "🌞"}</button></>)
+ return (
+  <div class="fixed flex items-center top-10 right-0 p-2 translate-x-[calc(100%-46px)] hover:translate-x-0 transition-all duration-200 ease-in-out bg-slate-300 rounded-s-full z-50">
+   <span class="text-slate-800 dark:"><IconSettings width="30" height="30" /></span>
+   <button class=" pl-2" onClick={handleClick}>{theme === "light" ? "🌙" : "🌞"}</button>
+  </div>
+ )
 
 }

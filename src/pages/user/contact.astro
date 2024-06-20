@@ -1,8 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { isEmpty } from "../../util/isEmpy";
-import Backdrop from "../../components/Backdrop.astro";
-import Username from "./[username].astro";
+import Modal from "../../components/Modal.astro";
+import PrettyButton from "../../components/common/PrettyButton.astro";
+import { IconTablerBrandTelegram } from "../../components/icons/Icons";
 export const prerender = false;
 const senderEmail = Astro.cookies.get("senderEmail")?.value;
 const recipientEmail = Astro.cookies.get("recipientEmail")?.value;
@@ -11,16 +12,16 @@ const projectID = Astro.cookies.get("projectID")?.value;
 const customerName = Astro.cookies.get("customerName")?.value;
 const customer = Astro.cookies.get("username")?.value;
 
-if (isEmpty([Username])) {
+if (isEmpty([customerName])) {
  return Astro.redirect("/projects");
 }
 ---
 
 <Layout title="contact">
- <Backdrop>
+ <Modal>
   En el siguiente formulario se redactará el correo a la persona que desea
   contactar por motivos del proyecto: <b>{projectTitle}</b>.
- </Backdrop>
+ </Modal>
  <form id="contactForm" method="post" class="tex-gray-800 p-3">
   <div>
    <label for="email-recipient" class="block text-white text-sm font-bold"
@@ -96,32 +97,9 @@ if (isEmpty([Username])) {
   </div>
   <br />
   <div class="w-full flex justify-center">
-   <button
-    type="submit"
-    class="flex-row text-2xl my3 text-white
-   justify-center cursor-pointer hover:bg-slate-700
-   focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-   font-bold rounded-lg p-2.5 text-center
-   inline-flex items-center dark:focus:ring-[#1da1f2]/55
-   mr-2 hover:shadow-lg transition-all duration-200
-   ease-in-out hover:scale-110 scale-90 gap-x-2
-   opacity-90 hover:opacity-100"
-    ><svg
-     xmlns="http://www.w3.org/2000/svg"
-     class="icon icon-tabler icon-tabler-brand-telegram"
-     width="35"
-     height="35"
-     viewBox="0 0 24 24"
-     stroke-width="1.5"
-     stroke="currentColor"
-     fill="none"
-     stroke-linecap="round"
-     stroke-linejoin="round"
-    >
-     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-     <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"></path>
-    </svg>Enviar</button
-   >
+   <PrettyButton type="submit">
+    <IconTablerBrandTelegram width="35" height="35" /> Enviar
+   </PrettyButton>
   </div>
  </form>
 </Layout>

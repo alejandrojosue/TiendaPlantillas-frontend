@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { IconX } from "../icons/Icons";
+import { IconShoppingCartOff, IconX } from "../icons/Icons";
 import Item, { type Props as CartItemProps } from "./Item";
 
 export default function Drawable() {
@@ -38,6 +38,15 @@ export default function Drawable() {
       <span class="sr-only">Close menu</span>
     </button>
     <div class="py-4 overflow-y-auto">
+      {
+        !cart.length ? <div class="flex items-center flex-col h-full py-6">
+          <IconShoppingCartOff width="40" height="40" />
+          <p>¡El carrito esta vacío!</p>
+          <a href="/templates"
+          class="px-2 py-1 my-3 text-sm font-semibold rounded bg-blue-500 text-gray-50">Empezar a Comprar</a>
+        </div>
+        : ''
+      }
       {cart.map(item => (
         <Item {...item} />
       ))}

@@ -1,7 +1,7 @@
 ---
-import type { User } from "../types/api";
-import { IconCirclePlus, IconGithub, IconInstagram, IconLinkedin, IconTablerLogout, IconUserEdit } from "./icons/Icons";
-import LinkButton from "./LinkButton";
+import type { User } from "../../types/api";
+import { IconCirclePlus, IconGithub, IconInstagram, IconLinkedin, IconTablerLogout, IconUserEdit } from "../icons/Icons";
+import LinkButton from "../common/LinkButton";
 
 interface Props extends User {
   isProfile?: boolean;
@@ -65,29 +65,25 @@ const {
           Crear {role === "Freelancer" ? "plantilla" : "proyecto"}
         </LinkButton>
         <LinkButton size="small">
-          <div id="btnEditProfile" class="flex gap-x-2">
+          <div id="btnEditProfile" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="flex gap-x-2">
             <IconUserEdit width="25" height="25" />
             Editar mi perfil
           </div>
         </LinkButton>
         <LinkButton link="#" size="small">
-          <div id="logout" class="flex gap-x-2">
+          <div id="logout" class="flex gap-x-2" >
             <IconTablerLogout width="25" height="25" />
             Cerrar sesión
           </div>
         </LinkButton>
+
       </>
     )
   }
 </div>
 <script>
-  import { deleteAllCookies } from "../util/cookies";
-  const backdrop = document.getElementById("backdrop") as HTMLDivElement;
+  import { deleteAllCookies } from "../../util/cookies";
   document
     .getElementById("logout")
     ?.addEventListener("click", deleteAllCookies);
-
-    document.getElementById('btnEditProfile')?.addEventListener('click',()=>{
-      backdrop.style.display = 'flex';
-    })
 </script>

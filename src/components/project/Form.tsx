@@ -4,7 +4,8 @@ import { ProjectStatus, Role } from "../../types/api";
 import CategoryRepository from "../../repositories/CategoryRepository";
 import Tags from "../Tags";
 import useProject from "../../hooks/useProject";
-import LinkButton from "../LinkButton";
+import LinkButton from "../common/LinkButton";
+import { IconArrowLeft, IconCirclePlus, IconRoundedPuls, IconTablerCoin } from "../icons/Icons";
 
 /**
  * Componente funcional que representa un formulario para crear un nuevo proyecto.
@@ -100,25 +101,7 @@ export default function Form({ customerID, username, email, token }: { customerI
                <div
                   class="bg-gray-800 text-gray-400 p-8 text-3xl font-semibold my-3 rounded-md flex items-center justify-center"
                >
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     class="icon icon-tabler icon-tabler-coin mr-2"
-                     width="40"
-                     height="40"
-                     viewBox="0 0 24 24"
-                     stroke-width="1.5"
-                     stroke="currentColor"
-                     fill="none"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                  >
-                     <path stroke="none" d="M0 0h24V24H0z" fill="none"></path>
-                     <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 0 0 0 18a9 9 0 0 0 -18 0"></path>
-                     <path
-                        d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"
-                     ></path>
-                     <path d="M12 7v10"></path>
-                  </svg>
+                  <IconTablerCoin width="40" height="40" />
                   Precio:
                   {/* Input para el precio del proyecto */}
                   <input
@@ -150,24 +133,7 @@ export default function Form({ customerID, username, email, token }: { customerI
             <div class="flex"></div>
             {/* Botón de retorno a la lista de proyectos */}
             <LinkButton link="/projects" size="large">
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-circle-arrow-left"
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-               >
-                  <path stroke="none" d="M0 0h24V24H0z" fill="none"></path>
-                  <path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18"></path>
-                  <path d="M8 12l4 4"></path>
-                  <path d="M8 12h8"></path>
-                  <path d="M12 8l-4 4"></path>
-               </svg>
+               <IconArrowLeft width="40" height="40" />
                Regresar
             </LinkButton>
             {/* Botón de envío del formulario */}
@@ -182,23 +148,7 @@ export default function Form({ customerID, username, email, token }: { customerI
                opacity-90 hover:opacity-100"
                type={'submit'}
             >
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-square-rounded-plus"
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-               >
-                  <path stroke="none" d="M0 0h24V24H0z" fill="none"></path>
-                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-                  <path d="M15 12h-6"></path>
-                  <path d="M12 9v6"></path>
-               </svg>
+               <IconRoundedPuls width="40" height="40" />
                Guardar
             </button>
          </form>

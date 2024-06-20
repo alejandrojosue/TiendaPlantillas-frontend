@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { IconTablerBrandTelegram } from "../components/icons/Icons";
 const userEmail = Astro.cookies.get('userEmail')?.value
 
 ---
@@ -57,21 +58,8 @@ const userEmail = Astro.cookies.get('userEmail')?.value
    mr-2 hover:shadow-lg transition-all duration-200
    ease-in-out hover:scale-110 scale-90 gap-x-2
    opacity-90 hover:opacity-100"
-    ><svg
-     xmlns="http://www.w3.org/2000/svg"
-     class="icon icon-tabler icon-tabler-brand-telegram"
-     width="35"
-     height="35"
-     viewBox="0 0 24 24"
-     stroke-width="1.5"
-     stroke="currentColor"
-     fill="none"
-     stroke-linecap="round"
-     stroke-linejoin="round"
-    >
-     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-     <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"></path>
-    </svg>Enviar</button
+    ><IconTablerBrandTelegram width="40" height="40" />
+    Enviar</button
    >
   </div>
  </form>

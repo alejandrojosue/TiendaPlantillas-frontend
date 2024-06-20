@@ -1,4 +1,4 @@
-import { setParam } from "../util/urlParams";
+import { setParam } from "../../util/urlParams";
 
 interface Props {
   link?: string; // URL opcional a la que apunta el botón
