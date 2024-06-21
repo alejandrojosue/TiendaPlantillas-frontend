@@ -1,6 +1,6 @@
 ---
 import type { User } from "../../types/api";
-import { IconCirclePlus, IconGithub, IconInstagram, IconLinkedin, IconTablerLogout, IconUserEdit } from "../icons/Icons";
+import { IconCirclePlus, IconShoppingCartCheck, IconGithub, IconInstagram, IconLinkedin, IconTablerLogout, IconUserEdit } from "../icons/Icons";
 import LinkButton from "../common/LinkButton";
 
 interface Props extends User {
@@ -56,7 +56,7 @@ const {
   </div>
   {
     isProfile && (
-      <>
+      <div class="grid lg:grid-cols-1 grid-cols-2 px-7">
         <LinkButton
           link={`/${role === "Freelancer" ? "templates" : "projects"}/create`}
           size="small"
@@ -70,14 +70,20 @@ const {
             Editar mi perfil
           </div>
         </LinkButton>
+        <LinkButton link="/user/my-purchases" size="small">
+          <div id="logout" class="flex gap-x-2" >
+            <IconShoppingCartCheck width="25" height="25" />
+            Mis Compras
+          </div>
+        </LinkButton>
         <LinkButton link="#" size="small">
           <div id="logout" class="flex gap-x-2" >
             <IconTablerLogout width="25" height="25" />
             Cerrar sesión
           </div>
         </LinkButton>
-
-      </>
+        
+      </div>
     )
   }
 </div>

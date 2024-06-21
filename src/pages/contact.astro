@@ -1,66 +1,70 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { IconTablerBrandTelegram } from "../components/icons/Icons";
-const userEmail = Astro.cookies.get('userEmail')?.value
+import PrettyForm from "../components/common/PrettyForm.astro";
+import { PUBLIC_COMPANY_NAME } from "../env/config";
+export const prerender = false
+const userEmail = Astro.cookies.get("email")?.value;
 
 ---
 
 <Layout title="Contacto">
- <form id="contactForm" method="post" class="tex-gray-800 p-3">
-  <div>
-   <label for="email-sender" class="block text-white text-sm font-bold"
+ <PrettyForm>
+  <img
+      src="/public/favicon.svg"
+      alt="icon"
+      width="60"
+      height="60"
+      slot="header-before-form"
+      class="mx-auto bg-white rounded-lg"
+    />
+    <h1 slot="header-before-form" class="text-center text-3xl" >
+      Bienvenido a {PUBLIC_COMPANY_NAME}
+    </h1>
+    <span slot="header-before-form" class="text-center text-lg text-slate-500">
+      Contáctese con {PUBLIC_COMPANY_NAME}
+    </span>
+  <section>
+   <label for="email-sender" class="block text-slate-500 dark:text-white text-sm font-bold"
     >Remitente:</label
    >
    <input
     type="email"
     id="email-sender"
-    value={userEmail}
+    placeholder="my-user@gmail.com"
+    value={userEmail ?? ''}
     name="email-sender"
-    class="mt-1 block w-full rounded-md p-2 bg-slate-800"
+    class="w-full rounded-md my-1 bg-transparent border border-slate-400 p-1 text-slate-500 focus:text-slate-300"
     required
    />
-  </div>
+  </section>
   <br />
-  <div>
-   <label for="subject" class="block text-white text-sm font-bold"
+  <section>
+   <label for="subject" class="block text-slate-500 dark:text-white text-sm font-bold"
     >Asunto:</label
    >
    <input
     type="text"
     id="subject"
     name="subject"
-    class="mt-1 block w-full rounded-md p-2 bg-slate-800"
+    placeholder="Este es el asunto..."
+    class="w-full rounded-md my-1 bg-transparent border border-slate-400 p-1 text-slate-500 focus:text-slate-300"
     required
    />
-  </div>
+  </section>
   <br />
-  <div>
-   <label for="message" class="block text-white text-sm font-bold"
+  <section>
+   <label for="message" class="block text-slate-500 dark:text-white text-sm font-bold"
     >Mensaje:</label
    >
    <textarea
     id="message"
     name="message"
-    rows="12"
-    class="mt-1 block w-full rounded-md p-2 bg-slate-800 text-justify"
-    required
-   ></textarea>
-  </div>
+    rows="8"
+    placeholder="Buenos días, necesito..."
+    class="w-full rounded-md mt-1 bg-transparent border border-slate-400 p-1 text-slate-500 focus:text-slate-300"
+    required></textarea>
+  </section>
   <br />
-  <div class="w-full flex justify-center">
-   <button
-    type="submit"
-    class="flex-row text-2xl my3 text-white
-   justify-center cursor-pointer hover:bg-slate-700
-   focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50
-   font-bold rounded-lg p-2.5 text-center
-   inline-flex items-center dark:focus:ring-[#1da1f2]/55
-   mr-2 hover:shadow-lg transition-all duration-200
-   ease-in-out hover:scale-110 scale-90 gap-x-2
-   opacity-90 hover:opacity-100"
-    ><IconTablerBrandTelegram width="40" height="40" />
-    Enviar</button
-   >
-  </div>
- </form>
+ </PrettyForm>
+ <form id="contactForm" method="post" class="tex-gray-800 p-3"></form>
 </Layout>

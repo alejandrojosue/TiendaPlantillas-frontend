@@ -5,7 +5,12 @@ import ReaderMarkdown from "../../components/ReaderMarkdown";
 import Carousel from "../../components/template/Carousel";
 import LinkButton from "../../components/common/LinkButton";
 import CategoryTag from "../../components/CategoryTag";
-import { IconArrowLeft, IconTablerCoin, IconTablerEye, IconCirclePlus } from "../../components/icons/Icons";
+import {
+   IconArrowLeft,
+   IconTablerCoin,
+   IconTablerEye,
+   IconCirclePlus,
+} from "../../components/icons/Icons";
 export const prerender = false;
 const { id } = Astro.params;
 if (!id) return;
@@ -18,7 +23,9 @@ if (!template) Astro.response.status = 404;
 
 <Layout title={template?.title || ""}>
    <div class="p-3 overflow-hidden">
-      <h1 class="text-5xl my-2 text-gray-700 dark:text-white">{template?.title}</h1>
+      <h1 class="text-5xl my-2 text-gray-700 dark:text-white">
+         {template?.title}
+      </h1>
       <Carousel images={template?.images as string[]} client:load />
       <ReaderMarkdown description={template?.description} />
       <div class="grid lg:grid-cols-2 lg:gap-16">
@@ -44,7 +51,10 @@ if (!template) Astro.response.status = 404;
          </div>
       </div>
       <div class="flex flex-wrap justify-center my-3 gap-4 mb-10">
-         <span class="font-semibold p-2 rounded-s-full bg-blue-500 text-white dark:bg-gray-400 dark:text-gray-800">Tags:</span>
+         <span
+            class="font-semibold p-2 rounded-s-full bg-blue-500 text-white dark:bg-gray-400 dark:text-gray-800"
+            >Tags:</span
+         >
          {
             template?.categories.map(({ categoryName }) => (
                <CategoryTag size="large" categoryName={categoryName} />
@@ -85,8 +95,8 @@ if (!template) Astro.response.status = 404;
          price: btnAddToCart.attributes.getNamedItem("data-price")?.value,
          img: btnAddToCart.attributes.getNamedItem("data-img")?.value,
       };
-      const templates =
-         JSON.parse(localStorage.getItem("cart") as string) || []; // almacena un Array
+      const cartStorage = localStorage.getItem("cart") as string;
+      const templates = cartStorage ? JSON.parse(cartStorage) : []; // almacena un Array
 
       if (
          Array.isArray(templates) &&

@@ -23,7 +23,7 @@ export default function ThemeToggle() {
  return (
   <div class="fixed flex items-center top-10 right-0 p-2 translate-x-[calc(100%-46px)] hover:translate-x-0 transition-all duration-200 ease-in-out bg-slate-300 rounded-s-full z-50">
    <span class="text-slate-800 dark:"><IconSettings width="30" height="30" /></span>
-   <button class=" pl-2" onClick={handleClick}>{theme === "light" ? "🌙" : "🌞"}</button>
+   <button class="ml-2 p-1 rounded-full hover:bg-slate-300 hover:shadow-2xl" onClick={handleClick}>{theme === "light" ? "🌙" : "🌞"}</button>
   </div>
  )
 

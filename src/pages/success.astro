@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LinkButton from "../components/common/LinkButton";
+import { IconArrowLeft, IconTablerEye } from "../components/icons/Icons";
+---
+
+<Layout title="Compra Cancelada">
+ <section class="flex items-center h-full p-16">
+  <div
+   class="container flex flex-col items-center justify-center px-5 mx-auto my-8"
+  >
+  <div class="text-center">
+   <h2 class="mb-8 font-extrabold text-7xl text-gray-600 dark:text-gray-400">
+    Pago Exitoso
+   </h2>
+    <p class="text-2xl font-semibold md:text-3xl">
+     ¡Tu compra se ha completado con éxito!
+    </p>
+    <p class="mt-4 mb-8 text-gray-400 dark:text-gray-600">
+     Gracias por tu compra. Puedes seguir explorando nuestros productos o revisar tu historial de pedidos.
+    </p>
+    <LinkButton link="/user/my-purchases" size="large">
+     <IconTablerEye width="50" height="50"/>
+     <span>Mis Compras</span>
+    </LinkButton>
+    <LinkButton link="/" size="large">
+     <IconArrowLeft width="40" height="40"/>
+     <span>Regresar al Inicio</span>
+    </LinkButton>
+   </div>
+  </div>
+ </section>
+ <script>
+ localStorage.setItem('cart', '')
+ </script>
+</Layout>
+

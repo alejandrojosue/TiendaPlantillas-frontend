@@ -4,7 +4,6 @@ import { PUBLIC_COMPANY_NAME } from "../env/config";
 import UserRepository from "../repositories/UserRepository";
 import TemplateRepository from "../repositories/TemplateRepository";
 import ProjectRepository from "../repositories/ProjectRepository";
-
 let _countFreelancers: number = 0,
  _countCustomers: number = 0,
  _countTemplates: number = 0,
@@ -35,6 +34,8 @@ try {
 } catch (error) {
  console.error((error as Error).message);
 }
+
+
 ---
 
 <Layout title="Home">
@@ -203,4 +204,5 @@ try {
    </div>
   </div>
  </section>
+
 </Layout>

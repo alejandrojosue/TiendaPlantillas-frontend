@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { IconShoppingCartOff, IconX } from "../icons/Icons";
 import Item, { type Props as CartItemProps } from "./Item";
+import ButtonPayment from "./ButtonPayment";
 
 export default function Drawable() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -11,7 +12,7 @@ export default function Drawable() {
 
   useEffect(() => {
     const cartStorage = localStorage.getItem('cart') as string;
-    setCart(JSON.parse(cartStorage) || [])
+    setCart(cartStorage ? JSON.parse(cartStorage) : [])
   }, [cart, isOpen])
 
   return (<aside
@@ -38,18 +39,20 @@ export default function Drawable() {
       <span class="sr-only">Close menu</span>
     </button>
     <div class="py-4 overflow-y-auto">
-      {
-        !cart.length ? <div class="flex items-center flex-col h-full py-6">
-          <IconShoppingCartOff width="40" height="40" />
-          <p>¡El carrito esta vacío!</p>
-          <a href="/templates"
-          class="px-2 py-1 my-3 text-sm font-semibold rounded bg-blue-500 text-gray-50">Empezar a Comprar</a>
-        </div>
-        : ''
-      }
       {cart.map(item => (
         <Item {...item} />
       ))}
+      {
+        !cart.length
+          ? <div class="flex items-center flex-col h-full py-6">
+              <IconShoppingCartOff width="40" height="40" />
+              <p>¡El carrito esta vacío!</p>
+              <a href="/templates"
+                class="px-2 py-1 my-3 text-sm font-semibold rounded bg-blue-500 text-gray-50">Empezar a Comprar</a>
+            </div>
+          : <div class="flex items-center flex-col h-full py-6"><ButtonPayment /></div>
+      }
+
     </div>
   </aside>)
 }

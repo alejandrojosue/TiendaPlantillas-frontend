@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LinkButton from "../components/common/LinkButton";
+import { IconArrowLeft } from "../components/icons/Icons";
+---
+
+<Layout title="Compra Cancelada">
+ <section class="flex items-center h-full p-16">
+  <div
+   class="container flex flex-col items-center justify-center px-5 mx-auto my-8"
+  >
+  <div class="text-center">
+   <h2 class="mb-8 font-extrabold text-7xl text-gray-600 dark:text-gray-400">
+    <span class="sr-only">Error</span>Compra Cancelada
+   </h2>
+    <p class="text-2xl font-semibold md:text-3xl">
+     Te informamos que tu compra ha sido cancelada con éxito.
+    </p>
+    <p class="mt-4 mb-8 text-gray-400 dark:text-gray-600">
+     Pero puedes seguir explorando nuestros productos en la página de inicio.
+    </p>
+    <LinkButton link="/templates" size="large">
+     <IconArrowLeft width="40" height="40"/>
+     <span>Regresar al Inicio</span>
+    </LinkButton>
+   </div>
+  </div>
+ </section>
+</Layout>

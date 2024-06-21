@@ -28,7 +28,7 @@ export default function CardTemplate({ id, title, img, categories, unitPrice, st
   // Método para añadir al carrito de compras.
   const addToCart = () => {
     const cartStorage = localStorage.getItem('cart') as string;
-    const cart: CartProps[] = JSON.parse(cartStorage) || [];
+    const cart: CartProps[] = cartStorage ? JSON.parse(cartStorage) : [];
     if (cart.findIndex((item) => +item.id === +id) !== -1) return;
     cart.push({ id: +id, name: title, img, price: unitPrice })
     localStorage.setItem('cart', JSON.stringify(cart))
