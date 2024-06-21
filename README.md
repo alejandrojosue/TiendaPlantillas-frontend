@@ -7,9 +7,9 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url] -->
 
-# Web oficial de Plataforma de Contratación Freelance y Venta de Plantillas 🌟
+# Plataforma de Contratación Freelance y Venta de Plantillas 🌟
 
-¡Bienvenido a la web oficial de la Plataforma de Contratación Freelance y Venta de Plantillas! Aquí encontrarás toda la información relevante sobre nuestro proyecto y cómo contribuir a él.
+¡Bienvenido a la Plataforma de Contratación Freelance y Venta de Plantillas! Aquí encontrarás toda la información relevante sobre nuestro proyecto y cómo contribuir a él.
 [Reportar error](https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues) · [Sugerir algo](https://github.com/alejandrojosue/TiendaPlantillas-frontend/issues)
 </div>
 
@@ -23,7 +23,7 @@
 <details>
 <summary>Tabla de contenidos</summary>
 
-- [Web oficial de Plataforma de Contratación Freelance y Venta de Plantillas 🌟](#web-oficial-de-plataforma-de-contratación-freelance-y-venta-de-plantillas-)
+- [Plataforma de Contratación Freelance y Venta de Plantillas 🌟](#plataforma-de-contratación-freelance-y-venta-de-plantillas-)
   - [Características principales](#características-principales)
   - [Para empezar](#para-empezar)
     - [Prerequisitos](#prerequisitos)
@@ -143,7 +143,7 @@ Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal.
 - [![Typescript][typescript-badge]][typescript-url] - JavaScript con sintaxis para tipos.
 - [![Tailwind CSS][tailwind-badge]][tailwind-url] - Un framework CSS de utilidades para construir diseños personalizados rápidamente.
 - [![Strapi][strapi-badge]][strapi-url] - Headless CMS para gestionar contenido.
-- [![Preact][preact-badge]][preact-url] - Librería de frontend más veloz y ligera queReact.
+- [![Preact][preact-badge]][preact-url] - Librería de frontend más veloz y ligera que React.
 
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
