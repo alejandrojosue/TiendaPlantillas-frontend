@@ -24,8 +24,7 @@ const useTemplate = () => {
     error: null
   });
   const templateRepository = new TemplateRepository();
-  const get =
-      async () => {
+  const get = async () => {
     try {
       let pageNumber = getParam('page') || '1'
       let sort = getParam('sort') || 'asc'
@@ -53,12 +52,13 @@ const useTemplate = () => {
     } finally {
       setState(prev => ({...prev, loading: false}))
     }
-  }
+  };
 
-  const getByUsername =
-      async ({username, isProfile}: {username: string, isProfile?:boolean}) => {
+  const getByUsername = async (
+      {username, isProfile}: {username: string, isProfile?: boolean}) => {
     try {
-      const templatesData = await templateRepository.getByUsername({username, isProfile});
+      const templatesData =
+          await templateRepository.getByUsername({username, isProfile});
       setState(prev => ({
                  ...prev,
                  template: templatesData,
@@ -72,10 +72,9 @@ const useTemplate = () => {
     } finally {
       setState(prev => ({...prev, loading: false}))
     }
-  }
+  };
 
-  const create =
-      async ({templateData, images, zip, token}: {
+  const create = async ({templateData, images, zip, token}: {
     templateData: Template,
     images: File[],
     zip: File,
@@ -99,15 +98,27 @@ const useTemplate = () => {
 
     await templateRepository.create(
         templateData, dataTransfer.files, zip, token)
-  }
+  };
 
-  const update =
-      async (template: Template, token: string) => {
+  const update = async (template: Template, token: string) => {
     await templateRepository.update(template, token)
-  }
+  };
+
+  const download = async({stripeId, idUser, token}:
+                             {stripeId: string, idUser: number, token: string}):
+      Promise<Array<{url:string}>> => {
+        try {
+          const res =
+              await templateRepository.downLoad({stripeId, idUser, token});
+          return res as [];
+        } catch (error) {
+          console.error((error as Error).message);
+          return []
+        }
+      };
 
   return {
-    ...state, get, getByUsername, create, update
+    ...state, get, getByUsername, create, update, download
   }
 };
 

@@ -6,7 +6,7 @@ export default interface ITemplateRepository {
   getByUsername({username, isProfile}:{username:string, isProfile?:boolean}): Promise<Template[]>;
   create(template: Template, images:FileList|null, templateZIP:File, token:string): Promise<void>;
   update(template: Template, token:string): Promise<void>;
-  downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}): Promise<void>;
+  downLoad({stripeId, idUser, token}: {stripeId: string, idUser: number, token:string}): Promise<string[]|Error>;
   total: number;
   pageCount: number;
 }

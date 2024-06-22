@@ -155,10 +155,20 @@ export default class TemplateRepository implements ITemplateRepository {
     }
   }
 
-  async downLoad({idTemplate, idUser}: {idTemplate: String, idUser: String}):
-      Promise<void> {
-    // const template = await fetch('')
-
-    throw new Error('Method not implemented.');
+  async downLoad({stripeId, idUser, token}:
+                     {stripeId: String, idUser: number, token: string}):
+      Promise<string[]|Error> {
+    try {
+      const res = await fetchDataFromAPI({
+        url: '/api/template/download',
+        token,
+        method: 'POST',
+        data: {customer: {id: idUser}, stripeId}
+      })
+      return res.urls as []
+    } catch (error) {
+      console.error((error as Error).message);
+      return error as Error
+    }
   }
 }

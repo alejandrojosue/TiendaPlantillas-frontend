@@ -113,9 +113,4 @@ export default class ProjectRepository implements IProjectRepository {
       return error as Error
     }
   }
-
-  downLoad({idProject, idUser}: {idProject: String; idUser: String;}):
-      Promise<void> {
-    throw new Error('Method not implemented.');
-  }
 }

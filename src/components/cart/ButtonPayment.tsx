@@ -21,7 +21,6 @@ const handlePayment = async () => {
  }
 
  const products = JSON.parse(localStorage.getItem("cart") + '')
- console.log(products.map(({ id }: { id: number }) => ({ id })));
 
  if (!products || !products.length) {
   alert('El carrito de compras está vacío!')
@@ -30,6 +29,11 @@ const handlePayment = async () => {
  }
 
  const purchaseHistoryRepository = new PurchaseHistoryRepository()
+  /*
+  * {products: [{id}], customer:{id}}
+  */
+ // await {...} -> retornara un return {stripeSession}
+ // sessionId: stripeSession.id
  const res = await purchaseHistoryRepository.create({
   token: getCookie("jwt") as string,
   customerId: +(getCookie("id") as string),
@@ -40,11 +44,7 @@ const handlePayment = async () => {
   alert(res.message)
   return
  }
- /*
-  * {products: [{id}], customer:{id}}
-  */
- // await {...} -> retornara un return {stripeSession}
- // sessionId: stripeSession.id
+
  await stripe?.redirectToCheckout({
   sessionId: res.stripeSession.id
  })
