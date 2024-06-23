@@ -54,7 +54,7 @@ export default class TemplateRepository implements ITemplateRepository {
       this.pageCount = 1;
       return templateMaper(res.data.id, res.data.attributes)
     } catch (error) {
-      alert((error as Error).message)
+      console.error((error as Error).message)
     }
     return null
   }
@@ -80,7 +80,7 @@ export default class TemplateRepository implements ITemplateRepository {
 
       return templatesMaper(res.data)
     } catch (error) {
-      alert((error as Error).message)
+      console.error((error as Error).message)
     }
     return []
   }

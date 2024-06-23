@@ -80,6 +80,8 @@ export default class ProjectRepository implements IProjectRepository {
 
       return projectsMaper(res.data)
     } catch (error) {
+      console.error((error as Error).message);
+      
     }
     return []
   }
