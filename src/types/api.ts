@@ -42,7 +42,7 @@ export interface Category {
 export interface PurchaseHistory {
   stripeId: string
   updatedAt: string
-  products: [{id: number}]
+  products: [{id: number, name: string, unitPrice: number}]
 }
 
 export enum Role {

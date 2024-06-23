@@ -7,7 +7,7 @@ export default class PurchaseHistoryRepository {
     try {
       const res = await fetchDataFromAPI({
         url: `/api/purchase-histories?filters[customer][id]=${
-            userId}&filters[completed]=true&sort[0]=id:desc`,
+            userId}&filters[completed]=true&sort[0]=id:desc&pagination[limit]=100`,
         token
       })
       if (!res.data) return [];

@@ -3,6 +3,38 @@ type Dimention = {
   height: string
 }
 
+export const IconCircleMinus = ({ width, height }: Dimention) => (
+  <svg xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-circle-minus"
+    width={width} height={height} viewBox="0 0 24 24"
+    stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M9 12l6 0" />
+  </svg>
+)
+
+export const IconCheck = ({ width, height }: Dimention) => (
+  <svg class="" aria-hidden="true"
+    width={width}
+    height={height}
+    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+  </svg>
+)
+
+export const IconDownload = ({ width, height }: Dimention) => (
+  <svg xmlns="http://www.w3.org/2000/svg"
+    class="icon icon-tabler icon-tabler-download"
+    width={width} height={height}
+    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+    <path d="M7 11l5 5l5 -5" />
+    <path d="M12 4l0 12" />
+  </svg>
+)
+
 export const IconCreditCardPay = ({ width, height }: Dimention) => (
   <svg xmlns="http://www.w3.org/2000/svg"
     class="icon icon-tabler icon-tabler-credit-card-pay"
