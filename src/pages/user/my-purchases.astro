@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import List from "../../components/purchase_history/List";
-export const prerender = false;
 
 const token = Astro.cookies.get("jwt")?.value as string;
 const userId = Astro.cookies.get("id")?.value as string;

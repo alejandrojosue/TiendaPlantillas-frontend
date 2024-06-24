@@ -3,7 +3,6 @@ import Form from "../../../components/template/Form";
 import Layout from "../../../layouts/Layout.astro";
 import TemplateRepository from "../../../repositories/TemplateRepository";
 import type { Template } from "../../../types/api";
-export const prerender = false;
 
 const { id } = Astro.params;
 if (!id) return;

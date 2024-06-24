@@ -4,7 +4,7 @@ import { isEmpty } from "../../util/isEmpy";
 import Modal from "../../components/Modal.astro";
 import PrettyButton from "../../components/common/PrettyButton.astro";
 import { IconTablerBrandTelegram } from "../../components/icons/Icons";
-export const prerender = false;
+
 const senderEmail = Astro.cookies.get("senderEmail")?.value;
 const recipientEmail = Astro.cookies.get("recipientEmail")?.value;
 const projectTitle = Astro.cookies.get("projectTitle")?.value;

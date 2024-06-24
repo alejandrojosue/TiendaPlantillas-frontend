@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import PrettyForm from "../components/common/PrettyForm.astro";
 import { PUBLIC_COMPANY_NAME } from "../env/config";
-export const prerender = false
 const userEmail = Astro.cookies.get("email")?.value;
 
 ---

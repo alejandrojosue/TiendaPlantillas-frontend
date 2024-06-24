@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Form from "../../components/project/Form";
-export const prerender = false;
 const token = Astro.cookies.get("jwt")?.value;
 const username = Astro.cookies.get("username")?.value;
 const email = Astro.cookies.get("email")?.value;
