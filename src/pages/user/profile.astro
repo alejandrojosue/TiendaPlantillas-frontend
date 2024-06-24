@@ -16,14 +16,15 @@ if (!token) return Astro.redirect("/login");
 let user; //await userRepository.me({ token });
 try {
   const res = await fetchDataFromAPI({ url: "/api/users/me?populate=role", token });
-
+  
   if (!res) Astro.response.status = 404;
   user = userMaper(res)
   // if (!user) return null;
 
   // return userMaper(res);
 } catch (error) {
-  // return null;
+  console.error((error as Error).message);
+  
 }
 let _role: any = user?.role;
 ---
