@@ -1,0 +1,122 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Drawable from "../components/cart/Drawable";
+import { IconArrowUpFilled } from "../components/icons/Icons";
+import ThemeToggle from "../components/ThemeToggle";
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class=`scroll-smooth`>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+		<ViewTransitions />
+	</head>
+	<body
+		class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen w-full absolute pb-24"
+	>
+		<Header />
+		<Drawable client:load />
+		<section class="relative" transition:persist></section>
+
+		<main class="py-3 mx-auto">
+			<slot />
+			<div class="lg:py-0 py-10"></div>
+		</main>
+		<ThemeToggle client:load />
+		<Footer />
+
+		<a
+			href="#up"
+			id="jumpUp"
+			class="fixed bottom-8 right-8 font-extrabold text-center text-slate-300 rounded-full"
+		>
+			<IconArrowUpFilled width="44" height="44" />
+		</a>
+		<style is:global>
+			html {
+				font-family: system-ui, sans-serif;
+				color: #fff;
+				color-scheme: dark light;
+			}
+
+			*::-webkit-scrollbar {
+				background-color: none;
+				width: 6px;
+				height: 4px;
+			}
+			*::-webkit-scrollbar-thumb {
+				background: rgb(255, 255, 255, 0.7);
+				border-radius: 10px;
+			}
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-weight: bold;
+			}
+			h1 {
+				font-size: 1.75em;
+				line-height: 1.225;
+			}
+			h2 {
+				font-size: 1.75em;
+				line-height: 1.225;
+			}
+			h3 {
+				font-size: 1.5em;
+				line-height: 1.43;
+			}
+			h4 {
+				font-size: 1.25em;
+				line-height: 1.4;
+			}
+			h5 {
+				line-height: 1.4;
+			}
+			h6 {
+				font-size: 1em;
+			}
+			#fr-logo {
+				display: none;
+			}
+			.fr-quick-insert {
+				display: none;
+			}
+		</style>
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+					return localStorage.getItem("theme");
+				}
+				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					return "dark";
+				}
+				return "light";
+			})();
+
+			if (theme === "light") {
+				document.documentElement.classList.remove("dark");
+			} else {
+				document.documentElement.classList.add("dark");
+			}
+			window.localStorage.setItem("theme", theme);
+		</script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
+		></script>
+	</body>
+</html>

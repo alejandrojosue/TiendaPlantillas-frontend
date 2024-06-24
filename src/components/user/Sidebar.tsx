@@ -4,11 +4,11 @@ import { deleteAllCookies } from "../../util/cookies";
 import LinkButton from "../common/LinkButton";
 
 interface Props extends Omit<User, 'role'> {
- isProfile?: boolean;
+ isMyProfile?: boolean;
  role: string
 }
 
-export default function Sidebar({ username, email, githubLink, LinkedInLink, instagramLink, role, isProfile }: Props) {
+export default function Sidebar({ username, email, githubLink, LinkedInLink, instagramLink, role, isMyProfile }: Props) {
  return (<>
   <div class="py-4 lg:w-1/3 flex flex-col">
    <img
@@ -48,7 +48,7 @@ export default function Sidebar({ username, email, githubLink, LinkedInLink, ins
     }
    </div>
    {
-    isProfile && (
+    isMyProfile && (
      <div class="grid lg:grid-cols-1 grid-cols-2 px-7">
       <LinkButton
        link={`/${role === "Freelancer" ? "templates" : "projects"}/create`}

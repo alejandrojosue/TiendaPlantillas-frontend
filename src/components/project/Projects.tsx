@@ -9,9 +9,9 @@ import { useEffect } from 'preact/hooks';
  * Componente funcional que muestra una lista de proyectos.
  * 
  * @param username Nombre de usuario para filtrar proyectos específicos (opcional).
- * @param isProfile Indica si se está mostrando en el perfil del usuario (opcional).
+ * @param isMyProfile Indica si se está mostrando en el perfil del usuario (opcional).
  */
-export default function Projects({ username, isProfile }: { username?: string, isProfile?: boolean }) {
+export default function Projects({ username, isMyProfile }: { username?: string, isMyProfile?: boolean }) {
   const { project: projects, loading, error, page, pageCount, pageSize, total, get, getByUsername } = useProject();
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function Projects({ username, isProfile }: { username?: string, i
             customer={project.customer}
             unitPrice={project.unitPrice}
             status={project.status}
-            isProfile={isProfile}
+            isMyProfile={isMyProfile}
           />
         ))}
         {/* Muestra un mensaje si no hay proyectos para mostrar. */}

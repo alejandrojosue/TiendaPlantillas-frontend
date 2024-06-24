@@ -15,6 +15,7 @@ interface Props {
 }
 
 export default function EditProfile({ biography, githubLink, instagramLink, LinkedInLink }: Props) {
+ 
  return (<>
   <Modal>
    <div class="relative w-full max-h-full">
@@ -38,9 +39,7 @@ export default function EditProfile({ biography, githubLink, instagramLink, Link
       </h1>
     </>}
     >
-     
      <div>
-      
       <label
        class="flex items-center gap-x-2 my-2 w-full text-slate-400 font-semibold"
       >

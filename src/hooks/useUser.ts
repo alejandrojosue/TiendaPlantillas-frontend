@@ -27,7 +27,21 @@ const useUser = ()=>{
   }
  }
 
- return{...state, me}
+ const getByUser = async({username}:{username:string})=>{
+  try {
+   const res = await userRepository.getUser({username})
+   setState(prev=>({...prev, user: res}))
+   if(!res){
+    location.href = '/404'
+   }
+  } catch (error) {
+   setState(prev=>({...prev, error: (error as Error).message}))
+  }finally{
+   setState(prev=>({...prev, loading: false}))
+  }
+ }
+
+ return{...state, me, getByUser}
 }
 
 export default useUser

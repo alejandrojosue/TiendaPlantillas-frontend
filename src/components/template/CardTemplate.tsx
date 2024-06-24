@@ -9,7 +9,7 @@ interface Props {
   categories: Category[]; // Lista de categorías a las que pertenece el template
   unitPrice: number; // Precio unitario del template
   status?: TemplateStatus; // Estado de la plantilla
-  isProfile?: boolean; // Verifica si es para mostrar en el perfil o en otro sitio
+  isMyProfile?: boolean; // Verifica si es para mostrar en el perfil o en otro sitio
 }
 
 /**
@@ -24,7 +24,7 @@ interface Props {
  * @param {Category[]} categories - Lista de categorías a las que pertenece el template.
  * @param {number} unitPrice - Precio unitario del template.
  */
-export default function CardTemplate({ id, title, img, categories, unitPrice, status, isProfile }: Props) {
+export default function CardTemplate({ id, title, img, categories, unitPrice, status, isMyProfile }: Props) {
   // Método para añadir al carrito de compras.
   const addToCart = () => {
     const cartStorage = localStorage.getItem('cart') as string;
@@ -45,7 +45,7 @@ export default function CardTemplate({ id, title, img, categories, unitPrice, st
 
         {/* Estado del template */}
         {
-          isProfile && <section class="mx-4 mt-4 font-semibold capitalize">
+          isMyProfile && <section class="mx-4 mt-4 font-semibold capitalize">
             <span class={`py-1 px-2 rounded-md ${status === TemplateStatus.APPROVED ? 'bg-blue-400 text-blue-800' :
               status === TemplateStatus['PENDING REVIEW'] ? 'bg-yellow-400 text-yellow-800' :
                 status === TemplateStatus['NOT APPROVED'] ? 'bg-red-400 text-red-800' :
@@ -91,7 +91,7 @@ export default function CardTemplate({ id, title, img, categories, unitPrice, st
           {/* Botón para añadir al carrito */}
           <span
             onClick={addToCart}
-            class={`${isProfile ? 'hidden': 'flex'} cursor-pointer gap-2 items-center justify-center px-4 h-10 text-base font-medium bg-gray-100 border-0 border-s hover:text-white border-gray-400 rounded-e hover:bg-gray-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+            class={`${isMyProfile ? 'hidden': 'flex'} cursor-pointer gap-2 items-center justify-center px-4 h-10 text-base font-medium bg-gray-100 border-0 border-s hover:text-white border-gray-400 rounded-e hover:bg-gray-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
           >
             <IconShoppingCart width="25" height="25" />
             Añadir

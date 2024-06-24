@@ -11,9 +11,9 @@ import CardTemplateSkeleton from './CardTemplateSkeleton';
  * Muestra una lista de plantillas de acuerdo a ciertos criterios, ya sea todas las plantillas o las de un usuario específico.
  * 
  * @param {string} username - Nombre de usuario opcional para filtrar las plantillas.
- * @param {boolean} isProfile - Verifica si se solicita desde el perfil de usuario o no.
+ * @param {boolean} isMyProfile - Verifica si se solicita desde el perfil de usuario o no.
  */
-export default function Templates({ username, isProfile = false }: { username?: string, isProfile?:boolean}) {
+export default function Templates({ username, isMyProfile = false }: { username?: string, isMyProfile?:boolean}) {
   const { template: templates, loading, error, page, pageCount, pageSize, total, get, getByUsername } = useTemplate();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Templates({ username, isProfile = false }: { username?: 
      * @function getByUsername - Obtiene en base a un usuario
      * @function get - Obtiene todos
     */
-    if (username) getByUsername({ username, isProfile }); else get();
+    if (username) getByUsername({ username, isProfile: isMyProfile }); else get();
   }, []);
 
   if (loading) {
@@ -55,7 +55,7 @@ export default function Templates({ username, isProfile = false }: { username?: 
               categories={template.categories}
               unitPrice={template.unitPrice}
               status={template.status}
-              isProfile={isProfile}
+              isMyProfile={isMyProfile}
             />
           ))
         }

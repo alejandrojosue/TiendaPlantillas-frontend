@@ -62,6 +62,7 @@ export default class UserRepository implements IUserRepository {
 
       return userMaper(res)
     } catch (error) {
+      console.error((error as Error).message);
       return null
     }
   }
@@ -72,8 +73,12 @@ export default class UserRepository implements IUserRepository {
         url:
             `/api/users?populate=*&filters[$and][0][username][$eqi]=${username}`
       })
-      return res[0]
+      if (!res) return null;
+
+      return userMaper(res[0])
     } catch (error) {
+      console.error((error as Error).message);
+      
       return null
     }
   }

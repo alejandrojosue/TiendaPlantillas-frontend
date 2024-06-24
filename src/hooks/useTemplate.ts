@@ -54,6 +54,31 @@ const useTemplate = () => {
     }
   };
 
+  const getById = async (id: string) => {
+    try {
+      const template = await templateRepository.getById(id);
+      if (!template) {
+        location.href = '/404';
+        return;
+      }
+
+      console.log({template});
+      setState(prev => ({
+                 ...prev,
+                 template,
+                 page: templateRepository.page,
+                 pageCount: templateRepository.pageCount,
+                 pageSize: templateRepository.pageSize,
+                 total: templateRepository.total
+               }));
+      console.log(state);
+    } catch (error) {
+      setState(prev => ({...prev, error: (error as Error).message}));
+    } finally {
+      setState(prev => ({...prev, loading: false}))
+    }
+  };
+
   const getByUsername = async (
       {username, isProfile}: {username: string, isProfile?: boolean}) => {
     try {
@@ -106,7 +131,7 @@ const useTemplate = () => {
 
   const download = async({stripeId, idUser, token}:
                              {stripeId: string, idUser: number, token: string}):
-      Promise<Array<{url:string}>> => {
+      Promise<Array<{url: string}>> => {
         try {
           const res =
               await templateRepository.downLoad({stripeId, idUser, token});
@@ -118,7 +143,7 @@ const useTemplate = () => {
       };
 
   return {
-    ...state, get, getByUsername, create, update, download
+    ...state, get, getById, getByUsername, create, update, download
   }
 };
 

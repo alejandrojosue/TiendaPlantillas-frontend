@@ -52,6 +52,8 @@ export default class TemplateRepository implements ITemplateRepository {
 
       this.total = 1;
       this.pageCount = 1;
+      this.pageCount = 1;
+      this.pageSize = 1;
       return templateMaper(res.data.id, res.data.attributes)
     } catch (error) {
       console.error((error as Error).message)

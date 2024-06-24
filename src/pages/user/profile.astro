@@ -1,18 +1,15 @@
 ---
 import MyProfile from "../../components/user/Profile";
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../layouts/LayoutProfile.astro";
 const token = Astro.cookies.get("jwt")?.value as string;
-
 if (!token) return Astro.redirect("/login");
-
 ---
 
 <Layout title="Profile">
   <MyProfile token={token} client:load />
-  
   <script>
     // Este es el código que sirve para el formulario del componente
-    // Profile.edit.astro
+    // EditProfile.tsx
     import UserRepository from "../../repositories/UserRepository";
     document.querySelector("form")?.addEventListener("submit", async (e) => {
       e.preventDefault();

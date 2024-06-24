@@ -7,10 +7,10 @@ import ReaderMarkdown from '../ReaderMarkdown';
 
 /**
  * Props del componente CardProject.
- * Extiende la interfaz Project con una propiedad opcional isProfile.
+ * Extiende la interfaz Project con una propiedad opcional isMyProfile.
  */
 interface Props extends Project {
-  isProfile?: boolean; // Indica si el proyecto se muestra en un perfil de usuario
+  isMyProfile?: boolean; // Indica si el proyecto se muestra en un perfil de usuario
 }
 
 /**
@@ -23,7 +23,7 @@ interface Props extends Project {
  * @param customer Información del cliente que publicó el proyecto.
  * @param status Estado actual del proyecto.
  * @param createdAt Fecha y hora de publicación del proyecto.
- * @param isProfile Indica si el proyecto se muestra en un perfil de usuario.
+ * @param isMyProfile Indica si el proyecto se muestra en un perfil de usuario.
  */
 export default function CardProject({
   id,
@@ -34,7 +34,7 @@ export default function CardProject({
   customer,
   status,
   createdAt,
-  isProfile,
+  isMyProfile,
 }: Props) {
   
   /**
@@ -101,7 +101,7 @@ export default function CardProject({
       <div class="flex flex-col lg:flex-row mt-2 items-center justify-between">
         <div>
           {/* Botón para contactar al cliente */}
-          {!isProfile && (
+          {!isMyProfile && (
             <span
               onClick={() =>
                 updateCookie({
@@ -128,7 +128,7 @@ export default function CardProject({
         </div>
 
         {/* Información adicional dependiendo del contexto */}
-        {isProfile ? (
+        {isMyProfile ? (
           <p class="dark:text-gray-500">
             <span class="font-semibold">Estado:</span>{' '}
             {/* Estilo condicional basado en el estado del proyecto */}

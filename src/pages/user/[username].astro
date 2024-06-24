@@ -1,47 +1,15 @@
 ---
-import Sidebar from "../../components/user/Sidebar.astro";
-import Layout from "../../layouts/Layout.astro";
-import { Role } from "../../types/api";
-import Projects from "../../components/project/Projects";
-import UserRepository from "../../repositories/UserRepository";
-import Templates from "../../components/template/Templates";
-
+import Layout from "../../layouts/LayoutProfile.astro";
+import MyProfile from "../../components/user/Profile"
 interface Props {
  username: string;
 }
 const { username } = Astro.params;
 
 if(!username) return Astro.redirect('/')
-const userRepository = new UserRepository()
-const user = await userRepository.getUser({username})
-if(!user) Astro.response.status = 404
-//@ts-ignore
-let role = user?.role.name
 
 ---
 
 <Layout title="Profile">
- <div class="w-full flex flex-col lg:flex-row" slot="before-main">
-  <Sidebar
-   username={username}
-   email={user?.email}
-   role={role==='Customer' ? 'Cliente' : role}
-   githubLink={user?.githubLink}
-   instagramLink={user?.instagramLink}
-   LinkedInLink={user?.LinkedInLink}
-  />
-  <div class="w-full p-4">
-   <h2 class="text-2xl">Mi Biografía</h2>
-   <p class="text-gray-400 my-4">
-   {user?.biography ? user?.biography : '// Nada aún'}
-   </p>
-   <h2 class="text-2xl mb-4">
-    Mis {role === Role.customer ? "Proyectos" : "Plantillas"}
-   </h2>
-   <div>
-    {role === Role.customer && <Projects username={username} client:visible />}
-    {role == Role.freelancer && <Templates username={username} client:visible/>}
-   </div>
-  </div>
- </div>
+  <MyProfile token="" username={username} client:load/>
 </Layout>
