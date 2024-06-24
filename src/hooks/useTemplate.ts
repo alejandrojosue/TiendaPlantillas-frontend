@@ -61,17 +61,7 @@ const useTemplate = () => {
         location.href = '/404';
         return;
       }
-
-      console.log({template});
-      setState(prev => ({
-                 ...prev,
-                 template,
-                 page: templateRepository.page,
-                 pageCount: templateRepository.pageCount,
-                 pageSize: templateRepository.pageSize,
-                 total: templateRepository.total
-               }));
-      console.log(state);
+      setState(prev => ({...prev, template}));
     } catch (error) {
       setState(prev => ({...prev, error: (error as Error).message}));
     } finally {

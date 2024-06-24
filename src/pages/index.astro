@@ -1,41 +1,40 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { PUBLIC_COMPANY_NAME } from "../env/config";
-import UserRepository from "../repositories/UserRepository";
-import TemplateRepository from "../repositories/TemplateRepository";
-import ProjectRepository from "../repositories/ProjectRepository";
-let _countFreelancers: number = 0,
- _countCustomers: number = 0,
- _countTemplates: number = 0,
- _countProjects: number = 0;
-try {
- const templateRepository = new TemplateRepository();
- const projectRepository = new ProjectRepository();
+import DataCounter from "../components/DataCounter";
+// import UserRepository from "../repositories/UserRepository";
+// import TemplateRepository from "../repositories/TemplateRepository";
+// import ProjectRepository from "../repositories/ProjectRepository";
+// let _countFreelancers: number = 0,
+//  _countCustomers: number = 0,
+//  _countTemplates: number = 0,
+//  _countProjects: number = 0;
+// try {
+//  const templateRepository = new TemplateRepository();
+//  const projectRepository = new ProjectRepository();
 
- const [
-  //@ts-ignore
-  { countFreelancers, countCustomers },
-  countTemplates,
-  countProjects,
- ] = await Promise.all([
-  new UserRepository().countByRole(),
-  templateRepository.count(),
-  projectRepository.count(),
- ]);
+//  const [
+//   //@ts-ignore
+//   { countFreelancers, countCustomers },
+//   countTemplates,
+//   countProjects,
+//  ] = await Promise.all([
+//   new UserRepository().countByRole(),
+//   templateRepository.count(),
+//   projectRepository.count(),
+//  ]);
 
- if (typeof countTemplates === "number" || typeof countProjects === "number") {
-  _countFreelancers = countFreelancers;
-  _countCustomers = countCustomers;
-  // @ts-ignore
-  _countTemplates = countTemplates;
-  // @ts-ignore
-  _countProjects = countProjects;
- }
-} catch (error) {
- console.error((error as Error).message);
-}
-
-
+//  if (typeof countTemplates === "number" || typeof countProjects === "number") {
+//   _countFreelancers = countFreelancers;
+//   _countCustomers = countCustomers;
+//   // @ts-ignore
+//   _countTemplates = countTemplates;
+//   // @ts-ignore
+//   _countProjects = countProjects;
+//  }
+// } catch (error) {
+//  console.error((error as Error).message);
+// }
 ---
 
 <Layout title="Home">
@@ -70,48 +69,7 @@ try {
    class="block mb-2 p-6 text-xs font-bold tracking-widest uppercase lg:text-center text-blue-500"
    >Nuestra web</span
   >
-  <div class="container grid justify-center grid-cols-2 mx-auto text-center">
-   <div class="flex flex-col justify-start m-2 lg:m-6">
-    <p
-     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-    >
-     {_countCustomers}
-    </p>
-    <p class="text-semibold text-sm sm:text-base text-blue-500">
-     Clientes Satisfechos
-    </p>
-   </div>
-   <div class="flex flex-col justify-start m-2 lg:m-6">
-    <p
-     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-    >
-     {_countFreelancers}
-    </p>
-    <p class="text-semibold text-sm sm:text-base text-blue-500">
-     Freelancers Disponibles
-    </p>
-   </div>
-   <div class="flex flex-col justify-start m-2 lg:m-6">
-    <p
-     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-    >
-     {_countTemplates}
-    </p>
-    <p class="text-semibold text-sm sm:text-base text-blue-500">
-     Plantillas Publicadas
-    </p>
-   </div>
-   <div class="flex flex-col justify-start m-2 lg:m-6">
-    <p
-     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-    >
-     {_countProjects}
-    </p>
-    <p class="text-semibold text-sm sm:text-base text-blue-500">
-     Proyectos Publicados
-    </p>
-   </div>
-  </div>
+  <DataCounter client:load />
  </section>
  <section class="p-6">
   <a id="get-started"></a>
@@ -190,19 +148,24 @@ try {
      </p>
     </article>
     <article>
-     <h3 class="font-semibold">¿Puedo ser cliente y freelancer al mismo tiempo?</h3>
+     <h3 class="font-semibold">
+      ¿Puedo ser cliente y freelancer al mismo tiempo?
+     </h3>
      <p class="mt-1 dark:text-gray-400">
-      Por motivos de seguridad, estamos obligados a limitar a los usuarios a un tipo de cuenta asegurando así la integridad de los datos de los clientes.
+      Por motivos de seguridad, estamos obligados a limitar a los usuarios a un
+      tipo de cuenta asegurando así la integridad de los datos de los clientes.
      </p>
     </article>
     <article>
-     <h3 class="font-semibold">¿Puedo pasar de ser cliente a freelancer o visceversa?</h3>
+     <h3 class="font-semibold">
+      ¿Puedo pasar de ser cliente a freelancer o visceversa?
+     </h3>
      <p class="mt-1 dark:text-gray-400">
-      Actualmente, al momento de crear tu usuario y seleccionar el tipo que deseas ser, no podrás revertir esos cambios.
+      Actualmente, al momento de crear tu usuario y seleccionar el tipo que
+      deseas ser, no podrás revertir esos cambios.
      </p>
     </article>
    </div>
   </div>
  </section>
-
 </Layout>

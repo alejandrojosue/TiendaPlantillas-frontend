@@ -20,11 +20,11 @@ export default function _Template({ id }: Props) {
  const { template, loading, error, getById } = useTemplate()
  useEffect(() => {
   getById(id)
-
-  console.log(template);
-  
-  document.title = (template as Template).title;
  }, [])
+
+ useEffect(()=>{
+  document.title = (template as Template).title ?? `Template ${id}`
+ }, [loading])
 
  return (<>
 
