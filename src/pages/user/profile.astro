@@ -1,85 +1,15 @@
 ---
-import Sidebar from "../../components/user/Sidebar.astro";
+import MyProfile from "../../components/user/Profile";
 import Layout from "../../layouts/Layout.astro";
-import { Role, type User } from "../../types/api";
-import Projects from "../../components/project/Projects";
-import UserRepository from "../../repositories/UserRepository";
-import Templates from "../../components/template/Templates";
-import ProfileEdit from "../../components/user/EditProfile.astro";
-import { fetchDataFromAPI } from "../../util/fetchDataFromAPI";
-import { userMaper } from "../../maper/userMaper";
 const token = Astro.cookies.get("jwt")?.value as string;
 
 if (!token) return Astro.redirect("/login");
-//  const userRepository = new UserRepository();
 
-let user; //await userRepository.me({ token });
-try {
-  const res = await fetchDataFromAPI({ url: "/api/users/me?populate=role", token });
-  
-  if (!res) Astro.response.status = 404;
-  user = userMaper(res)
-  // if (!user) return null;
-
-  // return userMaper(res);
-} catch (error) {
-  console.error((error as Error).message);
-  
-}
-let _role: any = user?.role;
 ---
 
 <Layout title="Profile">
-  <ProfileEdit
-    biography={user?.biography ?? ""}
-    githubLink={user?.githubLink ?? ""}
-    instagramLink={user?.instagramLink ?? ""}
-    LinkedInLink={user?.LinkedInLink ?? ""}
-  />
-  <div class="w-full flex flex-col lg:flex-row" slot="before-main">
-    <Sidebar
-      username={user?.username ?? ""}
-      isProfile={true}
-      email={user?.email ?? ""}
-      role={_role === "Customer" ? "Cliente" : _role}
-      githubLink={user?.githubLink ?? ""}
-      instagramLink={user?.instagramLink ?? ""}
-      LinkedInLink={user?.LinkedInLink ?? ""}
-    />
-    <div class="w-full p-4">
-      <h2 class="text-2xl">Mi Biografía</h2>
-      <p class="text-gray-400 my-4">
-        {user?.biography ? user?.biography : "// Nada aún"}
-      </p>
-      <h2 class="text-2xl mb-4">
-        Mis {
-          user?.role && user?.role === Role.customer
-            ? "Proyectos"
-            : "Plantillas"
-        }
-      </h2>
-      <div>
-        {
-          user?.role === Role.customer && (
-            <Projects
-              username={(user?.username as string) ?? ""}
-              isProfile={true}
-              client:visible
-            />
-          )
-        }
-        {
-          user?.role == Role.freelancer && (
-            <Templates
-              username={(user?.username as string) ?? ""}
-              isProfile
-              client:visible
-            />
-          )
-        }
-      </div>
-    </div>
-  </div>
+  <MyProfile token={token} client:load />
+  
   <script>
     // Este es el código que sirve para el formulario del componente
     // Profile.edit.astro
