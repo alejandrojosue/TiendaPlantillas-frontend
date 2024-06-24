@@ -11,9 +11,9 @@ import { userMaper } from "../../maper/userMaper";
 const token = Astro.cookies.get("jwt")?.value as string;
 
 if (!token) return Astro.redirect("/login");
-// const userRepository = new UserRepository();
+ const userRepository = new UserRepository();
 
-let user:User; //await userRepository.me({ token });
+let user:User = {role: Role.customer}; await userRepository.me({ token });
 try {
   const res = await fetchDataFromAPI({ url: "/api/users/me?populate=role", token }) as User;
 
@@ -25,7 +25,7 @@ try {
 } catch (error) {
   // return null;
 }
-let _role: any = user?.role;
+let _role: any = user.role;
 ---
 
 <Layout title="Profile">
