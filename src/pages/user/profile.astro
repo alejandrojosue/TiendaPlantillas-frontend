@@ -11,21 +11,21 @@ import { userMaper } from "../../maper/userMaper";
 const token = Astro.cookies.get("jwt")?.value as string;
 
 if (!token) return Astro.redirect("/login");
- const userRepository = new UserRepository();
+//  const userRepository = new UserRepository();
 
-let user:User = {role: Role.customer}; await userRepository.me({ token });
+let user; //await userRepository.me({ token });
 try {
-  const res = await fetchDataFromAPI({ url: "/api/users/me?populate=role", token }) as User;
+  const res = await fetchDataFromAPI({ url: "/api/users/me?populate=role", token });
 
+  if (!res) Astro.response.status = 404;
   user = userMaper(res)
-  if (!user) Astro.response.status = 404;
   // if (!user) return null;
 
   // return userMaper(res);
 } catch (error) {
   // return null;
 }
-let _role: any = user.role;
+let _role: any = user?.role;
 ---
 
 <Layout title="Profile">
