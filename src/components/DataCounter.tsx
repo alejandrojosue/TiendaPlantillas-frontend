@@ -20,7 +20,21 @@ export default function DataCounter() {
   loading: true,
   error: null
  })
+
+ const recoverFromsessionStorage = () => {
+  const data = sessionStorage.getItem("dataCounter")
+  if (!data) return null
+  return JSON.parse(data)
+ }
+
  const handleCounter = async () => {
+  const data = recoverFromsessionStorage()
+
+  if (data) {
+   const { customers, freelancers, templates, projects } = data;
+   setCounters(prev => ({ ...prev, customers, freelancers, templates, projects }))
+   return;
+  }
   try {
    const [
     //@ts-ignore
@@ -36,6 +50,13 @@ export default function DataCounter() {
     return;
    }
    setCounters(prev => ({ ...prev, freelancers: countFreelancers, customers: countCustomers, templates: countTemplates, projects: countProjects }))
+   const data = {
+    freelancers: countFreelancers,
+    projects: countProjects,
+    templates: countTemplates,
+    customers: countCustomers
+   }
+   sessionStorage.setItem('dataCounter', JSON.stringify(data))
   } catch (error) {
    setCounters(prev => ({ ...prev, error: (error as Error).message }))
    console.error((error as Error).message);
@@ -50,45 +71,45 @@ export default function DataCounter() {
  }, [])
  return (
   <div class="container grid justify-center grid-cols-2 mx-auto text-center">
-  <div class="flex flex-col justify-start m-2 lg:m-6">
-   <p
-    class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-   >
-    {counters.customers ?? 0}
-   </p>
-   <p class="text-semibold text-sm sm:text-base text-blue-500">
-    Clientes Satisfechos
-   </p>
-  </div>
-  <div class="flex flex-col justify-start m-2 lg:m-6">
-   <p
-    class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-   >
-    {counters.freelancers ?? 0}
-   </p>
-   <p class="text-semibold text-sm sm:text-base text-blue-500">
-    Freelancers Disponibles
-   </p>
-  </div>
-  <div class="flex flex-col justify-start m-2 lg:m-6">
-   <p
-    class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-   >
-    {counters.templates ?? 0}
-   </p>
-   <p class="text-semibold text-sm sm:text-base text-blue-500">
-    Plantillas Publicadas
-   </p>
-  </div>
-  <div class="flex flex-col justify-start m-2 lg:m-6">
-   <p
-    class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
-   >
-    {counters.projects ?? 0}
-   </p>
-   <p class="text-semibold text-sm sm:text-base text-blue-500">
-    Proyectos Publicados
-   </p>
-  </div>
- </div>)
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {counters.customers ?? 0}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Clientes Satisfechos
+    </p>
+   </div>
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {counters.freelancers ?? 0}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Freelancers Disponibles
+    </p>
+   </div>
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {counters.templates ?? 0}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Plantillas Publicadas
+    </p>
+   </div>
+   <div class="flex flex-col justify-start m-2 lg:m-6">
+    <p
+     class="text-4xl font-bold leading-none lg:text-6xl text-gray-700 dark:text-gray-200"
+    >
+     {counters.projects ?? 0}
+    </p>
+    <p class="text-semibold text-sm sm:text-base text-blue-500">
+     Proyectos Publicados
+    </p>
+   </div>
+  </div>)
 }
