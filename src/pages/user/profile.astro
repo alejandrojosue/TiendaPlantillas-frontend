@@ -1,19 +1,30 @@
 ---
 import Sidebar from "../../components/user/Sidebar.astro";
 import Layout from "../../layouts/Layout.astro";
-import { Role } from "../../types/api";
+import { Role, type User } from "../../types/api";
 import Projects from "../../components/project/Projects";
 import UserRepository from "../../repositories/UserRepository";
 import Templates from "../../components/template/Templates";
 import ProfileEdit from "../../components/user/EditProfile.astro";
-
+import { fetchDataFromAPI } from "../../util/fetchDataFromAPI";
+import { userMaper } from "../../maper/userMaper";
 const token = Astro.cookies.get("jwt")?.value as string;
 
 if (!token) return Astro.redirect("/login");
-const userRepository = new UserRepository();
-const user = await userRepository.me({ token });
+// const userRepository = new UserRepository();
 
-if (!user) Astro.response.status = 404;
+let user:User; //await userRepository.me({ token });
+try {
+  const res = await fetchDataFromAPI({ url: "/api/users/me?populate=role", token }) as User;
+
+  user = userMaper(res)
+  if (!user) Astro.response.status = 404;
+  // if (!user) return null;
+
+  // return userMaper(res);
+} catch (error) {
+  // return null;
+}
 let _role: any = user?.role;
 ---
 
@@ -90,7 +101,7 @@ let _role: any = user?.role;
       if (user instanceof Error) {
         alert(user.message);
       }
-      location.href = '/user/profile'
+      location.href = "/user/profile";
     });
   </script>
 </Layout>
