@@ -6,7 +6,7 @@ import Projects from "../../components/project/Projects";
 import UserRepository from "../../repositories/UserRepository";
 import Templates from "../../components/template/Templates";
 import ProfileEdit from "../../components/user/EditProfile.astro";
-export const prerender = false;
+export const prerender = true;
 
 const token = Astro.cookies.get("jwt")?.value as string;
 
