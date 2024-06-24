@@ -73,6 +73,21 @@ const useProject = () => {
     }
   }
 
+  const getById = async(id:string)=>{
+    try {
+      const project = await projectRepository.getById(id);
+      if (!project) {
+        location.href = '/404';
+        return;
+      }
+      setState(prev=>({...prev, project}))
+    } catch (error) {
+      setState(prev=>({...prev, error: (error as Error).message}))
+    }finally{
+      setState(prev=>({...prev, loading:false}))
+    }
+  }
+
   const getByUsername =
       async ({username}: {username: string}) => {
     try {
@@ -116,7 +131,7 @@ const useProject = () => {
   }
 
   return {
-    ...state, get, getByUsername, create
+    ...state, get, getById, getByUsername, create
   }
 };
 

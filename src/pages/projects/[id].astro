@@ -1,82 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ProjectRepository from "../../repositories/ProjectRepository";
-import ReaderMarkdown from "../../components/ReaderMarkdown";
-import LinkButton from "../../components/common/LinkButton";
-import { IconArrowLeft, IconTablerEmailFilled } from "../../components/icons/Icons";
+import Project from "../../components/project/Project";
 const { id } = Astro.params;
+if(!id) return Astro.redirect('/projects')
 
-const projectRepository = new ProjectRepository();
-if (!id) return;
-const project = await projectRepository.getById(id);
-if (!project) Astro.response.status = 404;
 ---
 
-<Layout title={project?.title || ""}>
-    <div class="p-3">
-        <h1 class="text-5xl my-2">{project?.title}</h1>
-        <ReaderMarkdown description={project!.description} />
-        <div class="grid lg:grid-cols-2 lg:gap-16">
-            <div
-                class="bg-gray-800 text-gray-400 p-8 text-3xl font-semibold my-3 rounded-md flex items-center justify-center"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-coin mr-2"
-                    width="35"
-                    height="35"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-                    <path
-                        d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"
-                    ></path>
-                    <path d="M12 7v10"></path>
-                </svg>
-                Precio: ${project!.unitPrice}
-            </div>
-            <div
-                class="bg-gray-400 text-lg relative p-8 flex items-center justify-center text-gray-800 font-semibold my-3 rounded-md"
-            >
-                <span
-                    class="text-gray-800 rounded p-3 text-xs absolute top-0 left-0"
-                    >Autor</span
-                >
-                <a
-                    href=`/user/${project!.customer.username}`
-                    class="capitalize transition-all hover:text-2xl"
-                    >{project!.customer.username}</a
-                >
-                <h1 class="mx-2">&#183;</h1>{project!.customer.email}
-            </div>
-        </div>
-        <div class="flex flex-wrap justify-center my-3 gap-4 mb-10">
-            <span class="p-2 rounded-s-full bg-gray-400 text-gray-800"
-                >Tags:</span
-            >
-            {
-                project?.categories.map(({ categoryName }) => (
-                    <span class="p-2 cursor-pointer hover:scale-105 transition-all capitalize rounded font-bold text-gray-400 border border-gray-400">
-                        {categoryName}
-                    </span>
-                ))
-            }
-        </div>
-        <div class="flex">
-            <LinkButton link="/projects" size="large">
-                <IconArrowLeft width="40" height="40" />
-                Regresar
-            </LinkButton>
-            <LinkButton link="/user/contact" size="large">
-                <IconTablerEmailFilled width="40" height="40" />
-                Contactar
-            </LinkButton>
-        </div>
-    </div>
+<Layout title="">
+    <Project id={id} client:load />
 </Layout>
