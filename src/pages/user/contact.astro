@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { isEmpty } from "../../util/isEmpy";
-import Modal from "../../components/Modal";
 import PrettyButton from "../../components/common/PrettyButton.astro";
 import { IconTablerBrandTelegram } from "../../components/icons/Icons";
 
@@ -18,10 +17,6 @@ if (isEmpty([customerName])) {
 ---
 
 <Layout title="contact">
- <Modal>
-  En el siguiente formulario se redactará el correo a la persona que desea
-  contactar por motivos del proyecto: <b>{projectTitle}</b>.
- </Modal>
  <form id="contactForm" method="post" class="tex-gray-800 p-3">
   <div>
    <label for="email-recipient" class="block text-white text-sm font-bold"
