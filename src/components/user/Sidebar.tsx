@@ -12,7 +12,7 @@ export default function Sidebar({ username, email, githubLink, LinkedInLink, ins
  return (<>
   <div class="py-4 lg:w-1/3 flex flex-col">
    <img
-    src="/public/favicon.svg"
+    src="/favicon.svg"
     alt="user-image"
     class="dark:bg-slate-800 rounded-full mx-auto border border-blue-500 dark:border-slate-400 object-fill"
     width="150"

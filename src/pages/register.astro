@@ -2,7 +2,6 @@
 import { PUBLIC_COMPANY_NAME } from "../env/config";
 import Layout from "../layouts/Layout.astro";
 import PrettyForm from "../components/common/PrettyForm.astro";
-export const prerender = false;
 const token = Astro.cookies.get("jwt")?.value;
 if (token) return Astro.redirect(`/user/profile`);
 ---
@@ -19,11 +18,11 @@ if (token) return Astro.redirect(`/user/profile`);
     <!-- Imagen de Encabezado -->
     <img 
       slot="header-before-form"
-      src="/public/favicon.svg"
+      src="/favicon.svg"
       alt="icon"
       width="60"
       height="60"
-      class="mx-auto bg-blue-500 rounded-lg"
+      class="mx-auto bg-blue-50 rounded-lg"
     />
     <!-- Título del Formulario -->
     <h1 slot="header-before-form" class="text-center text-3xl">
