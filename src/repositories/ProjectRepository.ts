@@ -45,7 +45,7 @@ export default class ProjectRepository implements IProjectRepository {
 
       return projectsMaper(res.data)
     } catch (error) {
-      console.error(error);
+      alert((error as Error).message);
     }
     return []
   }
