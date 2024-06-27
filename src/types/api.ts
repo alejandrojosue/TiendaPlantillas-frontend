@@ -45,6 +45,13 @@ export interface PurchaseHistory {
   products: [{id: number, name: string, unitPrice: number}]
 }
 
+export interface Payment {
+  amount: number
+  isWithDrawn: boolean
+  createdAt: string
+  product: {id: number, name: string}
+}
+
 export enum Role {
   customer = 'Customer',
   freelancer = 'Freelancer'

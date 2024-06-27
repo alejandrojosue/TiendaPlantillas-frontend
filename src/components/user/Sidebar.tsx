@@ -1,5 +1,5 @@
 import type { User } from "../../types/api";
-import { IconCirclePlus, IconShoppingCartCheck, IconGithub, IconInstagram, IconLinkedin, IconTablerLogout, IconUserEdit } from "../icons/Icons";
+import { IconCirclePlus, IconShoppingCartCheck, IconGithub, IconInstagram, IconLinkedin, IconTablerLogout, IconUserEdit, IconReceipt } from "../icons/Icons";
 import { deleteAllCookies } from "../../util/cookies";
 import LinkButton from "../common/LinkButton";
 
@@ -69,6 +69,14 @@ export default function Sidebar({ username, email, githubLink, LinkedInLink, ins
         Mis Compras
        </div>
       </LinkButton>
+      {role === 'Freelancer'
+       ? <LinkButton link="/user/my-payments" size="small">
+        <div class="flex gap-x-2" >
+         <IconReceipt width="25" height="25" />
+         Ver mis Pagos
+        </div>
+       </LinkButton>
+       : ''}
       <LinkButton link="#" size="small">
        <div id="logout" onClick={deleteAllCookies} class="flex gap-x-2" >
         <IconTablerLogout width="25" height="25" />

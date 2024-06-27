@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import List from "../../components/payments/List";
+
+const token = Astro.cookies.get("jwt")?.value as string;
+const userId = Astro.cookies.get("id")?.value as string;
+
+if (!token || !userId) return Astro.redirect("/login");
+---
+
+<Layout title="Mis Pagos por Cobrar">
+ <List token={token} userId={+userId} client:load />
+</Layout>

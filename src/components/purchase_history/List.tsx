@@ -5,7 +5,8 @@ import Item from "./Item";
 
 export default function List({ token, userId }: { token: string, userId: number }) {
     const { loading, error, data, get } = usePurchaseHistory()
-    useEffect(() => {get({ token, userId });
+    useEffect(() => {
+        get({ token, userId });
     }, [])
 
     if (error) {
@@ -22,6 +23,10 @@ export default function List({ token, userId }: { token: string, userId: number 
                     {data?.map((value, index) => (
                         <Item key={`item-${index}`} stripeId={value.stripeId} updatedAt={dateTimeFormat(value.updatedAt)} token={token} idUser={userId} products={value.products} />
                     ))}
+                    {/* Muestra un mensaje si no hay compras para mostrar. */}
+                    {Array.isArray(data) && data.length < 1 && (
+                        <p class="text-gray-400"> // Nada aún </p>
+                    )}
                 </ul>
             </div>
         </div>

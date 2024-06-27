@@ -41,7 +41,7 @@ export default function Item({ stripeId, updatedAt, idUser, token, products }: P
       {stripeId}
      </p>
      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-      Publicado el {updatedAt?.split(',')[0]} a las {updatedAt?.split(',')[1]}
+      Comprado el {updatedAt?.split(',')[0]} a las {updatedAt?.split(',')[1]}
      </p>
     </div>
     <div class="inline-flex items-center gap-x-1 text-base font-semibold text-gray-900 dark:text-white">
