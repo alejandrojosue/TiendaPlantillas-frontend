@@ -31,6 +31,7 @@ export interface User {
   githubLink?: string
   instagramLink?: string
   LinkedInLink?: string
+  stripeLink?: string
   role: Role
 }
 
@@ -46,6 +47,7 @@ export interface PurchaseHistory {
 }
 
 export interface Payment {
+  id: number
   amount: number
   isWithDrawn: boolean
   createdAt: string

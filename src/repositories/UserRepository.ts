@@ -7,7 +7,7 @@ import {fetchDataFromAPI} from '../util/fetchDataFromAPI';
 import type IUserRepository from './IUserRepository';
 
 export default class UserRepository implements IUserRepository {
-  async edit({ biography, linkedinLink, githubLink, instagramLink }: { biography: string; linkedinLink: string; githubLink: string; instagramLink: string; }): Promise<User | Error> {
+  async edit({ biography, linkedinLink, githubLink, instagramLink, stripeLink }: { biography: string; linkedinLink: string; githubLink: string; instagramLink: string; stripeLink: string }): Promise<User | Error> {
     try {
       const id = getCookie('id');
       const token = getCookie('jwt') as string;
@@ -15,7 +15,7 @@ export default class UserRepository implements IUserRepository {
       const res = await fetchDataFromAPI({
         method: 'PUT',
         url: `/api/users/${id}`,
-        data: {biography, linkedinLink, githubLink, instagramLink},
+        data: {biography, linkedinLink, githubLink, instagramLink, stripeLink},
         token
       })
       return res as User

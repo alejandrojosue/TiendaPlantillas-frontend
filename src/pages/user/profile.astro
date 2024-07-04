@@ -19,12 +19,14 @@ if (!token) return Astro.redirect("/login");
       const githubLink = data.get("githubLink") as string;
       const instagramLink = data.get("instagramLink") as string;
       const linkedinLink = data.get("linkedinLink") as string;
+      const stripeLink = data.get("stripeLink") as string;
       const biography = data.get("biography") as string;
       const user = await userRepository.edit({
         githubLink,
         instagramLink,
         linkedinLink,
         biography,
+        stripeLink
       });
       if (user instanceof Error) {
         alert(user.message);

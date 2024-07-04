@@ -12,7 +12,8 @@ const usePayment = () => {
   const paymentRepository = new PaymentRepository()
   const [state, setState] =
       useState<Props>({loading: true, data: [], error: ''})
-  const [total, setTotal] = useState<number>(0)
+  const [total, setTotal] = useState<number>(0);
+  const [feedback, setFeedback] = useState<unknown>(null)
 
 
   const handleTotal = (value: number) => setTotal(value)
@@ -24,8 +25,12 @@ const usePayment = () => {
         return;
       }
       setState(prev => ({...prev, loading: true}))
+      const [res, res2] = await Promise.all([
+        paymentRepository.getByFreelancerId({userId, token}),
+        paymentRepository.feedback({token, userId})
+      ])
 
-      const res = await paymentRepository.getByFreelancerId({userId, token});
+      setFeedback(res2)
 
       setState(prev => ({...prev, data: res}))
     } catch (error) {
@@ -35,8 +40,25 @@ const usePayment = () => {
     }
   }
 
+  const collectNow = async({token, paymentsId}: {token: string, paymentsId: number[]})=>{
+    try {
+      setState(prev=>({...prev, loading: true}))
+      if (total < 100) {
+        alert('El monto total debe ser superior a $100 para poder cobrarse!');
+        return
+       }
+       if (confirm(`¿Desea cobrar la cantidad de $${total}?`)) {
+        await paymentRepository.update({token, paymentsId, amount: total})
+       }
+    } catch (error) {
+      setState(prev=>({...prev, error: (error as Error).message}))
+    }finally{
+      setState(prev=>({...prev, loading: false, data: []}))
+    }
+  }
+
   return {
-    ...state, total, handleTotal, getByFreelancerId
+    ...state, total, feedback, handleTotal, getByFreelancerId, collectNow
   }
 };
 

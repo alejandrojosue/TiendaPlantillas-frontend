@@ -21,6 +21,8 @@ export default function Profile({ token, username }: Props) {
       githubLink={user?.githubLink ?? ""}
       instagramLink={user?.instagramLink ?? ""}
       LinkedInLink={user?.LinkedInLink ?? ""}
+      stripeLink={user?.stripeLink ?? ""}
+      isFreelancer={user?.role === "Freelancer"}
     />
     <div class="w-full flex flex-col lg:flex-row" slot="before-main">
       <Sidebar
