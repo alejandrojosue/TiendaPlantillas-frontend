@@ -4,7 +4,7 @@ import {MAX_RETRIES, PUBLIC_STRAPI_HOST} from '../env/config'
  * Realiza una solicitud a la API y devuelve los datos.
  * @param {string} url - La ruta de la API a la que se realizará la solicitud.
  * @param {string} method - El método HTTP de la solicitud (por defecto 'GET').
- * @param {object} data - Los datos a enviar en el cuerpo de la solicitud (para
+ * @param {Object} data - Los datos a enviar en el cuerpo de la solicitud (para
  *     POST y PUT).
  * @returns {Promise} Una promesa que resuelve en los datos de la respuesta de
  *     la API.
@@ -12,7 +12,7 @@ import {MAX_RETRIES, PUBLIC_STRAPI_HOST} from '../env/config'
  */
 export const fetchDataFromAPI =
     async({url, method = 'GET', data, token}:
-              {url: string, method?: string, data?: object, token?: string}):
+              {url: string, method?: string, data?: Object, token?: string}):
         Promise<any> => {
           let retries = 0;
           let errorResponse: Error|null = null;
@@ -36,19 +36,19 @@ export const fetchDataFromAPI =
               const response =
                   await fetch(PUBLIC_STRAPI_HOST + url, requestOptions);
               const errorList: {[key: string]: () => void} = {
-                'Bad Request': () => {
+                '400': () => {
                   throw new Error('Datos no válidos')
                 },
-                Unauthorized: () => {
+                '401': () => {
                   throw new Error('Acceso Denegado')
                 },
-                Forbidden: () => {
+                '403': () => {
                   throw new Error('Acceso Denegado')
                 },
-                'Not Found': () => {
+                '404': () => {
                   throw new Error('Recurso no encontrado')
                 },
-                'Internal Server Error': () => {
+                '500': () => {
                   throw new Error('Ha ocurrido un error en el servidor')
                 },
                 'Failed to fetch': () => {
@@ -57,8 +57,8 @@ export const fetchDataFromAPI =
               };
 
               if (!response.ok) {
-                if (errorList[response.statusText])
-                  errorList[response.statusText]();
+                if (errorList[response.status])
+                  errorList[response.status]();
                 else
                   throw new Error(response.statusText);
               }
