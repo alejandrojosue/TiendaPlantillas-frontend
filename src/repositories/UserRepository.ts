@@ -124,6 +124,7 @@ export default class UserRepository implements IUserRepository {
         token: PUBLIC_USER_CREATE_TOKEN,
         data: {email, username, confirmed: true, password, role: _role}
       });
+      
       return res
     } catch (error) {
       return error as Error

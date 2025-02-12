@@ -74,7 +74,6 @@ export default class TemplateRepository implements ITemplateRepository {
       });
 
       if (!res.data) return [];
-
       this.total = res.meta.pagination.total;
       this.page = res.meta.pagination.page;
       this.pageCount = res.meta.pagination.pageCount;
@@ -115,7 +114,7 @@ export default class TemplateRepository implements ITemplateRepository {
         body: formData,
         headers: {Authorization: `Bearer ${token}`}
       });
-
+      (response)
       const res = await response.json()
 
       if (!res.data) return;

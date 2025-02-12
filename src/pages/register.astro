@@ -100,7 +100,6 @@ if (token) return Astro.redirect(`/user/profile`);
       e.preventDefault();
       const form = e.target;
       const data = new FormData(form as HTMLFormElement);
-      console.log(data.get("role") as string);
       const userRepository = new UserRepository();
       const email = data.get("email") as string;
       const username = data.get("username") as string;
@@ -111,26 +110,31 @@ if (token) return Astro.redirect(`/user/profile`);
         alert('Debe aceptar los términos y condiciones!')
         return
       }
-      const user = await userRepository.signup({
+      let user = await userRepository.signup({
         username,
         email,
         password,
         // @ts-ignore
         role: Role[role],
       });
-
+      
       if (user instanceof Error) {
         alert(user.message);
       } else {
-        //@ts-ignore
-        setCookie("email", user.user.email as string);
-        //@ts-ignore
-        setCookie("jwt", user.jwt as string);
-        //@ts-ignore
-        setCookie("id", user.user.id + "");
-        //@ts-ignore
-        setCookie("username", user.user.username as string);
-        location.href = "/user/profile";
+        user = await userRepository.signin(email, password);
+        if (user instanceof Error) {
+          alert(user.message);
+        } else {
+          //@ts-ignore
+          setCookie("email", user.user.email as string);
+          //@ts-ignore
+          setCookie("jwt", user.jwt as string);
+          //@ts-ignore
+          setCookie("id", user.user.id + "");
+          //@ts-ignore
+          setCookie("username", user.user.username as string);
+          location.href = "/user/profile";
+        }
       }
     });
   </script>

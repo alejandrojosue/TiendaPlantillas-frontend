@@ -29,7 +29,7 @@ export const templateMaper = (id:number, attributes: any): Template =>{
 
 const imagesListMaper = (data:any) : string[] =>{
  return data?.map(({attributes}:{attributes:any})=>(
-  PUBLIC_STRAPI_HOST + attributes.formats?.medium?.url
+   PUBLIC_STRAPI_HOST + attributes.url
  )) as string[]
 }
 
